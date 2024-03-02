@@ -35,10 +35,17 @@ android {
     buildFeatures {
         viewBinding = true
     }
+    buildFeatures {
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.10"
+    }
 }
 
 dependencies {
     implementation(project(":data"))
+    implementation(project(":uikit"))
 
     implementation(libs.core.ktx)
     implementation(libs.appcompat)
@@ -52,6 +59,7 @@ dependencies {
     implementation(libs.dagger.hilt)
 
     implementation(libs.coil)
+    implementation(libs.paging.compose)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
