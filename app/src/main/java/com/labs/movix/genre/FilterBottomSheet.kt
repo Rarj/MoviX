@@ -25,7 +25,7 @@ class FilterBottomSheet(
     private val onSelected: (Genre) -> Unit,
 ) : BottomSheetDialogFragment() {
 
-    private val viewModel: HomeViewModel by viewModels()
+    private val viewModel: FilterViewModel by viewModels()
 
     private lateinit var binding: BottomSheetFilterBinding
     private lateinit var adapter: FilterAdapter
