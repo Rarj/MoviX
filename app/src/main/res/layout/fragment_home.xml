@@ -85,8 +85,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/image_profile" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view_genre"
+    <androidx.compose.ui.platform.ComposeView
+        android:id="@+id/compose_preview"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="24dp"
@@ -94,10 +94,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/text_genre"
-        app:layout_constraintVertical_bias="0"
-        app:spanCount="2"
-        tools:itemCount="8"
-        tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        tools:listitem="@layout/genre_item" />
+        app:layout_constraintVertical_bias="0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

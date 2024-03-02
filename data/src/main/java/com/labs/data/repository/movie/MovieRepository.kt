@@ -2,10 +2,16 @@ package com.labs.data.repository.movie
 
 import androidx.paging.PagingData
 import com.labs.data.ViewState
+import com.labs.data.repository.genre.Genre
 import kotlinx.coroutines.flow.Flow
 
 interface MovieRepository {
-    suspend fun getDiscoverMovie(genreIds: List<String>): Flow<PagingData<Movie>>
+
+    fun setSelectedGenre(genre: Genre?)
+
+    fun getSelectedGenre(): Genre?
+
+    suspend fun getDiscoverMovie(): Flow<PagingData<Movie>>
 
     fun getDetailMovie(id: String): Flow<ViewState<Movie>>
 

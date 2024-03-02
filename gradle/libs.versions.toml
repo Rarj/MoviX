@@ -12,13 +12,19 @@ navigation = "2.7.7"
 viewmodelscope = "2.7.0"
 paging3 = "3.2.1"
 
+# Jetpack Compose
+composeMaterial3 = "1.2.0"
+composeUi = "1.6.2"
+pagingCompose = "3.2.1"
+
 # 3rd parties
 retrofit = "2.9.0"
 okHttp = "4.12.0"
 gson = "2.10.1"
 gson-converter = "2.9.0"
 hilt = "2.48"
-coil = "2.5.0"
+coil = "2.6.0"
+coilCompose = "2.6.0"
 loggingInterceptor = "4.9.2"
 
 [libraries]
@@ -34,6 +40,12 @@ navigation-ui = { group = "androidx.navigation", name = "navigation-ui-ktx", ver
 viewmodelscope = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "viewmodelscope" }
 paging3 = { group = "androidx.paging", name = "paging-runtime", version.ref = "paging3" }
 
+# Jetpack Compose
+compose-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "composeMaterial3" }
+compose-ui-tooling-debug = { group = "androidx.compose.ui", name = "ui-tooling", version.ref = "composeUi" }
+compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview", version.ref = "composeUi" }
+paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "pagingCompose" }
+
 # 3rd parties
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 okHttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okHttp" }
@@ -42,6 +54,7 @@ gson-converter = { group = "com.squareup.retrofit2", name = "converter-gson", ve
 dagger-hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
 dagger-hilt = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 coil = { group = "io.coil-kt", name = "coil", version.ref = "coil" }
+coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coilCompose" }
 logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "loggingInterceptor" }
 
 [plugins]

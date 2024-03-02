@@ -4,6 +4,7 @@ import androidx.paging.PagingData
 import com.labs.data.ViewState
 import com.labs.data.di.ApiService
 import com.labs.data.pagination.createPager
+import com.labs.data.repository.genre.Genre
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -15,13 +16,20 @@ class MovieRepositoryImpl @Inject constructor(
     private val apiService: ApiService
 ) : MovieRepository {
 
-    override suspend fun getDiscoverMovie(genreIds: List<String>): Flow<PagingData<Movie>> {
-        val ids = genreIds.toString()
-            .replace("[", "")
-            .replace("]", "")
-            .replace(",", "%7C")
+    private var genre: Genre? = null
 
+    override fun getSelectedGenre(): Genre? = this.genre
+
+    override fun setSelectedGenre(genre: Genre?) {
+        this.genre = genre
+    }
+
+    override suspend fun getDiscoverMovie(): Flow<PagingData<Movie>> {
         return createPager { page ->
+            val ids = listOf(genre?.id ?: "").toString()
+                .replace("[", "")
+                .replace("]", "")
+                .replace(",", "%7C")
             apiService.getDiscoverMovie(ids, page)
         }.flow.flowOn(Dispatchers.IO)
     }
