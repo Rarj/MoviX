@@ -40,6 +40,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.constraintlayout.compose)
     api(libs.compose.material3)
     api(libs.compose.ui.tooling.preview)
     debugApi(libs.compose.ui.tooling.debug)
