@@ -1,0 +1,8 @@
+package com.labs.uikit.appearance
+
+import androidx.compose.ui.graphics.Color
+
+val ColorPrimary = Color(0xFF2C394B)
+val ColorSecondary = Color(0xFFFF4C29)
+val ColorWhite = Color(0xFFFFFFFF)
+val ColorGray = Color(0xFFBABABA)
