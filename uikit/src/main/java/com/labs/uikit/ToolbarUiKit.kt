@@ -32,7 +32,11 @@ import com.labs.uikit.appearance.ColorWhite
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ToolbarUiKit(modifier: Modifier = Modifier) {
+fun ToolbarUiKit(
+    modifier: Modifier = Modifier,
+    onSearchClicked: () -> Unit,
+    onFilterClicked: () -> Unit,
+) {
     TopAppBar(modifier = modifier, colors = TopAppBarColors(
         containerColor = ColorPrimary,
         scrolledContainerColor = Color.Unspecified,
@@ -76,7 +80,7 @@ fun ToolbarUiKit(modifier: Modifier = Modifier) {
                 .height(24.dp)
                 .width(24.dp)
                 .align(alignment = Alignment.CenterVertically),
-                onClick = { /* do nothing */ }) {
+                onClick = { onSearchClicked.invoke() }) {
                 Icon(
                     painter = painterResource(R.drawable.ic_search),
                     contentDescription = null,
@@ -87,7 +91,7 @@ fun ToolbarUiKit(modifier: Modifier = Modifier) {
                 .height(24.dp)
                 .width(24.dp)
                 .align(alignment = Alignment.CenterVertically),
-                onClick = { /* do nothing */ }) {
+                onClick = { onFilterClicked.invoke() }) {
                 Icon(
                     painter = painterResource(R.drawable.ic_filter),
                     contentDescription = null,
@@ -100,5 +104,5 @@ fun ToolbarUiKit(modifier: Modifier = Modifier) {
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
 private fun ToolbarUiKitPreview() {
-    ToolbarUiKit()
+    ToolbarUiKit(onSearchClicked = {}, onFilterClicked = {})
 }
