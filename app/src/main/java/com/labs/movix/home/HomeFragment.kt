@@ -29,6 +29,7 @@ import com.labs.movix.R
 import com.labs.movix.databinding.FragmentHomeBinding
 import com.labs.movix.genre.FilterBottomSheet
 import com.labs.uikit.PosterUiKit
+import com.labs.uikit.ToolbarUiKit
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -43,10 +44,16 @@ class HomeFragment : Fragment() {
     private lateinit var movieLazyPagingItems: LazyPagingItems<Movie>
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
+
+        binding.composeViewToolbar.apply {
+            setContent {
+                setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+                ToolbarUiKit()
+            }
+        }
 
         binding.composePreview.apply {
             setContent {
