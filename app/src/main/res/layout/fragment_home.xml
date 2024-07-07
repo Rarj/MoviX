@@ -6,7 +6,16 @@
     android:layout_height="match_parent"
     android:background="@color/primary"
     android:paddingTop="24dp"
+    android:nestedScrollingEnabled="true"
     tools:context=".home.HomeFragment">
+
+    <androidx.compose.ui.platform.ComposeView
+        android:id="@+id/compose_view_toolbar"
+        android:layout_width="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_height="wrap_content"/>
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/text_name"
@@ -14,6 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:text="Hello, Rio Arj!"
+        android:visibility="gone"
         android:textColor="@color/white"
         android:textSize="18sp"
         app:fontFamily="@font/sono_bold"
@@ -24,6 +34,7 @@
         android:id="@+id/text_header"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:text="Find your funky moviX!"
         android:textColor="@color/grey"
         android:textSize="12sp"
@@ -35,6 +46,7 @@
         android:id="@+id/image_profile"
         style="@style/CircleImage"
         android:layout_width="48dp"
+        android:visibility="gone"
         android:layout_height="48dp"
         android:layout_marginStart="24dp"
         android:adjustViewBounds="true"
@@ -51,6 +63,7 @@
         android:id="@+id/button_search"
         android:layout_width="36dp"
         android:layout_height="36dp"
+        android:visibility="gone"
         android:layout_marginEnd="8dp"
         android:background="@null"
         android:contentDescription="Search"
@@ -64,7 +77,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:text="Movie by Comedy Genre"
         android:textColor="@color/secondaryVariant"
@@ -72,13 +85,14 @@
         app:fontFamily="@font/sono_medium"
         app:layout_constraintEnd_toStartOf="@id/button_filter"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/button_search" />
+        app:layout_constraintTop_toBottomOf="@id/compose_view_toolbar" />
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/button_filter"
         android:layout_width="36dp"
         android:layout_height="36dp"
         android:layout_marginEnd="24dp"
+        android:visibility="gone"
         android:background="@null"
         android:src="@drawable/ic_filter"
         app:layout_constraintBottom_toBottomOf="@id/image_profile"
