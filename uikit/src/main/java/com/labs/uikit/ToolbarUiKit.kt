@@ -1,0 +1,104 @@
+package com.labs.uikit
+
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedIconButton
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarColors
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.PlatformTextStyle
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.labs.uikit.appearance.ColorGray
+import com.labs.uikit.appearance.ColorPrimary
+import com.labs.uikit.appearance.ColorSecondary
+import com.labs.uikit.appearance.ColorWhite
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun ToolbarUiKit(modifier: Modifier = Modifier) {
+    TopAppBar(modifier = modifier, colors = TopAppBarColors(
+        containerColor = ColorPrimary,
+        scrolledContainerColor = Color.Unspecified,
+        navigationIconContentColor = Color.Unspecified,
+        titleContentColor = Color.Unspecified,
+        actionIconContentColor = Color.Unspecified,
+    ), navigationIcon = {
+        OutlinedIconButton(
+            modifier = Modifier.padding(start = 4.dp),
+            onClick = { /* do nothing */ },
+            border = BorderStroke(1.dp, ColorSecondary)
+        ) {
+            Icon(
+                painter = painterResource(R.drawable.ic_profile),
+                contentDescription = null,
+            )
+        }
+    }, title = {
+        Column(
+            modifier = Modifier.padding(start = 16.dp)
+        ) {
+            Text(
+                text = "Hello, Rio Arj!",
+                fontFamily = FontFamily(Font(resId = R.font.sono_bold)),
+                fontSize = 18.sp,
+                color = ColorWhite,
+                style = TextStyle(platformStyle = PlatformTextStyle(includeFontPadding = false))
+            )
+            Text(
+                text = "Find your funky Movix!",
+                fontFamily = FontFamily(Font(resId = R.font.sono_light)),
+                fontSize = 12.sp,
+                color = ColorGray,
+                style = TextStyle(platformStyle = PlatformTextStyle(includeFontPadding = false))
+            )
+        }
+    }, actions = {
+        Row {
+            IconButton(modifier = Modifier
+                .padding(end = 8.dp)
+                .height(24.dp)
+                .width(24.dp)
+                .align(alignment = Alignment.CenterVertically),
+                onClick = { /* do nothing */ }) {
+                Icon(
+                    painter = painterResource(R.drawable.ic_search),
+                    contentDescription = null,
+                )
+            }
+            IconButton(modifier = Modifier
+                .padding(end = 8.dp)
+                .height(24.dp)
+                .width(24.dp)
+                .align(alignment = Alignment.CenterVertically),
+                onClick = { /* do nothing */ }) {
+                Icon(
+                    painter = painterResource(R.drawable.ic_filter),
+                    contentDescription = null,
+                )
+            }
+        }
+    })
+}
+
+@Preview(showSystemUi = true, showBackground = true)
+@Composable
+private fun ToolbarUiKitPreview() {
+    ToolbarUiKit()
+}
