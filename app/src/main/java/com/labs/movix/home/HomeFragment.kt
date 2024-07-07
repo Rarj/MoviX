@@ -51,7 +51,26 @@ class HomeFragment : Fragment() {
         binding.composeViewToolbar.apply {
             setContent {
                 setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
-                ToolbarUiKit()
+                ToolbarUiKit(
+                    onSearchClicked = {
+                        val bundle = bundleOf(
+                            "selected_genre_id" to viewModel.getSelectedGenre()?.id
+                        )
+                        findNavController().navigate(R.id.search_page, bundle)
+                    },
+                    onFilterClicked = {
+                        val filterPage = FilterBottomSheet { genre ->
+                            setGenreTitle(genre.name)
+                            viewModel.setSelectedGenre(genre)
+                            movieLazyPagingItems.refresh()
+                        }
+                        val bundle = bundleOf(
+                            "selected_genre_id" to viewModel.getSelectedGenre()?.id
+                        )
+                        filterPage.arguments = bundle
+                        filterPage.show(childFragmentManager, "FILTER_PAGE")
+                    },
+                )
             }
         }
 
@@ -114,30 +133,6 @@ class HomeFragment : Fragment() {
                     null -> println("First Initialization!")
                 }
             }
-        }
-
-        initUIListener()
-    }
-
-    private fun initUIListener() {
-        binding.buttonFilter.setOnClickListener {
-            val filterPage = FilterBottomSheet { genre ->
-                setGenreTitle(genre.name)
-                viewModel.setSelectedGenre(genre)
-                movieLazyPagingItems.refresh()
-            }
-            val bundle = bundleOf(
-                "selected_genre_id" to viewModel.getSelectedGenre()?.id
-            )
-            filterPage.arguments = bundle
-            filterPage.show(childFragmentManager, "FILTER_PAGE")
-        }
-
-        binding.buttonSearch.setOnClickListener {
-            val bundle = bundleOf(
-                "selected_genre_id" to viewModel.getSelectedGenre()?.id
-            )
-            findNavController().navigate(R.id.search_page, bundle)
         }
     }
 
