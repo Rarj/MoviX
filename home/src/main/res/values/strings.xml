@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--HOME page-->
+    <string name="selected_genre_label">Movie by %s Genre</string>
+</resources>
