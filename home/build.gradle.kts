@@ -39,7 +39,13 @@ android {
 }
 
 dependencies {
+    implementation(project(":uikit"))
+    implementation(project(":data"))
+
+    implementation(libs.compose.constraintlayout)
     implementation(libs.compose.material3)
     implementation(libs.compose.ui.tooling.preview)
     debugImplementation(libs.compose.ui.tooling.debug)
+
+    implementation(libs.paging.compose)
 }
