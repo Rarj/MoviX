@@ -15,11 +15,9 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.labs.data.Status.ERROR
-import com.labs.data.Status.LOADING
-import com.labs.data.Status.SUCCESS
 import com.labs.data.repository.movie.Movie
 import com.labs.home.HomeUI
+import com.labs.home.HomeViewModel
 import com.labs.movix.R
 import com.labs.movix.databinding.FragmentHomeBinding
 import com.labs.movix.genre.FilterBottomSheet
@@ -45,7 +43,7 @@ class HomeFragment : Fragment() {
             setContent {
                 setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
 
-                movieLazyPagingItems = viewModel.movieFlow.collectAsLazyPagingItems()
+                movieLazyPagingItems = viewModel.moviePagingDataState.collectAsLazyPagingItems()
 
                 HomeUI(
                     selectedGenre = getString(
@@ -60,7 +58,6 @@ class HomeFragment : Fragment() {
                     },
                     onFilterClicked = {
                         val filterPage = FilterBottomSheet { genre ->
-                            setGenreTitle(genre.name)
                             viewModel.setSelectedGenre(genre)
                             movieLazyPagingItems.refresh()
                         }
@@ -95,27 +92,15 @@ class HomeFragment : Fragment() {
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.genre.collectLatest { state ->
-                when (state?.status) {
-                    LOADING -> println(state.status.name)
-                    SUCCESS -> {
-                        setGenreTitle(viewModel.getSelectedGenre()?.name.toString())
-                        println(state.data.toString())
-                    }
-
-                    ERROR -> println(state.status.name)
-                    null -> println("First Initialization!")
-                }
+            viewModel.state.collectLatest { state ->
+                renderLoading(isLoading = state.isLoading)
             }
         }
     }
 
-    private fun setGenreTitle(genreName: String) {
-        val genreTitle = buildString {
-            append("Movie by ")
-            append(genreName)
-            append(" Genre")
-        }
-        binding.textGenre.text = genreTitle
+    private fun renderLoading(isLoading: Boolean?) {
+        if (isLoading == null) return
+
+        println("LOADING_STATE: $isLoading")
     }
 }
