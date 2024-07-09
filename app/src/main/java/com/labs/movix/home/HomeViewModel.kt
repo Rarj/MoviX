@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -25,13 +26,23 @@ class HomeViewModel @Inject constructor(
     private val movieRepository: MovieRepository,
 ) : ViewModel() {
 
+    private val _state = MutableStateFlow(HomeState())
+    val state get() = _state.asStateFlow()
+
     private val _genres = MutableStateFlow<ViewState<List<Genre>>?>(null)
     val genre get() = _genres.asStateFlow()
 
     var movieFlow: Flow<PagingData<Movie>> = flow { PagingData.empty<Movie>() }
         private set
 
-    fun setSelectedGenre(genre: Genre?) = movieRepository.setSelectedGenre(genre)
+    fun setSelectedGenre(genre: Genre?) {
+        movieRepository.setSelectedGenre(genre)
+        _state.update {
+            it.copy(
+                selectedGenre = genre?.name
+            )
+        }
+    }
 
     fun getSelectedGenre() = movieRepository.getSelectedGenre()
 
