@@ -1,4 +1,4 @@
-package com.labs.home
+package com.labs.home.ui
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells

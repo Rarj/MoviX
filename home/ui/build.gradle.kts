@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.labs.home"
+    namespace = "com.labs.home.ui"
     compileSdk = 34
 
     defaultConfig {

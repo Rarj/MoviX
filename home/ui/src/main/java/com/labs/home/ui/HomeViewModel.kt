@@ -1,4 +1,4 @@
-package com.labs.home
+package com.labs.home.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

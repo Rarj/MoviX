@@ -46,7 +46,7 @@ android {
 dependencies {
     implementation(project(":data"))
     implementation(project(":uikit"))
-    implementation(project(":home"))
+    implementation(project(":home:ui"))
 
     implementation(libs.core.ktx)
     implementation(libs.appcompat)
