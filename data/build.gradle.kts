@@ -39,6 +39,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":home:api"))
 
     implementation(libs.retrofit)
     implementation(libs.okHttp)

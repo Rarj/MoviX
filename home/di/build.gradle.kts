@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.labs.home.ui"
+    namespace = "com.labs.home.di"
     compileSdk = 34
 
     defaultConfig {
@@ -32,29 +32,12 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.10"
-    }
 }
 
 dependencies {
-    implementation(project(":uikit"))
-    implementation(project(":home:di"))
     implementation(project(":home:impl"))
     implementation(project(":home:api"))
     implementation(project(":data"))
-
-    implementation(libs.compose.constraintlayout)
-    implementation(libs.compose.material3)
-    implementation(libs.compose.ui.tooling.preview)
-    debugImplementation(libs.compose.ui.tooling.debug)
-
-    implementation(libs.paging.compose)
-
-    implementation(libs.viewmodelscope)
 
     kapt(libs.dagger.hilt.compiler)
     implementation(libs.dagger.hilt)

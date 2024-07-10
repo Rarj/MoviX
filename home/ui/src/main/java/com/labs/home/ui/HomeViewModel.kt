@@ -5,9 +5,9 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import com.labs.data.Status
 import com.labs.data.repository.genre.Genre
-import com.labs.data.repository.genre.GenreRepository
 import com.labs.data.repository.movie.Movie
 import com.labs.data.repository.movie.MovieRepository
+import com.labs.home.impl.GenreRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow
@@ -21,7 +21,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val genreRepository: GenreRepository,
+    private val genreRepo: GenreRepo,
     private val movieRepository: MovieRepository,
 ) : ViewModel() {
 
@@ -44,7 +44,7 @@ class HomeViewModel @Inject constructor(
 
     fun getGenres() {
         viewModelScope.launch {
-            genreRepository.getGenres().collectLatest { genres ->
+            genreRepo.getGenres().collectLatest { genres ->
                 when (genres.status) {
                     Status.LOADING -> {
                         _state.update {
@@ -55,7 +55,12 @@ class HomeViewModel @Inject constructor(
                     }
 
                     Status.SUCCESS -> {
-                        setSelectedGenre(genres.data?.firstOrNull())
+                        setSelectedGenre(
+                            Genre(
+                                id = genres.data?.firstOrNull()?.id ?: 0,
+                                name = genres.data?.firstOrNull()?.name.toString(),
+                            )
+                        )
                         async { getMovies() }.await()
                     }
 
