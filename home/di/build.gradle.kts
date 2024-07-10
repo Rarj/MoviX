@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.kotlinAndroid)
+    alias(libs.plugins.hilt)
+    alias(libs.plugins.kotlinkapt)
 }
 
 android {
@@ -33,5 +35,14 @@ android {
 }
 
 dependencies {
+    implementation(project(":home:impl"))
+    implementation(project(":home:api"))
+    implementation(project(":data"))
 
+    kapt(libs.dagger.hilt.compiler)
+    implementation(libs.dagger.hilt)
+}
+
+kapt {
+    correctErrorTypes = true
 }

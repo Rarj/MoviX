@@ -42,6 +42,9 @@ android {
 
 dependencies {
     implementation(project(":uikit"))
+    implementation(project(":home:di"))
+    implementation(project(":home:impl"))
+    implementation(project(":home:api"))
     implementation(project(":data"))
 
     implementation(libs.compose.constraintlayout)
