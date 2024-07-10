@@ -10,9 +10,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
-class MovieRepositoryImpl @Inject constructor(
+class DiscoverMovieRepositoryImpl @Inject constructor(
     private val apiService: HomeService
-) : MovieRepository {
+) : DiscoverMovieRepository {
 
     private var genre: Genre? = null
 

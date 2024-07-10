@@ -2,8 +2,8 @@ package com.labs.home.di
 
 import com.labs.data.di.NetworkQualifierHomeService
 import com.labs.home.api.HomeService
-import com.labs.home.impl.discover.MovieRepository
-import com.labs.home.impl.discover.MovieRepositoryImpl
+import com.labs.home.impl.discover.DiscoverMovieRepository
+import com.labs.home.impl.discover.DiscoverMovieRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,8 +14,8 @@ import dagger.hilt.components.SingletonComponent
 class DiscoverMovieRepoImplModule {
 
     @Provides
-    fun provideDiscoverMovieRepoImpl(@NetworkQualifierHomeService apiService: HomeService): MovieRepository {
-        return MovieRepositoryImpl(apiService)
+    fun provideDiscoverMovieRepoImpl(@NetworkQualifierHomeService apiService: HomeService): DiscoverMovieRepository {
+        return DiscoverMovieRepositoryImpl(apiService)
 
     }
 

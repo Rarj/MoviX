@@ -5,7 +5,7 @@ import com.labs.data.repository.genre.Genre
 import com.labs.home.api.response.discover.Movie
 import kotlinx.coroutines.flow.Flow
 
-interface MovieRepository {
+interface DiscoverMovieRepository {
 
     fun setSelectedGenre(genre: Genre?)
 
