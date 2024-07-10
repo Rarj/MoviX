@@ -5,76 +5,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/primary"
-    android:paddingTop="24dp"
     android:nestedScrollingEnabled="true"
+    android:paddingTop="24dp"
     tools:context=".home.HomeFragment">
+
+    <androidx.compose.ui.platform.ComposeView
+        android:id="@+id/compose_root"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.compose.ui.platform.ComposeView
         android:id="@+id/compose_view_toolbar"
         android:layout_width="0dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_height="wrap_content"/>
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/text_name"
-        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:text="Hello, Rio Arj!"
         android:visibility="gone"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        app:fontFamily="@font/sono_bold"
-        app:layout_constraintStart_toEndOf="@id/image_profile"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/text_header"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:text="Find your funky moviX!"
-        android:textColor="@color/grey"
-        android:textSize="12sp"
-        app:fontFamily="@font/sono_light"
-        app:layout_constraintStart_toStartOf="@id/text_name"
-        app:layout_constraintTop_toBottomOf="@id/text_name" />
-
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/image_profile"
-        style="@style/CircleImage"
-        android:layout_width="48dp"
-        android:visibility="gone"
-        android:layout_height="48dp"
-        android:layout_marginStart="24dp"
-        android:adjustViewBounds="true"
-        android:padding="4dp"
-        android:scaleType="centerInside"
-        android:src="@drawable/ic_profile"
-        app:layout_constraintBottom_toBottomOf="@id/text_header"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/text_name"
-        app:strokeColor="@color/secondary"
-        app:strokeWidth="1dp" />
-
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/button_search"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:visibility="gone"
-        android:layout_marginEnd="8dp"
-        android:background="@null"
-        android:contentDescription="Search"
-        android:src="@drawable/ic_search"
-        app:layout_constraintBottom_toBottomOf="@id/image_profile"
-        app:layout_constraintEnd_toStartOf="@id/button_filter"
-        app:layout_constraintTop_toTopOf="@id/image_profile" />
-
-    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/text_genre"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
@@ -82,28 +37,19 @@
         android:text="Movie by Comedy Genre"
         android:textColor="@color/secondaryVariant"
         android:textSize="18sp"
+        android:visibility="gone"
         app:fontFamily="@font/sono_medium"
-        app:layout_constraintEnd_toStartOf="@id/button_filter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/compose_view_toolbar" />
-
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/button_filter"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:layout_marginEnd="24dp"
-        android:visibility="gone"
-        android:background="@null"
-        android:src="@drawable/ic_filter"
-        app:layout_constraintBottom_toBottomOf="@id/image_profile"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/image_profile" />
 
     <androidx.compose.ui.platform.ComposeView
         android:id="@+id/compose_preview"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="24dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

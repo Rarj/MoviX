@@ -14,7 +14,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.labs.data.Status
 import com.labs.data.repository.genre.Genre
 import com.labs.movix.databinding.BottomSheetFilterBinding
-import com.labs.movix.home.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch

@@ -46,6 +46,7 @@ android {
 dependencies {
     implementation(project(":data"))
     implementation(project(":uikit"))
+    implementation(project(":home"))
 
     implementation(libs.core.ktx)
     implementation(libs.appcompat)
@@ -57,6 +58,8 @@ dependencies {
 
     kapt(libs.dagger.hilt.compiler)
     implementation(libs.dagger.hilt)
+
+    implementation(libs.compose.constraintlayout)
 
     implementation(libs.coil)
     implementation(libs.paging.compose)
