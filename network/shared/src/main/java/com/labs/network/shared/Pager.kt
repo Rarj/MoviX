@@ -2,8 +2,6 @@ package com.labs.network.shared
 
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
-import com.labs.data.ViewState
-import com.labs.data.di.NetworkResponse
 
 private const val DEFAULT_PAGE_SIZE = 20
 
