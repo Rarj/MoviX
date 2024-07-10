@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.kotlinAndroid)
+    alias(libs.plugins.hilt)
+    alias(libs.plugins.kotlinkapt)
 }
 
 android {
@@ -30,14 +32,31 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    buildFeatures {
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.10"
+    }
 }
 
 dependencies {
+    implementation(project(":uikit"))
+    implementation(project(":data"))
 
-    implementation(libs.core.ktx)
-    implementation(libs.appcompat)
-    implementation(libs.material)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.test.ext.junit)
-    androidTestImplementation(libs.espresso.core)
+    implementation(libs.compose.constraintlayout)
+    implementation(libs.compose.material3)
+    implementation(libs.compose.ui.tooling.preview)
+    debugImplementation(libs.compose.ui.tooling.debug)
+
+    implementation(libs.paging.compose)
+
+    implementation(libs.viewmodelscope)
+
+    kapt(libs.dagger.hilt.compiler)
+    implementation(libs.dagger.hilt)
+}
+
+kapt {
+    correctErrorTypes = true
 }

@@ -17,5 +17,4 @@ rootProject.name = "MoviX"
 include(":app")
 include(":data")
 include(":uikit")
-include(":home")
 include(":home:ui")

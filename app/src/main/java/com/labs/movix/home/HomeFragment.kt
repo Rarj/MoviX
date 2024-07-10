@@ -16,13 +16,14 @@ import androidx.navigation.fragment.findNavController
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.labs.data.repository.movie.Movie
-import com.labs.home.HomeUI
-import com.labs.home.HomeViewModel
+import com.labs.home.ui.HomeUI
+import com.labs.home.ui.HomeViewModel
 import com.labs.movix.R
 import com.labs.movix.databinding.FragmentHomeBinding
 import com.labs.movix.genre.FilterBottomSheet
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import com.labs.home.ui.R as RHome
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -46,7 +47,7 @@ class HomeFragment : Fragment() {
 
                 HomeUI(
                     selectedGenre = getString(
-                        com.labs.home.R.string.selected_genre_label,
+                        RHome.string.selected_genre_label,
                         viewModel.state.collectAsState().value.selectedGenre.orEmpty()
                     ),
                     onSearchClicked = {
