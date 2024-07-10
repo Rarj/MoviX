@@ -10,9 +10,9 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
-class GenreRepositoryImpl @Inject constructor(
+class GenreRepoImpl @Inject constructor(
     private val service: HomeService
-) : GenreRepository {
+) : GenreRepo {
 
     override fun getGenres(): Flow<ViewState<List<Genre>>> {
         return flow {
