@@ -22,7 +22,6 @@ import com.labs.movix.R
 import com.labs.movix.databinding.FragmentHomeBinding
 import com.labs.movix.genre.FilterBottomSheet
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -90,17 +89,5 @@ class HomeFragment : Fragment() {
                 viewModel.getGenres()
             }
         }
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.state.collectLatest { state ->
-                renderLoading(isLoading = state.isLoading)
-            }
-        }
-    }
-
-    private fun renderLoading(isLoading: Boolean?) {
-        if (isLoading == null) return
-
-        println("LOADING_STATE: $isLoading")
     }
 }
