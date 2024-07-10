@@ -7,7 +7,7 @@ import com.labs.data.Status
 import com.labs.data.repository.genre.Genre
 import com.labs.data.repository.movie.Movie
 import com.labs.data.repository.movie.MovieRepository
-import com.labs.home.impl.GenreRepo
+import com.labs.home.impl.genre.GenreRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow

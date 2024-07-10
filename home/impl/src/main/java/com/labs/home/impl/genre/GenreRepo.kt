@@ -1,4 +1,4 @@
-package com.labs.home.impl
+package com.labs.home.impl.genre
 
 import com.labs.data.ViewState
 import com.labs.home.api.response.genre.Genre
