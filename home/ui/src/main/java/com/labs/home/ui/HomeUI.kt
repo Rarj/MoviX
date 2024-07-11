@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.paging.compose.LazyPagingItems
 import com.labs.data.BuildConfig
-import com.labs.data.repository.movie.Movie
+import com.labs.home.api.response.discover.Movie
 import com.labs.uikit.PosterUiKit
 import com.labs.uikit.ToolbarUiKit
 import com.labs.uikit.appearance.ColorSecondaryVariant

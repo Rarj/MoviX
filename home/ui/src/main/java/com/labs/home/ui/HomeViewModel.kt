@@ -5,8 +5,8 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import com.labs.data.Status
 import com.labs.data.repository.genre.Genre
-import com.labs.data.repository.movie.Movie
-import com.labs.data.repository.movie.MovieRepository
+import com.labs.home.api.response.discover.Movie
+import com.labs.home.impl.discover.DiscoverMovieRepository
 import com.labs.home.impl.genre.GenreRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
@@ -22,7 +22,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val genreRepo: GenreRepo,
-    private val movieRepository: MovieRepository,
+    private val movieRepository: DiscoverMovieRepository,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(HomeState())

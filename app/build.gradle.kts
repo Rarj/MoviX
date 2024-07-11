@@ -47,6 +47,7 @@ dependencies {
     implementation(project(":data"))
     implementation(project(":uikit"))
     implementation(project(":home:ui"))
+    implementation(project(":home:api"))
 
     implementation(libs.core.ktx)
     implementation(libs.appcompat)

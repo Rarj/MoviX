@@ -15,7 +15,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.labs.data.repository.movie.Movie
+import com.labs.home.api.response.discover.Movie
 import com.labs.home.ui.HomeUI
 import com.labs.home.ui.HomeViewModel
 import com.labs.movix.R
