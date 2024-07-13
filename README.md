@@ -12,6 +12,8 @@ MoviX is an innovative application designed to enhance your movie browsing exper
   - Rating
 - Filter movie by genre
 
+https://github.com/user-attachments/assets/4047a6a4-690c-4427-b2a0-510bdab80d9f
+
 ### Technology Stack
 
 * Kotlin
