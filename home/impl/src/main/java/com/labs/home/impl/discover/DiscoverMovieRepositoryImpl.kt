@@ -1,9 +1,11 @@
 package com.labs.home.impl.discover
 
 import androidx.paging.PagingData
-import com.labs.data.repository.genre.Genre
 import com.labs.home.api.HomeService
-import com.labs.home.api.response.discover.Movie
+import com.labs.home.impl.discover.mapper.DiscoverMovie
+import com.labs.home.impl.discover.mapper.toDiscoverMovie
+import com.labs.home.impl.genre.mapper.Genre
+import com.labs.network.shared.NetworkResponse
 import com.labs.network.shared.createPager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -14,21 +16,20 @@ class DiscoverMovieRepositoryImpl @Inject constructor(
     private val apiService: HomeService
 ) : DiscoverMovieRepository {
 
-    private var genre: Genre? = null
-
-    override fun getSelectedGenre(): Genre? = this.genre
-
-    override fun setSelectedGenre(genre: Genre?) {
-        this.genre = genre
-    }
-
-    override suspend fun getDiscoverMovie(): Flow<PagingData<Movie>> {
+    override suspend fun getDiscoverMovie(genreId: String?): Flow<PagingData<DiscoverMovie>> {
         return createPager { page ->
-            val ids = listOf(genre?.id ?: "").toString()
+            val ids = listOf(genreId.orEmpty()).toString()
                 .replace("[", "")
                 .replace("]", "")
                 .replace(",", "%7C")
-            apiService.getDiscoverMovie(ids, page)
+            val response = apiService.getDiscoverMovie(ids, page)
+            val movies = response.results.map { it.toDiscoverMovie() }
+
+            NetworkResponse(
+                page = response.page,
+                totalPages = response.totalPages,
+                results = movies
+            )
         }.flow.flowOn(Dispatchers.IO)
     }
 

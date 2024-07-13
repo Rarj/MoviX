@@ -2,6 +2,7 @@ package com.labs.home.ui
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyGridScope
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -11,10 +12,6 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.paging.compose.LazyPagingItems
-import com.labs.data.BuildConfig
-import com.labs.home.api.response.discover.Movie
-import com.labs.uikit.PosterUiKit
 import com.labs.uikit.ToolbarUiKit
 import com.labs.uikit.appearance.ColorSecondaryVariant
 import com.labs.uikit.R as RUiKit
@@ -25,8 +22,7 @@ fun HomeUI(
     selectedGenre: String? = null,
     onSearchClicked: () -> Unit,
     onFilterClicked: () -> Unit,
-    onItemClicked: (movieId: Int?) -> Unit,
-    lazyPagingItems: LazyPagingItems<Movie>,
+    contentItem: LazyGridScope.() -> Unit,
 ) {
     ConstraintLayout(modifier = modifier) {
         val (toolbar, genre, movies) = createRefs()
@@ -60,32 +56,19 @@ fun HomeUI(
                 start.linkTo(parent.start)
                 end.linkTo(parent.end)
             },
-            lazyPagingItems = lazyPagingItems,
-        ) { movieId ->
-            onItemClicked.invoke(movieId)
-        }
+            contentItem = contentItem
+        )
     }
 }
 
 @Composable
 private fun MoviesUI(
     modifier: Modifier,
-    lazyPagingItems: LazyPagingItems<Movie>,
-    onItemClick: (movieId: Int?) -> Unit,
+    contentItem: LazyGridScope.() -> Unit,
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(count = 2),
-        modifier = modifier.padding(start = 8.dp, end = 8.dp, top = 16.dp)
-    ) {
-        items(lazyPagingItems.itemCount) { index ->
-            lazyPagingItems[index]?.posterPath?.let { url ->
-                PosterUiKit(url = buildString {
-                    append(BuildConfig.IMAGE_BASE_URL)
-                    append(url)
-                }) {
-                    onItemClick.invoke(lazyPagingItems[index]?.id)
-                }
-            }
-        }
-    }
+        modifier = modifier.padding(start = 8.dp, end = 8.dp, top = 16.dp),
+        content = contentItem
+    )
 }
