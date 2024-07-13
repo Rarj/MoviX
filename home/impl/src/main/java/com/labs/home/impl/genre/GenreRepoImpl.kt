@@ -1,8 +1,9 @@
-package com.labs.home.impl
+package com.labs.home.impl.genre
 
 import com.labs.data.ViewState
 import com.labs.home.api.HomeService
-import com.labs.home.api.response.Genre
+import com.labs.home.impl.genre.mapper.Genre
+import com.labs.home.impl.genre.mapper.toGenre
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -19,7 +20,10 @@ class GenreRepoImpl @Inject constructor(
             emit(ViewState.loading())
 
             val response = service.getGenre()
-            emit(ViewState.success(response.genres))
+            val genres = response.genres.map {
+                it.toGenre()
+            }
+            emit(ViewState.success(genres))
         }
             .flowOn(Dispatchers.IO)
             .catch {

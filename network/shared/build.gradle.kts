@@ -1,12 +1,10 @@
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.kotlinAndroid)
-    alias(libs.plugins.hilt)
-    alias(libs.plugins.kotlinkapt)
 }
 
 android {
-    namespace = "com.labs.home.impl"
+    namespace = "com.labs.network.shared"
     compileSdk = 34
 
     defaultConfig {
@@ -35,14 +33,6 @@ android {
 }
 
 dependencies {
-    implementation(project(":home:api"))
-    implementation(project(":network:shared"))
-    implementation(project(":data"))
-
-    kapt(libs.dagger.hilt.compiler)
-    implementation(libs.dagger.hilt)
-}
-
-kapt {
-    correctErrorTypes = true
+    implementation(libs.gson)
+    implementation(libs.paging3)
 }

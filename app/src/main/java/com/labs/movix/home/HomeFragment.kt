@@ -13,14 +13,14 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.labs.data.repository.movie.Movie
+import com.labs.data.BuildConfig
 import com.labs.home.ui.HomeUI
 import com.labs.home.ui.HomeViewModel
 import com.labs.movix.R
 import com.labs.movix.databinding.FragmentHomeBinding
 import com.labs.movix.genre.FilterBottomSheet
+import com.labs.uikit.PosterUiKit
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import com.labs.home.ui.R as RHome
@@ -32,8 +32,6 @@ class HomeFragment : Fragment() {
 
     private val viewModel: HomeViewModel by viewModels()
 
-    private lateinit var movieLazyPagingItems: LazyPagingItems<Movie>
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -43,8 +41,7 @@ class HomeFragment : Fragment() {
             setContent {
                 setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
 
-                movieLazyPagingItems = viewModel.moviePagingDataState.collectAsLazyPagingItems()
-
+                val movieLazyPagingItems = viewModel.moviePagingDataState.collectAsLazyPagingItems()
                 HomeUI(
                     selectedGenre = getString(
                         RHome.string.selected_genre_label,
@@ -52,29 +49,37 @@ class HomeFragment : Fragment() {
                     ),
                     onSearchClicked = {
                         val bundle = bundleOf(
-                            "selected_genre_id" to viewModel.getSelectedGenre()?.id
+                            "selected_genre_id" to viewModel.state.value.selectedGenreId?.toInt()
                         )
                         findNavController().navigate(R.id.search_page, bundle)
                     },
                     onFilterClicked = {
                         val filterPage = FilterBottomSheet { genre ->
-                            viewModel.setSelectedGenre(genre)
-                            movieLazyPagingItems.refresh()
+                            viewModel.setSelectedGenre(
+                                id = genre.id,
+                                name = genre.name,
+                            )
+                            viewLifecycleOwner.lifecycleScope.launch { viewModel.getMovies() }
                         }
                         val bundle = bundleOf(
-                            "selected_genre_id" to viewModel.getSelectedGenre()?.id
+                            "selected_genre_id" to viewModel.state.value.selectedGenreId?.toInt()
                         )
                         filterPage.arguments = bundle
                         filterPage.show(childFragmentManager, "FILTER_PAGE")
                     },
-                    onItemClicked = { movieId ->
-                        movieId?.let {
-                            findNavController().navigate(
-                                R.id.detail_movie_page, bundleOf("movie_id" to movieId)
-                            )
+                    contentItem = {
+                        items(movieLazyPagingItems.itemCount) { index ->
+                            PosterUiKit(url = buildString {
+                                append(BuildConfig.IMAGE_BASE_URL)
+                                append(movieLazyPagingItems[index]?.posterPath)
+                            }) {
+                                val movieId = movieLazyPagingItems[index]?.id
+                                findNavController().navigate(
+                                    R.id.detail_movie_page, bundleOf("movie_id" to movieId)
+                                )
+                            }
                         }
                     },
-                    lazyPagingItems = movieLazyPagingItems
                 )
             }
         }

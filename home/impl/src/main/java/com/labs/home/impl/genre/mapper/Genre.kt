@@ -1,4 +1,4 @@
-package com.labs.home.api.response
+package com.labs.home.impl.genre.mapper
 
 data class Genre(
     val id: Int,

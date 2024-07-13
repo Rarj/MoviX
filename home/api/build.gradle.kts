@@ -33,5 +33,8 @@ android {
 }
 
 dependencies {
+    implementation(project(":network:shared"))
+
     implementation(libs.retrofit)
+    implementation(libs.gson)
 }

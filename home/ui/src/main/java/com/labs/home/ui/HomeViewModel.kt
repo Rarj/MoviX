@@ -4,10 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import com.labs.data.Status
-import com.labs.data.repository.genre.Genre
-import com.labs.data.repository.movie.Movie
-import com.labs.data.repository.movie.MovieRepository
-import com.labs.home.impl.GenreRepo
+import com.labs.home.impl.discover.DiscoverMovieRepository
+import com.labs.home.impl.discover.mapper.DiscoverMovie
+import com.labs.home.impl.genre.GenreRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow
@@ -22,25 +21,27 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val genreRepo: GenreRepo,
-    private val movieRepository: MovieRepository,
+    private val movieRepository: DiscoverMovieRepository,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(HomeState())
     val state get() = _state.asStateFlow()
 
-    private var _moviePagingDataState: Flow<PagingData<Movie>> = flow { PagingData.empty<Movie>() }
+    private var _moviePagingDataState: Flow<PagingData<DiscoverMovie>> =
+        flow { PagingData.empty<DiscoverMovie>() }
     val moviePagingDataState get() = _moviePagingDataState
 
-    fun setSelectedGenre(genre: Genre?) {
-        movieRepository.setSelectedGenre(genre)
+    fun setSelectedGenre(
+        id: Int?,
+        name: String?,
+    ) {
         _state.update {
             it.copy(
-                selectedGenre = genre?.name
+                selectedGenreId = if (id == 0) "" else id.toString(),
+                selectedGenre = name,
             )
         }
     }
-
-    fun getSelectedGenre() = movieRepository.getSelectedGenre()
 
     fun getGenres() {
         viewModelScope.launch {
@@ -55,12 +56,13 @@ class HomeViewModel @Inject constructor(
                     }
 
                     Status.SUCCESS -> {
-                        setSelectedGenre(
-                            Genre(
-                                id = genres.data?.firstOrNull()?.id ?: 0,
-                                name = genres.data?.firstOrNull()?.name.toString(),
+                        val genre = genres.data?.firstOrNull()
+                        if (genre?.id.toString() != state.value.selectedGenreId) {
+                            setSelectedGenre(
+                                id = genre?.id,
+                                name = genre?.name,
                             )
-                        )
+                        }
                         async { getMovies() }.await()
                     }
 
@@ -76,9 +78,9 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private suspend fun getMovies() {
+    suspend fun getMovies() {
         viewModelScope.launch {
-            _moviePagingDataState = movieRepository.getDiscoverMovie()
+            _moviePagingDataState = movieRepository.getDiscoverMovie(state.value.selectedGenreId)
         }
     }
 
