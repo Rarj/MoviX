@@ -1,5 +1,6 @@
 package com.labs.home.ui
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyGridScope
@@ -55,7 +56,7 @@ fun HomeUI(
                 top.linkTo(genre.bottom)
                 start.linkTo(parent.start)
                 end.linkTo(parent.end)
-            },
+            }.animateContentSize(),
             contentItem = contentItem
         )
     }
