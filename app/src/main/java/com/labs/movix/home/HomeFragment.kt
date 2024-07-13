@@ -59,10 +59,7 @@ class HomeFragment : Fragment() {
                                 id = genre.id,
                                 name = genre.name,
                             )
-                            viewLifecycleOwner.lifecycleScope.launch {
-                                viewModel.getMovies()
-                            }
-                            movieLazyPagingItems.refresh()
+                            viewLifecycleOwner.lifecycleScope.launch { viewModel.getMovies() }
                         }
                         val bundle = bundleOf(
                             "selected_genre_id" to viewModel.state.value.selectedGenreId?.toInt()
