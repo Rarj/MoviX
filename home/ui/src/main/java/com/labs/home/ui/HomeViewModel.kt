@@ -31,6 +31,10 @@ class HomeViewModel @Inject constructor(
         flow { PagingData.empty<DiscoverMovie>() }
     val moviePagingDataState get() = _moviePagingDataState
 
+    init {
+        getGenres()
+    }
+
     fun setSelectedGenre(
         id: Int?,
         name: String?,

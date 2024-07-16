@@ -49,6 +49,7 @@ dependencies {
     implementation(project(":home:ui"))
     implementation(project(":home:api"))
     implementation(project(":home:impl"))
+    implementation(project(":navigation:home:controller"))
 
     implementation(libs.core.ktx)
     implementation(libs.appcompat)
@@ -62,6 +63,8 @@ dependencies {
     implementation(libs.dagger.hilt)
 
     implementation(libs.compose.constraintlayout)
+    implementation(libs.compose.activity)
+    implementation(libs.compose.navigation)
 
     implementation(libs.coil)
     implementation(libs.paging.compose)

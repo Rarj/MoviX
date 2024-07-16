@@ -13,11 +13,14 @@ constraintlayout-compose = "1.0.1"
 navigation = "2.7.7"
 viewmodelscope = "2.7.0"
 paging3 = "3.2.1"
+activityCompose = "1.9.0"
 
 # Jetpack Compose
 composeMaterial3 = "1.2.0"
 composeUi = "1.6.2"
 pagingCompose = "3.2.1"
+composeNavigation = "2.7.7"
+composeHiltNavigation = "1.2.0"
 
 # 3rd parties
 retrofit = "2.9.0"
@@ -48,6 +51,9 @@ compose-ui-tooling-debug = { group = "androidx.compose.ui", name = "ui-tooling",
 compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview", version.ref = "composeUi" }
 paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "pagingCompose" }
 compose-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version.ref = "constraintlayout-compose" }
+compose-navigation = { group = "androidx.navigation", name = "navigation-compose", version.ref = "composeNavigation" }
+compose-hiltNavigation =  { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "composeHiltNavigation" }
+compose-activity = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 
 # 3rd parties
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
