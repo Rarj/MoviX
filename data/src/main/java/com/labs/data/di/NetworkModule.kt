@@ -1,6 +1,7 @@
 package com.labs.data.di
 
 import com.labs.data.BuildConfig
+import com.labs.data.RetryMechanismInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -9,6 +10,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -24,18 +26,11 @@ class NetworkModule {
     @Provides
     fun provideOkHttp(loggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
         val okHttpClient = OkHttpClient.Builder()
-            .addInterceptor { chain ->
-                val original = chain.request()
-                val request = original.newBuilder()
-                    .addHeader("accept", "application/json")
-                    .addHeader(
-                        "Authorization",
-                        "Bearer ${BuildConfig.AUTH_TOKEN}"
-                    )
-                    .build()
-
-                chain.proceed(request)
-            }
+            .readTimeout(timeout = 1, unit = TimeUnit.MINUTES)
+            .writeTimeout(timeout = 1, unit = TimeUnit.MINUTES)
+            .connectTimeout(timeout = 1, unit = TimeUnit.MINUTES)
+            .retryOnConnectionFailure(true)
+            .addInterceptor(RetryMechanismInterceptor())
 
         if (BuildConfig.DEBUG)
             okHttpClient.addInterceptor(loggingInterceptor)
