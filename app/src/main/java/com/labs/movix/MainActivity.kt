@@ -11,10 +11,17 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.labs.home.ui.HomeUI
 import com.labs.navigation.home.controller.HOME_ROUTE
+import com.labs.search.controller.Navigation
+import com.labs.search.controller.SEARCH_ROUTE
+import com.labs.search.ui.SearchUI
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    @Inject
+    lateinit var searchNavigation: Navigation
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,10 +36,15 @@ class MainActivity : ComponentActivity() {
                     composable(route = HOME_ROUTE) {
                         HomeUI(
                             modifier = Modifier.fillMaxSize(),
-                            onSearchClicked = { println("CLICKED_EVENT: SEARCH") },
+                            onSearchClicked = {
+                                searchNavigation.navigateToSearchPage(navController)
+                            },
                             onFilterClicked = { println("CLICKED_EVENT: FILTER") },
                             onItemClicked = { movieId -> println("CLICKED_EVENT: MOVIE_CLICKED : $movieId") },
                         )
+                    }
+                    composable(route = SEARCH_ROUTE) {
+                        SearchUI()
                     }
                 }
             }
