@@ -40,6 +40,7 @@ android {
 
 dependencies {
     implementation(project(":home:api"))
+    implementation(project(":search:api"))
 
     implementation(libs.retrofit)
     implementation(libs.okHttp)
