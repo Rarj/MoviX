@@ -39,6 +39,8 @@ android {
 }
 
 dependencies {
+    implementation(project(":uikit"))
+
     implementation(libs.compose.constraintlayout)
     implementation(libs.compose.material3)
     implementation(libs.compose.ui.tooling.preview)
