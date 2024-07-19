@@ -44,7 +44,9 @@ class MainActivity : ComponentActivity() {
                         )
                     }
                     composable(route = SEARCH_ROUTE) {
-                        SearchUI()
+                        SearchUI(
+                            onBack = { navController.popBackStack() }
+                        )
                     }
                 }
             }
