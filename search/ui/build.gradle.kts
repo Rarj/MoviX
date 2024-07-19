@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.kotlinAndroid)
+    alias(libs.plugins.hilt)
+    alias(libs.plugins.kotlinkapt)
 }
 
 android {
@@ -40,9 +42,24 @@ android {
 
 dependencies {
     implementation(project(":uikit"))
+    implementation(project(":search:di"))
+    implementation(project(":search:impl"))
+    implementation(project(":data"))
 
     implementation(libs.compose.constraintlayout)
     implementation(libs.compose.material3)
     implementation(libs.compose.ui.tooling.preview)
     debugImplementation(libs.compose.ui.tooling.debug)
+
+    implementation(libs.paging.compose)
+
+    implementation(libs.viewmodelscope)
+
+    kapt(libs.dagger.hilt.compiler)
+    implementation(libs.dagger.hilt)
+    implementation(libs.compose.hiltNavigation)
+}
+
+kapt {
+    correctErrorTypes = true
 }
