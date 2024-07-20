@@ -50,6 +50,9 @@ dependencies {
     implementation(project(":home:api"))
     implementation(project(":home:impl"))
     implementation(project(":navigation:home:controller"))
+    implementation(project(":search:ui"))
+    implementation(project(":navigation:search:controller"))
+    implementation(project(":navigation:search:impl"))
 
     implementation(libs.core.ktx)
     implementation(libs.appcompat)

@@ -2,6 +2,7 @@ package com.labs.data.di
 
 import com.labs.data.BuildConfig
 import com.labs.home.api.HomeService
+import com.labs.search.api.SearchService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -63,6 +64,12 @@ class NetworkModule {
     @NetworkQualifierHomeService
     fun provideHomeService(retrofit: Retrofit): HomeService {
         return retrofit.create(HomeService::class.java)
+    }
+
+    @Provides
+    @NetworkQualifierSearchService
+    fun provideSearchService(retrofit: Retrofit): SearchService {
+        return retrofit.create(SearchService::class.java)
     }
 
 }
