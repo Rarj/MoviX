@@ -54,6 +54,10 @@ dependencies {
     implementation(project(":navigation:search:controller"))
     implementation(project(":navigation:search:impl"))
 
+    implementation(project(":detail:ui"))
+    implementation(project(":navigation:detail:controller"))
+    implementation(project(":navigation:detail:impl"))
+
     implementation(libs.core.ktx)
     implementation(libs.appcompat)
     implementation(libs.material)
