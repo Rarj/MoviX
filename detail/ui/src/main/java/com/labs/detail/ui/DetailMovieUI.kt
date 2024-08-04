@@ -9,8 +9,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -20,9 +22,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
@@ -44,7 +48,7 @@ import com.labs.uikit.R as RUiKit
 @Composable
 fun DetailMovieUI(
     modifier: Modifier = Modifier,
-    movieId: String,
+    state: DetailMovieState,
 ) {
     ConstraintLayout(
         modifier = modifier
@@ -59,39 +63,16 @@ fun DetailMovieUI(
             chainStyle = ChainStyle.Packed(bias = 0f)
         )
 
-        Column(
-            modifier = Modifier
+        ToolbarUI(
+            Modifier
                 .fillMaxWidth()
                 .constrainAs(topBar) {
                     top.linkTo(parent.top)
                 }
                 .wrapContentSize()
-                .padding(top = 32.dp, end = 8.dp)
-        ) {
-            IconButton(
-                onClick = {
-                    // TODO: back to the last page
-                }
-            ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_back),
-                    tint = ColorWhite,
-                    contentDescription = null,
-                )
-            }
-
-            Text(
-                modifier = Modifier
-                    .padding(start = 16.dp, top = 8.dp)
-                    .fillMaxWidth(),
-                textAlign = TextAlign.Start,
-                maxLines = 3,
-                text = "Avenger",
-                color = ColorWhite,
-                fontSize = 28.sp,
-                fontFamily = FontFamily(Font(resId = R.font.sono_extrabold))
-            )
-        }
+                .padding(top = 32.dp, end = 8.dp),
+            state.title
+        )
 
         Column(
             modifier = Modifier
@@ -103,6 +84,7 @@ fun DetailMovieUI(
                     bottom.linkTo(buttonSeeReview.top)
                     height = Dimension.fillToConstraints
                 }
+                .verticalScroll(state = rememberScrollState())
         ) {
             AsyncImage(
                 modifier = Modifier
@@ -112,7 +94,7 @@ fun DetailMovieUI(
                     .clip(RoundedCornerShape(CornerSize(percent = 5)))
                     .background(color = Color.LightGray),
                 model = ImageRequest.Builder(LocalContext.current)
-                    .data("url")
+                    .data(state.posterUrl)
                     .crossfade(true)
                     .build(),
                 contentScale = ContentScale.FillBounds,
@@ -127,14 +109,14 @@ fun DetailMovieUI(
                     modifier = Modifier
                         .wrapContentSize(),
                     tint = ColorStar,
-                    painter = painterResource(id = RUiKit.drawable.ic_star),
+                    imageVector = ImageVector.vectorResource(id = RUiKit.drawable.ic_star),
                     contentDescription = "Rating Icon - Star"
                 )
 
                 Text(
                     modifier = Modifier
                         .wrapContentSize(),
-                    text = "4.5/10",
+                    text = state.rating,
                     maxLines = 1,
                     color = ColorWhite,
                     fontSize = 16.sp,
@@ -145,7 +127,7 @@ fun DetailMovieUI(
             Text(
                 modifier = Modifier
                     .padding(16.dp),
-                text = "Long Overview",
+                text = state.overview,
                 color = ColorWhite,
                 textAlign = TextAlign.Center,
                 fontSize = 18.sp,
@@ -173,8 +155,49 @@ fun DetailMovieUI(
     }
 }
 
+@Composable
+private fun ToolbarUI(
+    modifier: Modifier,
+    title: String,
+) {
+    Column(
+        modifier = modifier
+    ) {
+        IconButton(
+            onClick = {
+                // TODO: back to the last page
+            }
+        ) {
+            Icon(
+                imageVector = ImageVector.vectorResource(id = RUiKit.drawable.ic_back),
+                tint = ColorWhite,
+                contentDescription = null,
+            )
+        }
+
+        Text(
+            modifier = Modifier
+                .padding(start = 16.dp, top = 8.dp)
+                .fillMaxWidth(),
+            textAlign = TextAlign.Start,
+            maxLines = 3,
+            text = title,
+            color = ColorWhite,
+            fontSize = 28.sp,
+            fontFamily = FontFamily(Font(resId = R.font.sono_extrabold))
+        )
+    }
+}
+
 @Preview(showBackground = true, showSystemUi = true, backgroundColor = 0xFF2C394B)
 @Composable
 private fun DetailMovieUIPreview() {
-    DetailMovieUI(movieId = "movieId")
+    DetailMovieUI(
+        state = DetailMovieState(
+            title = "Avenger",
+            posterUrl = "url",
+            rating = "8.9/10",
+            overview = "Long OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong Overview"
+        )
+    )
 }

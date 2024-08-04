@@ -1,6 +1,7 @@
 package com.labs.data.di
 
 import com.labs.data.BuildConfig
+import com.labs.detail.api.DetailMovieService
 import com.labs.home.api.HomeService
 import com.labs.search.api.SearchService
 import dagger.Module
@@ -70,6 +71,12 @@ class NetworkModule {
     @NetworkQualifierSearchService
     fun provideSearchService(retrofit: Retrofit): SearchService {
         return retrofit.create(SearchService::class.java)
+    }
+
+    @Provides
+    @NetworkQualifierDetailMovieService
+    fun provideDetailMovieService(retrofit: Retrofit): DetailMovieService {
+        return retrofit.create(DetailMovieService::class.java)
     }
 
 }

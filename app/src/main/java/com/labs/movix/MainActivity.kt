@@ -8,12 +8,15 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.labs.detail.ui.DetailMovieState
 import com.labs.detail.ui.DetailMovieUI
+import com.labs.detail.ui.DetailMovieViewModel
 import com.labs.home.ui.HomeUI
 import com.labs.navigation.detail.controller.DETAIL_MOVIE_ID_ARGS
 import com.labs.navigation.detail.controller.DETAIL_MOVIE_ROUTE
@@ -22,6 +25,7 @@ import com.labs.search.controller.SEARCH_ROUTE
 import com.labs.search.ui.SearchUI
 import com.labs.search.ui.SearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 import com.labs.navigation.detail.controller.Navigation as DetailMovieNavigation
 import com.labs.search.controller.Navigation as SearchNavigation
@@ -80,8 +84,12 @@ class MainActivity : ComponentActivity() {
                             type = NavType.StringType
                         })
                     ) { backstackEntry ->
+                        val viewModel: DetailMovieViewModel by viewModels()
                         val movieId = backstackEntry.arguments?.getString(DETAIL_MOVIE_ID_ARGS)
-                        DetailMovieUI(movieId = movieId.orEmpty())
+
+                        viewModel.getDetailMovie(movieId.orEmpty())
+                        val state = viewModel.state.collectAsState().value
+                        DetailMovieUI(state = DetailMovieState())
                     }
                 }
             }

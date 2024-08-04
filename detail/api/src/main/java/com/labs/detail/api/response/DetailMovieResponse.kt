@@ -7,7 +7,7 @@ data class DetailMovieResponse(
     @SerializedName("poster_path")
     val posterPath: String?,
     @SerializedName("genre_ids")
-    val genreIds: List<String>,
+    val genreIds: List<String>?,
     val title: String,
     val overview: String,
     @SerializedName("vote_average")
