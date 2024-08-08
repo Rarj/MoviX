@@ -6,6 +6,8 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.lifecycleScope
@@ -14,6 +16,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import androidx.navigation.navigation
 import com.labs.detail.ui.DetailMovieState
 import com.labs.detail.ui.DetailMovieUI
 import com.labs.detail.ui.DetailMovieViewModel
@@ -32,6 +35,8 @@ import com.labs.search.controller.Navigation as SearchNavigation
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    private val viewModel: DetailMovieViewModel by viewModels()
 
     @Inject
     lateinit var searchNavigation: SearchNavigation
@@ -84,12 +89,13 @@ class MainActivity : ComponentActivity() {
                             type = NavType.StringType
                         })
                     ) { backstackEntry ->
-                        val viewModel: DetailMovieViewModel by viewModels()
                         val movieId = backstackEntry.arguments?.getString(DETAIL_MOVIE_ID_ARGS)
 
-                        viewModel.getDetailMovie(movieId.orEmpty())
+                        LaunchedEffect(key1 = movieId) {
+                            viewModel.getDetailMovie(movieId.orEmpty())
+                        }
                         val state = viewModel.state.collectAsState().value
-                        DetailMovieUI(state = DetailMovieState())
+                        DetailMovieUI(state = state)
                     }
                 }
             }
