@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class DetailMovieResponse(
     val id: Int,
-    @SerializedName("poster_path")
+    @SerializedName("backdrop_path")
     val posterPath: String?,
     @SerializedName("genre_ids")
     val genreIds: List<String>?,

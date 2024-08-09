@@ -6,8 +6,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CornerSize
@@ -19,13 +19,14 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -33,9 +34,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.labs.uikit.R
@@ -46,12 +47,30 @@ import com.labs.uikit.appearance.ColorWhite
 import com.labs.uikit.R as RUiKit
 
 @Composable
-fun DetailMovieUI(
-    modifier: Modifier = Modifier,
+fun DetailMovieScreen(
+    viewModel: DetailMovieViewModel = hiltViewModel(),
+    movieId: String,
+    onBack: () -> Unit,
+    onReview: () -> Unit,
+) {
+    LaunchedEffect(movieId.isNotEmpty()) {
+        viewModel.getDetailMovie(movieId)
+    }
+
+    DetailMovieUI(
+        state = viewModel.state.collectAsState().value,
+        onBack = { onBack.invoke() },
+        onReview = { onReview.invoke() })
+}
+
+@Composable
+private fun DetailMovieUI(
     state: DetailMovieState,
+    onBack: () -> Unit,
+    onReview: () -> Unit,
 ) {
     ConstraintLayout(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxSize()
             .background(color = ColorPrimary)
     ) {
@@ -60,18 +79,18 @@ fun DetailMovieUI(
             topBar,
             content,
             buttonSeeReview,
-            chainStyle = ChainStyle.Packed(bias = 0f)
         )
 
         ToolbarUI(
             Modifier
-                .fillMaxWidth()
                 .constrainAs(topBar) {
                     top.linkTo(parent.top)
                 }
+                .fillMaxWidth()
                 .wrapContentSize()
                 .padding(top = 32.dp, end = 8.dp),
-            state.title
+            title = state.title,
+            onBack = onBack,
         )
 
         Column(
@@ -81,16 +100,16 @@ fun DetailMovieUI(
                     top.linkTo(topBar.bottom)
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
-                    bottom.linkTo(buttonSeeReview.top)
                     height = Dimension.fillToConstraints
                 }
+                .padding(top = 8.dp)
                 .verticalScroll(state = rememberScrollState())
         ) {
             AsyncImage(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(all = 16.dp)
-                    .height(260.dp)
+                    .wrapContentHeight()
                     .clip(RoundedCornerShape(CornerSize(percent = 5)))
                     .background(color = Color.LightGray),
                 model = ImageRequest.Builder(LocalContext.current)
@@ -126,6 +145,7 @@ fun DetailMovieUI(
 
             Text(
                 modifier = Modifier
+                    .fillMaxSize()
                     .padding(16.dp),
                 text = state.overview,
                 color = ColorWhite,
@@ -144,7 +164,7 @@ fun DetailMovieUI(
                 }
                 .fillMaxWidth()
                 .padding(start = 16.dp, end = 16.dp, bottom = 8.dp),
-            onClick = { /*TODO*/ },
+            onClick = { onReview.invoke() },
             shape = RoundedCornerShape(8.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = ColorSecondaryVariant
@@ -159,14 +179,13 @@ fun DetailMovieUI(
 private fun ToolbarUI(
     modifier: Modifier,
     title: String,
+    onBack: () -> Unit,
 ) {
     Column(
         modifier = modifier
     ) {
         IconButton(
-            onClick = {
-                // TODO: back to the last page
-            }
+            onClick = { onBack.invoke() }
         ) {
             Icon(
                 imageVector = ImageVector.vectorResource(id = RUiKit.drawable.ic_back),
@@ -198,6 +217,8 @@ private fun DetailMovieUIPreview() {
             posterUrl = "url",
             rating = "8.9/10",
             overview = "Long OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong Overview"
-        )
+        ),
+        onBack = {},
+        onReview = {},
     )
 }
