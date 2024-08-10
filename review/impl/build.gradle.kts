@@ -35,7 +35,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":search:api"))
+    implementation(project(":review:api"))
     implementation(project(":network:shared"))
     implementation(project(":data"))
 

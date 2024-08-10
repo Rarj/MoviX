@@ -35,8 +35,8 @@ android {
 }
 
 dependencies {
-    implementation(project(":search:impl"))
-    implementation(project(":search:api"))
+    implementation(project(":review:impl"))
+    implementation(project(":review:api"))
     implementation(project(":data"))
 
     implementation(libs.dagger.hilt)
