@@ -43,6 +43,7 @@ dependencies {
     implementation(project(":home:api"))
     implementation(project(":search:api"))
     implementation(project(":detail:api"))
+    implementation(project(":review:api"))
 
     implementation(libs.retrofit)
     implementation(libs.okHttp)

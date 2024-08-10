@@ -17,3 +17,7 @@ annotation class NetworkQualifierApiService
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
 annotation class NetworkQualifierDetailMovieService
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class NetworkQualifierReviewService
