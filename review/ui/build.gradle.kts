@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "com.labs.search.ui"
+    namespace = "com.labs.review.ui"
     compileSdk = 34
 
     defaultConfig {
-        minSdk = 23
+        minSdk = 24
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -42,8 +42,8 @@ android {
 
 dependencies {
     implementation(project(":uikit"))
-    implementation(project(":review:di"))
-    implementation(project(":review:impl"))
+    implementation(project(":search:di"))
+    implementation(project(":search:impl"))
     implementation(project(":data"))
 
     implementation(libs.compose.constraintlayout)
