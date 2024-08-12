@@ -64,23 +64,23 @@ private fun ReviewUI(
         containerColor = ColorPrimary,
     ) {
         reviews.apply {
-            when  {
-                 loadState.refresh is LoadState.NotLoading -> {
-                     if (reviews.itemCount <= 0) ReviewEmptyUI()
+            when {
+                loadState.refresh is LoadState.NotLoading -> {
+                    if (reviews.itemCount <= 0) ReviewEmptyUI()
 
-                     LazyColumn {
-                         items(reviews.itemCount) { index ->
-                             val item = reviews[index]
-                             ReviewItemUI(
-                                 review = ReviewItem(
-                                     id = item?.id.orEmpty(),
-                                     author = item?.author.orEmpty(),
-                                     content = item?.content.orEmpty(),
-                                 )
-                             )
-                         }
-                     }
-                 }
+                    LazyColumn {
+                        items(reviews.itemCount) { index ->
+                            val item = reviews[index]
+                            ReviewItemUI(
+                                review = ReviewItem(
+                                    id = item?.id.orEmpty(),
+                                    author = item?.author.orEmpty(),
+                                    content = item?.content.orEmpty(),
+                                )
+                            )
+                        }
+                    }
+                }
             }
         }
     }
@@ -121,7 +121,9 @@ private fun ReviewItemUI(
             text = review.content,
             color = ColorWhite,
             fontFamily = FontFamily(Font(resId = RUiKit.font.sono_medium)),
-            fontSize = 14.sp
+            fontSize = 14.sp,
+            letterSpacing = 1.5.sp,
+            lineHeight = 22.sp
         )
 
         HorizontalDivider(
