@@ -14,7 +14,7 @@ class ReviewRepositoryImpl @Inject constructor(
     private val service: ReviewService
 ) : ReviewRepository {
 
-    override suspend fun getReview(movieId: String): Flow<PagingData<com.labs.review.impl.mapper.Review>> {
+    override suspend fun getReview(movieId: String): Flow<PagingData<ReviewItem>> {
         return createPager { page ->
             val response = service.getReviews(movieId, page)
             val results = response.results.map { result -> result.toReview() }
