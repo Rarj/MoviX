@@ -2,6 +2,7 @@ package com.labs.review.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.cachedIn
 import com.labs.review.impl.ReviewRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,7 +23,7 @@ class ReviewViewModel @Inject constructor(
         viewModelScope.launch {
             _state.update {
                 it.copy(
-                    reviewPagingItem = reviewRepository.getReview(movieId = movieId)
+                    reviewPagingItem = reviewRepository.getReview(movieId = movieId).cachedIn(this)
                 )
             }
         }
