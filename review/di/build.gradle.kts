@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.labs.detail.ui"
+    namespace = "com.labs.review.di"
     compileSdk = 34
 
     defaultConfig {
@@ -32,33 +32,15 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.10"
-    }
 }
 
 dependencies {
-    implementation(project(":uikit"))
-    implementation(project(":detail:di"))
-    implementation(project(":detail:impl"))
+    implementation(project(":review:impl"))
+    implementation(project(":review:api"))
     implementation(project(":data"))
-    implementation(project(":review:ui"))
 
-    implementation(libs.compose.constraintlayout)
-    implementation(libs.compose.material3)
-    implementation(libs.compose.ui.tooling.preview)
-    debugImplementation(libs.compose.ui.tooling.debug)
-
-    implementation(libs.paging.compose)
-
-    implementation(libs.viewmodelscope)
-
-    kapt(libs.dagger.hilt.compiler)
     implementation(libs.dagger.hilt)
-    implementation(libs.compose.hiltNavigation)
+    kapt(libs.dagger.hilt.compiler)
 }
 
 kapt {

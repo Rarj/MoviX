@@ -21,6 +21,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -39,6 +43,7 @@ import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.labs.review.ui.ReviewScreen
 import com.labs.uikit.R
 import com.labs.uikit.appearance.ColorPrimary
 import com.labs.uikit.appearance.ColorSecondaryVariant
@@ -51,8 +56,9 @@ fun DetailMovieScreen(
     viewModel: DetailMovieViewModel = hiltViewModel(),
     movieId: String,
     onBack: () -> Unit,
-    onReview: () -> Unit,
 ) {
+    var showBottomSheet by remember { mutableStateOf(false) }
+
     LaunchedEffect(movieId.isNotEmpty()) {
         viewModel.getDetailMovie(movieId)
     }
@@ -60,7 +66,14 @@ fun DetailMovieScreen(
     DetailMovieUI(
         state = viewModel.state.collectAsState().value,
         onBack = { onBack.invoke() },
-        onReview = { onReview.invoke() })
+        onReview = { showBottomSheet = !showBottomSheet })
+
+    if (showBottomSheet) {
+        ReviewScreen(
+            movieId = movieId,
+            onDismiss = { showBottomSheet = false },
+        )
+    }
 }
 
 @Composable
@@ -163,7 +176,7 @@ private fun DetailMovieUI(
                     end.linkTo(parent.end)
                 }
                 .fillMaxWidth()
-                .padding(start = 16.dp, end = 16.dp, bottom = 8.dp),
+                .padding(start = 16.dp, end = 16.dp, bottom = 32.dp),
             onClick = { onReview.invoke() },
             shape = RoundedCornerShape(8.dp),
             colors = ButtonDefaults.buttonColors(

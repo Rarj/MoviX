@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.labs.detail.ui"
+    namespace = "com.labs.review.ui"
     compileSdk = 34
 
     defaultConfig {
@@ -42,10 +42,9 @@ android {
 
 dependencies {
     implementation(project(":uikit"))
-    implementation(project(":detail:di"))
-    implementation(project(":detail:impl"))
+    implementation(project(":review:di"))
+    implementation(project(":review:impl"))
     implementation(project(":data"))
-    implementation(project(":review:ui"))
 
     implementation(libs.compose.constraintlayout)
     implementation(libs.compose.material3)

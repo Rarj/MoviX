@@ -3,6 +3,7 @@ package com.labs.data.di
 import com.labs.data.BuildConfig
 import com.labs.detail.api.DetailMovieService
 import com.labs.home.api.HomeService
+import com.labs.review.api.ReviewService
 import com.labs.search.api.SearchService
 import dagger.Module
 import dagger.Provides
@@ -77,6 +78,12 @@ class NetworkModule {
     @NetworkQualifierDetailMovieService
     fun provideDetailMovieService(retrofit: Retrofit): DetailMovieService {
         return retrofit.create(DetailMovieService::class.java)
+    }
+
+    @Provides
+    @NetworkQualifierReviewService
+    fun provideReviewService(retrofit: Retrofit): ReviewService {
+        return retrofit.create(ReviewService::class.java)
     }
 
 }
