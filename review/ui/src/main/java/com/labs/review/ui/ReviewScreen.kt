@@ -1,7 +1,7 @@
 package com.labs.review.ui
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
@@ -44,8 +44,9 @@ fun ReviewScreen(
         viewModel.getReviews(movieId)
     }
 
+    val state = viewModel.state.collectAsState().value.reviewPagingItem
     ReviewUI(
-        reviews = viewModel.state.collectAsState().value.reviewPagingItem.collectAsLazyPagingItems(),
+        reviews = state.collectAsLazyPagingItems(),
         onDismiss = onDismiss,
     )
 }
@@ -56,14 +57,12 @@ private fun ReviewUI(
     reviews: LazyPagingItems<ReviewItem>,
     onDismiss: () -> Unit
 ) {
-    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    val sheetState = rememberModalBottomSheetState()
 
     ModalBottomSheet(
-        modifier = Modifier.fillMaxHeight(0.97f),
         onDismissRequest = { onDismiss() },
         sheetState = sheetState,
         containerColor = ColorPrimary,
-        dragHandle = { BottomSheetDefaults.DragHandle() }
     ) {
         LazyColumn {
             items(reviews.itemCount) { index ->
