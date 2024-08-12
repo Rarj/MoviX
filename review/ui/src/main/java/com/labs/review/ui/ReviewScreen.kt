@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -62,16 +63,24 @@ private fun ReviewUI(
         sheetState = sheetState,
         containerColor = ColorPrimary,
     ) {
-        LazyColumn {
-            items(reviews.itemCount) { index ->
-                val item = reviews[index]
-                ReviewItemUI(
-                    review = ReviewItem(
-                        id = item?.id.orEmpty(),
-                        author = item?.author.orEmpty(),
-                        content = item?.content.orEmpty(),
-                    )
-                )
+        reviews.apply {
+            when  {
+                 loadState.refresh is LoadState.NotLoading -> {
+                     if (reviews.itemCount <= 0) ReviewEmptyUI()
+
+                     LazyColumn {
+                         items(reviews.itemCount) { index ->
+                             val item = reviews[index]
+                             ReviewItemUI(
+                                 review = ReviewItem(
+                                     id = item?.id.orEmpty(),
+                                     author = item?.author.orEmpty(),
+                                     content = item?.content.orEmpty(),
+                                 )
+                             )
+                         }
+                     }
+                 }
             }
         }
     }
