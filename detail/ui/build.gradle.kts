@@ -45,6 +45,7 @@ dependencies {
     implementation(project(":detail:di"))
     implementation(project(":detail:impl"))
     implementation(project(":data"))
+    implementation(project(":review:ui"))
 
     implementation(libs.compose.constraintlayout)
     implementation(libs.compose.material3)
