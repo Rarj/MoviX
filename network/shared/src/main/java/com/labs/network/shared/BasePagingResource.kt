@@ -13,7 +13,11 @@ class BasePagingSource<V : Any>(
             LoadResult.Page(
                 data = response.results,
                 prevKey = if (page == 1) null else page - 1,
-                nextKey = if (response.totalPages != null && page == response.totalPages) null else page + 1
+                nextKey = if (
+                    response.totalPages != null && page == response.totalPages ||
+                    response.totalPages == 0
+                ) null
+                else page + 1
             )
         } catch (e: Exception) {
             LoadResult.Error(e)

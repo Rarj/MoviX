@@ -19,6 +19,7 @@ android {
         buildConfigField("String", "AUTH_TOKEN", "\"TMDB_TOKEN\"")
         buildConfigField("String", "BASE_URL", "\"https://api.themoviedb.org/3/\"")
         buildConfigField("String", "IMAGE_BASE_URL", "\"https://image.tmdb.org/t/p/w342/\"")
+        buildConfigField("String", "BACKDROP_IMAGE_BASE_URL", "\"https://image.tmdb.org/t/p/w780/\"")
     }
 
     buildTypes {
@@ -40,6 +41,9 @@ android {
 
 dependencies {
     implementation(project(":home:api"))
+    implementation(project(":search:api"))
+    implementation(project(":detail:api"))
+    implementation(project(":review:api"))
 
     implementation(libs.retrofit)
     implementation(libs.okHttp)

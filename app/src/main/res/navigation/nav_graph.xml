@@ -3,27 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_graph_movie"
-    app:startDestination="@id/home_page">
-
-    <fragment
-        android:id="@+id/home_page"
-        android:name="com.labs.movix.home.HomeFragment"
-        android:label="Home Page"
-        tools:layout="@layout/fragment_home">
-    </fragment>
+    app:startDestination="@id/detail_movie_page">
 
     <fragment
         android:id="@+id/detail_movie_page"
         android:name="com.labs.movix.detail.DetailMovieFragment"
         android:label="Detail Movie Page"
-        tools:layout="@layout/fragment_detail_movie">
-    </fragment>
+        tools:layout="@layout/fragment_detail_movie" />
 
     <fragment
         android:id="@+id/search_page"
         android:name="com.labs.movix.search.SearchMovieFragment"
         android:label="Search Movie Page"
-        tools:layout="@layout/fragment_search">
-    </fragment>
+        tools:layout="@layout/fragment_search" />
 
 </navigation>
