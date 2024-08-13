@@ -9,13 +9,18 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.labs.detail.ui.DetailMovieScreen
+import com.labs.home.impl.discover.mapper.DiscoverMovie
 import com.labs.home.ui.HomeUI
+import com.labs.home.ui.HomeViewModel
 import com.labs.navigation.detail.controller.DETAIL_MOVIE_ID_ARGS
 import com.labs.navigation.detail.controller.DETAIL_MOVIE_ROUTE
 import com.labs.navigation.home.controller.HOME_ROUTE
@@ -23,6 +28,7 @@ import com.labs.search.controller.SEARCH_ROUTE
 import com.labs.search.ui.SearchUI
 import com.labs.search.ui.SearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 import com.labs.navigation.detail.controller.Navigation as DetailMovieNavigation
 import com.labs.search.controller.Navigation as SearchNavigation
@@ -36,6 +42,9 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var detailMovieNavigation: DetailMovieNavigation
 
+    private val homeViewModel: HomeViewModel by viewModels()
+    private lateinit var pagingItems: LazyPagingItems<DiscoverMovie>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -48,18 +57,27 @@ class MainActivity : ComponentActivity() {
                     navController, startDestination = HOME_ROUTE
                 ) {
                     composable(route = HOME_ROUTE) {
+                        pagingItems = homeViewModel.moviePagingDataState.collectAsLazyPagingItems()
+
                         HomeUI(
                             modifier = Modifier.fillMaxSize(),
+                            pagingItems = pagingItems,
+                            state = homeViewModel.state.collectAsState().value,
                             onSearchClicked = {
                                 searchNavigation.navigateToSearchPage(navController)
                             },
-                            onFilterClicked = { println("CLICKED_EVENT: FILTER") },
                             onItemClicked = { movieId ->
                                 detailMovieNavigation.navigateToDetailMoviePage(
                                     navController,
                                     movieId,
                                 )
                             },
+                            onFilterRefreshed = { genre ->
+                                lifecycleScope.launch {
+                                    homeViewModel.setSelectedGenre(genre.id, genre.name)
+                                    pagingItems.refresh()
+                                }
+                            }
                         )
                     }
                     composable(route = SEARCH_ROUTE) {
