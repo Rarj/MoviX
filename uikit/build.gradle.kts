@@ -45,8 +45,4 @@ dependencies {
     debugApi(libs.compose.ui.tooling.debug)
 
     api(libs.coil.compose)
-
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.test.ext.junit)
-    androidTestImplementation(libs.espresso.core)
 }

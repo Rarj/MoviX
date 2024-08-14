@@ -57,12 +57,6 @@ class NetworkModule {
     }
 
     @Provides
-    @NetworkQualifierApiService
-    fun provideApiService(retrofit: Retrofit): ApiService {
-        return retrofit.create(ApiService::class.java)
-    }
-
-    @Provides
     @NetworkQualifierHomeService
     fun provideHomeService(retrofit: Retrofit): HomeService {
         return retrofit.create(HomeService::class.java)
