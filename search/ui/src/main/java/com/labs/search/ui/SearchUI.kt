@@ -60,7 +60,7 @@ fun SearchUI(
                     top.linkTo(parent.top)
                 }
                 .wrapContentSize()
-                .padding(top = 32.dp, end = 8.dp)
+                .padding(top = 62.dp, end = 16.dp)
         ) {
             IconButton(
                 modifier = Modifier
@@ -157,7 +157,7 @@ private fun ClearTextIcon(
     }
 }
 
-@Preview
+@Preview(showSystemUi = true, showBackground = true)
 @Composable
 private fun SearchUIPreview() {
     SearchUI(
