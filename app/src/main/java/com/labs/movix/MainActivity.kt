@@ -9,7 +9,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -28,7 +27,6 @@ import com.labs.search.controller.SEARCH_ROUTE
 import com.labs.search.ui.SearchUI
 import com.labs.search.ui.SearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 import com.labs.navigation.detail.controller.Navigation as DetailMovieNavigation
 import com.labs.search.controller.Navigation as SearchNavigation
@@ -52,17 +50,18 @@ class MainActivity : ComponentActivity() {
         setContent {
             Surface {
                 val navController = rememberNavController()
+                val state = homeViewModel.state.collectAsState().value
+                pagingItems = state.moviePagingDataState.collectAsLazyPagingItems()
 
                 NavHost(
                     navController, startDestination = HOME_ROUTE
                 ) {
                     composable(route = HOME_ROUTE) {
-                        pagingItems = homeViewModel.moviePagingDataState.collectAsLazyPagingItems()
 
                         HomeUI(
                             modifier = Modifier.fillMaxSize(),
                             pagingItems = pagingItems,
-                            state = homeViewModel.state.collectAsState().value,
+                            state = state,
                             onSearchClicked = {
                                 searchNavigation.navigateToSearchPage(navController)
                             },
@@ -73,9 +72,9 @@ class MainActivity : ComponentActivity() {
                                 )
                             },
                             onFilterRefreshed = { genre ->
-                                lifecycleScope.launch {
-                                    homeViewModel.setSelectedGenre(genre.id, genre.name)
-                                    pagingItems.refresh()
+                                homeViewModel.apply {
+                                    setSelectedGenre(genre.id, genre.name)
+                                    getMovies()
                                 }
                             }
                         )
