@@ -1,6 +1,3 @@
 <resources>
     <string name="app_name">TMDB</string>
-
-    <!--HOME page-->
-    <string name="selected_genre_label">Movie by %s Genre</string>
 </resources>
