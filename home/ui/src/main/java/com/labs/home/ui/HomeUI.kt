@@ -9,10 +9,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -26,7 +23,7 @@ import androidx.paging.compose.LazyPagingItems
 import com.labs.data.BuildConfig
 import com.labs.home.impl.discover.mapper.DiscoverMovie
 import com.labs.home.impl.genre.mapper.Genre
-import com.labs.home.ui.filter.FilterUScreen
+import com.labs.home.ui.filter.FilterScreen
 import com.labs.uikit.PosterUiKit
 import com.labs.uikit.ToolbarUiKit
 import com.labs.uikit.appearance.ColorPrimary
@@ -54,7 +51,7 @@ fun HomeUI(
     val filterPageState = remember { mutableStateOf(false) }
 
     if (filterPageState.value) {
-        FilterUScreen(
+        FilterScreen(
             selectedGenre = state.selectedGenreId.orEmpty(),
             onDismiss = { filterPageState.value = !filterPageState.value },
             onGenreClicked = { genre ->

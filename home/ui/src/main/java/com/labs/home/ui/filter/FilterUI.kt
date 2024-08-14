@@ -29,7 +29,7 @@ import com.labs.uikit.appearance.ColorPrimary
 import com.labs.uikit.appearance.ColorWhite
 
 @Composable
-fun FilterUScreen(
+fun FilterScreen(
     selectedGenre: String,
     viewModel: GenreViewModel = hiltViewModel(),
     onDismiss: () -> Unit,
