@@ -36,6 +36,7 @@ fun ToolbarUiKit(
     modifier: Modifier = Modifier,
     onSearchClicked: () -> Unit,
     onFilterClicked: () -> Unit,
+    onAboutClicked: () -> Unit,
 ) {
     TopAppBar(modifier = modifier, colors = TopAppBarColors(
         containerColor = ColorPrimary,
@@ -46,11 +47,11 @@ fun ToolbarUiKit(
     ), navigationIcon = {
         OutlinedIconButton(
             modifier = Modifier.padding(start = 4.dp),
-            onClick = { /* do nothing */ },
+            onClick = { onAboutClicked.invoke() },
             border = BorderStroke(1.dp, ColorSecondary)
         ) {
             Icon(
-                painter = painterResource(R.drawable.ic_profile),
+                painter = painterResource(R.drawable.ic_movie),
                 contentDescription = null,
             )
         }
@@ -59,14 +60,14 @@ fun ToolbarUiKit(
             modifier = Modifier.padding(start = 16.dp)
         ) {
             Text(
-                text = "Hello, Rio Arj!",
+                text = "Welcome Movie Buffs!",
                 fontFamily = FontFamily(Font(resId = R.font.sono_bold)),
                 fontSize = 18.sp,
                 color = ColorWhite,
                 style = TextStyle(platformStyle = PlatformTextStyle(includeFontPadding = false))
             )
             Text(
-                text = "Find your funky Movix!",
+                text = "Find your funky movie!",
                 fontFamily = FontFamily(Font(resId = R.font.sono_light)),
                 fontSize = 12.sp,
                 color = ColorGray,
@@ -104,5 +105,5 @@ fun ToolbarUiKit(
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
 private fun ToolbarUiKitPreview() {
-    ToolbarUiKit(onSearchClicked = {}, onFilterClicked = {})
+    ToolbarUiKit(onSearchClicked = {}, onFilterClicked = {}, onAboutClicked = {})
 }
