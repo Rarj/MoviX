@@ -2,12 +2,16 @@ package com.labs.home.ui
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.Font
@@ -15,30 +19,47 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
-import androidx.paging.compose.collectAsLazyPagingItems
 import com.labs.data.BuildConfig
 import com.labs.home.impl.discover.mapper.DiscoverMovie
+import com.labs.home.impl.genre.mapper.Genre
+import com.labs.home.ui.filter.FilterScreen
 import com.labs.uikit.PosterUiKit
 import com.labs.uikit.ToolbarUiKit
 import com.labs.uikit.appearance.ColorPrimary
 import com.labs.uikit.appearance.ColorSecondaryVariant
+import com.labs.uikit.appearance.ColorWhite
 import com.labs.uikit.R as RUiKit
 
 @Composable
 fun HomeUI(
     modifier: Modifier = Modifier,
-    viewModel: HomeViewModel = hiltViewModel(),
+    pagingItems: LazyPagingItems<DiscoverMovie>,
+    state: HomeState,
     onSearchClicked: () -> Unit,
-    onFilterClicked: () -> Unit,
     onItemClicked: (movieId: String) -> Unit,
+    onFilterRefreshed: (Genre) -> Unit,
 ) {
     val context = LocalContext.current
     val selectedGenre = context.getString(
         R.string.selected_genre_label,
-        viewModel.state.collectAsState().value.selectedGenre.orEmpty()
+        state.selectedGenre.orEmpty()
     )
+    val isAboutClicked = remember { mutableStateOf(false) }
+
+    if (isAboutClicked.value) AlertAboutUI(isAboutClicked)
+    val filterPageState = remember { mutableStateOf(false) }
+
+    if (filterPageState.value) {
+        FilterScreen(
+            selectedGenre = state.selectedGenreId.orEmpty(),
+            onDismiss = { filterPageState.value = !filterPageState.value },
+            onGenreClicked = { genre ->
+                filterPageState.value = !filterPageState.value
+                if (genre != null) onFilterRefreshed.invoke(genre)
+            }
+        )
+    }
 
     ConstraintLayout(
         modifier = modifier
@@ -54,7 +75,8 @@ fun HomeUI(
                 end.linkTo(parent.end)
             },
             onSearchClicked = { onSearchClicked.invoke() },
-            onFilterClicked = { onFilterClicked.invoke() },
+            onFilterClicked = { filterPageState.value = !filterPageState.value },
+            onAboutClicked = { isAboutClicked.value = !isAboutClicked.value }
         )
 
         Text(
@@ -78,11 +100,39 @@ fun HomeUI(
                     end.linkTo(parent.end)
                 }
                 .animateContentSize(),
-            pagingItems = viewModel.moviePagingDataState.collectAsLazyPagingItems(),
+            pagingItems = pagingItems,
         ) { movieId ->
             onItemClicked.invoke(movieId)
         }
     }
+}
+
+@Composable
+private fun AlertAboutUI(isAboutClicked: MutableState<Boolean>) {
+    AlertDialog(
+        containerColor = ColorPrimary,
+        title = {
+            Text(
+                modifier = Modifier.clickable { isAboutClicked.value = !isAboutClicked.value },
+                text = "This product uses the TMDB API but is not endorsed or certified by TMDB.",
+                color = ColorWhite,
+                fontSize = 18.sp,
+                fontFamily = FontFamily(Font(resId = RUiKit.font.sono_medium)),
+            )
+        },
+        onDismissRequest = { isAboutClicked.value = !isAboutClicked.value },
+        confirmButton = {
+            Text(
+                modifier = Modifier
+                    .clickable { isAboutClicked.value = !isAboutClicked.value }
+                    .padding(all = 8.dp),
+                text = "Got It",
+                color = ColorSecondaryVariant,
+                fontSize = 18.sp,
+                fontFamily = FontFamily(Font(resId = RUiKit.font.sono_medium)),
+            )
+        },
+    )
 }
 
 @Composable

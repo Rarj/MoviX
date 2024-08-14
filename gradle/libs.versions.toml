@@ -12,13 +12,13 @@ constraintlayout = "2.1.4"
 constraintlayout-compose = "1.0.1"
 navigation = "2.7.7"
 viewmodelscope = "2.7.0"
-paging3 = "3.2.1"
+paging3 = "3.3.2"
 activityCompose = "1.9.0"
 
 # Jetpack Compose
 composeMaterial3 = "1.2.0"
 composeUi = "1.6.2"
-pagingCompose = "3.2.1"
+pagingCompose = "3.3.2"
 composeNavigation = "2.7.7"
 composeHiltNavigation = "1.2.0"
 
