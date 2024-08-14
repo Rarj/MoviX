@@ -7,7 +7,8 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.Font
@@ -15,11 +16,11 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
-import androidx.paging.compose.collectAsLazyPagingItems
 import com.labs.data.BuildConfig
 import com.labs.home.impl.discover.mapper.DiscoverMovie
+import com.labs.home.impl.genre.mapper.Genre
+import com.labs.home.ui.filter.FilterUScreen
 import com.labs.uikit.PosterUiKit
 import com.labs.uikit.ToolbarUiKit
 import com.labs.uikit.appearance.ColorPrimary
@@ -29,16 +30,29 @@ import com.labs.uikit.R as RUiKit
 @Composable
 fun HomeUI(
     modifier: Modifier = Modifier,
-    viewModel: HomeViewModel = hiltViewModel(),
+    pagingItems: LazyPagingItems<DiscoverMovie>,
+    state: HomeState,
     onSearchClicked: () -> Unit,
-    onFilterClicked: () -> Unit,
     onItemClicked: (movieId: String) -> Unit,
+    onFilterRefreshed: (Genre) -> Unit,
 ) {
     val context = LocalContext.current
     val selectedGenre = context.getString(
         R.string.selected_genre_label,
-        viewModel.state.collectAsState().value.selectedGenre.orEmpty()
+        state.selectedGenre.orEmpty()
     )
+    val filterPageState = remember { mutableStateOf(false) }
+
+    if (filterPageState.value) {
+        FilterUScreen(
+            selectedGenre = state.selectedGenreId.orEmpty(),
+            onDismiss = { filterPageState.value = !filterPageState.value },
+            onGenreClicked = { genre ->
+                filterPageState.value = !filterPageState.value
+                if (genre != null) onFilterRefreshed.invoke(genre)
+            }
+        )
+    }
 
     ConstraintLayout(
         modifier = modifier
@@ -54,7 +68,7 @@ fun HomeUI(
                 end.linkTo(parent.end)
             },
             onSearchClicked = { onSearchClicked.invoke() },
-            onFilterClicked = { onFilterClicked.invoke() },
+            onFilterClicked = { filterPageState.value = !filterPageState.value },
         )
 
         Text(
@@ -78,7 +92,7 @@ fun HomeUI(
                     end.linkTo(parent.end)
                 }
                 .animateContentSize(),
-            pagingItems = viewModel.moviePagingDataState.collectAsLazyPagingItems(),
+            pagingItems = pagingItems,
         ) { movieId ->
             onItemClicked.invoke(movieId)
         }

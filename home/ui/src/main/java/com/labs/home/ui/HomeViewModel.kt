@@ -2,18 +2,15 @@ package com.labs.home.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.labs.data.Status
 import com.labs.home.impl.discover.DiscoverMovieRepository
-import com.labs.home.impl.discover.mapper.DiscoverMovie
 import com.labs.home.impl.genre.GenreRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -26,10 +23,6 @@ class HomeViewModel @Inject constructor(
 
     private val _state = MutableStateFlow(HomeState())
     val state get() = _state.asStateFlow()
-
-    private var _moviePagingDataState: Flow<PagingData<DiscoverMovie>> =
-        flow { PagingData.empty<DiscoverMovie>() }
-    val moviePagingDataState get() = _moviePagingDataState
 
     init {
         getGenres()
@@ -47,7 +40,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun getGenres() {
+    private fun getGenres() {
         viewModelScope.launch {
             genreRepo.getGenres().collectLatest { genres ->
                 when (genres.status) {
@@ -82,9 +75,16 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    suspend fun getMovies() {
+    fun getMovies() {
         viewModelScope.launch {
-            _moviePagingDataState = movieRepository.getDiscoverMovie(state.value.selectedGenreId)
+            val response = movieRepository.getDiscoverMovie(state.value.selectedGenreId)
+                .cachedIn(this)
+
+            _state.update {
+                it.copy(
+                    moviePagingDataState = response,
+                )
+            }
         }
     }
 
