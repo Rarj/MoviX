@@ -20,10 +20,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.paging.compose.LazyPagingItems
-import com.labs.data.BuildConfig
 import com.labs.home.impl.discover.mapper.DiscoverMovie
 import com.labs.home.impl.genre.mapper.Genre
 import com.labs.home.ui.filter.FilterScreen
+import com.labs.uikit.BuildConfig
 import com.labs.uikit.PosterUiKit
 import com.labs.uikit.ToolbarUiKit
 import com.labs.uikit.appearance.ColorPrimary

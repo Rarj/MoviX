@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.kotlinAndroid)
+    alias(libs.plugins.hilt)
+    alias(libs.plugins.kotlinkapt)
 }
 
 android {
@@ -35,6 +37,10 @@ android {
 dependencies {
     implementation(project(":network:shared"))
 
-    implementation(libs.retrofit)
-    implementation(libs.gson)
+    implementation(libs.dagger.hilt)
+    kapt(libs.dagger.hilt.compiler)
+}
+
+kapt {
+    correctErrorTypes = true
 }

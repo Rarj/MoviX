@@ -1,6 +1,5 @@
 package com.labs.review.di
 
-import com.labs.data.di.NetworkQualifierReviewService
 import com.labs.review.api.ReviewService
 import com.labs.review.impl.ReviewRepository
 import com.labs.review.impl.mapper.ReviewRepositoryImpl
@@ -15,7 +14,7 @@ class ReviewModule {
 
     @Provides
     fun provideReviewRepository(
-        @NetworkQualifierReviewService service: ReviewService
+        service: ReviewService
     ): ReviewRepository {
         return ReviewRepositoryImpl(service)
     }

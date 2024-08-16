@@ -1,6 +1,5 @@
 package com.labs.search.di
 
-import com.labs.data.di.NetworkQualifierSearchService
 import com.labs.search.api.SearchService
 import com.labs.search.impl.SearchRepository
 import com.labs.search.impl.SearchRepositoryImpl
@@ -15,7 +14,7 @@ import dagger.hilt.components.SingletonComponent
 class SearchModule {
 
     @Provides
-    fun provideSearchRepository(@NetworkQualifierSearchService service: SearchService): SearchRepository {
+    fun provideSearchRepository(service: SearchService): SearchRepository {
         return SearchRepositoryImpl(service)
     }
 

@@ -46,7 +46,6 @@ android {
 }
 
 dependencies {
-    implementation(project(":data"))
     implementation(project(":uikit"))
     implementation(project(":home:ui"))
     implementation(project(":home:api"))

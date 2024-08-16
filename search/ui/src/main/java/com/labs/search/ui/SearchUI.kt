@@ -30,8 +30,8 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.labs.data.BuildConfig
 import com.labs.search.impl.mapper.Movie
+import com.labs.uikit.BuildConfig
 import com.labs.uikit.PosterUiKit
 import com.labs.uikit.appearance.ColorGray
 import com.labs.uikit.appearance.ColorPrimary

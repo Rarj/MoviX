@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.kotlinAndroid)
+    alias(libs.plugins.hilt)
+    alias(libs.plugins.kotlinkapt)
 }
 
 android {
@@ -15,8 +17,6 @@ android {
 
         buildConfigField("String", "AUTH_TOKEN", "\"eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4Nzg2N2Q3NTI1ODAyOTllNDJkNTc1ZTlhNGY4YjU0NSIsIm5iZiI6MTcyMzUxNjQ0Ny4wOTIwMTMsInN1YiI6IjYwNTBjNGRjNmRjNmMwMDA2YTBjZjQ0MCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ZvTojoEh7_osZKiIJNLBYvxU9Vof6sss086_gYL6tyE\"")
         buildConfigField("String", "BASE_URL", "\"https://api.themoviedb.org/3/\"")
-        buildConfigField("String", "IMAGE_BASE_URL", "\"https://image.tmdb.org/t/p/w342/\"")
-        buildConfigField("String", "BACKDROP_IMAGE_BASE_URL", "\"https://image.tmdb.org/t/p/w780/\"")
     }
 
     buildTypes {
@@ -41,6 +41,18 @@ android {
 }
 
 dependencies {
-    implementation(libs.gson)
-    implementation(libs.paging3)
+    api(libs.retrofit)
+    implementation(libs.okHttp)
+    implementation(libs.logging.interceptor)
+    api(libs.gson)
+    implementation(libs.gson.converter)
+
+    implementation(libs.dagger.hilt)
+    kapt(libs.dagger.hilt.compiler)
+
+    api(libs.paging3)
+}
+
+kapt {
+    correctErrorTypes = true
 }

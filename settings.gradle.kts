@@ -15,7 +15,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "MoviX"
 include(":app")
-include(":data")
 include(":uikit")
 include(":home:ui")
 include(":home:api")
