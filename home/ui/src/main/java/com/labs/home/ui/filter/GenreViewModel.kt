@@ -2,7 +2,6 @@ package com.labs.home.ui.filter
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.labs.data.Status
 import com.labs.home.impl.genre.GenreRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,18 +23,10 @@ class GenreViewModel @Inject constructor(
         viewModelScope.launch {
             val response = genreRepo.getGenres()
             response.collectLatest { genres ->
-                when (genres.status) {
-                    Status.LOADING -> {}
-
-                    Status.SUCCESS -> {
-                        _state.update {
-                            it.copy(
-                                genres = genres.data
-                            )
-                        }
-                    }
-
-                    Status.ERROR -> {}
+                _state.update {
+                    it.copy(
+                        genres = genres
+                    )
                 }
             }
         }

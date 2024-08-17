@@ -14,12 +14,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import androidx.paging.compose.LazyPagingItems
-import androidx.paging.compose.collectAsLazyPagingItems
 import com.labs.detail.ui.DetailMovieScreen
-import com.labs.home.impl.discover.mapper.DiscoverMovie
 import com.labs.home.ui.HomeUI
-import com.labs.home.ui.HomeViewModel
 import com.labs.movix.appearance.MovixTheme
 import com.labs.navigation.detail.controller.DETAIL_MOVIE_ID_ARGS
 import com.labs.navigation.detail.controller.DETAIL_MOVIE_ROUTE
@@ -41,9 +37,6 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var detailMovieNavigation: DetailMovieNavigation
 
-    private val homeViewModel: HomeViewModel by viewModels()
-    private lateinit var pagingItems: LazyPagingItems<DiscoverMovie>
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -52,16 +45,13 @@ class MainActivity : ComponentActivity() {
             MovixTheme {
                 Surface {
                     val navController = rememberNavController()
-                    val state = homeViewModel.state.collectAsState().value
-                    pagingItems = state.moviePagingDataState.collectAsLazyPagingItems()
 
                     NavHost(
                         navController, startDestination = HOME_ROUTE
                     ) {
                         composable(route = HOME_ROUTE) {
-                            HomeUI(modifier = Modifier.fillMaxSize(),
-                                pagingItems = pagingItems,
-                                state = state,
+                            HomeUI(
+                                modifier = Modifier.fillMaxSize(),
                                 onSearchClicked = {
                                     searchNavigation.navigateToSearchPage(navController)
                                 },
@@ -71,12 +61,7 @@ class MainActivity : ComponentActivity() {
                                         movieId,
                                     )
                                 },
-                                onFilterRefreshed = { genre ->
-                                    homeViewModel.apply {
-                                        setSelectedGenre(genre.id, genre.name)
-                                        getMovies()
-                                    }
-                                })
+                            )
                         }
                         composable(route = SEARCH_ROUTE) {
                             val viewModel: SearchViewModel by viewModels()

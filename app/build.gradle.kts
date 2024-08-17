@@ -1,9 +1,8 @@
-@Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.hilt)
-    kotlin("kapt")
+    alias(libs.plugins.kotlinkapt)
 }
 
 android {
@@ -36,8 +35,6 @@ android {
     }
     buildFeatures {
         viewBinding = true
-    }
-    buildFeatures {
         compose = true
     }
     composeOptions {
@@ -46,12 +43,9 @@ android {
 }
 
 dependencies {
-    implementation(project(":data"))
-    implementation(project(":uikit"))
     implementation(project(":home:ui"))
-    implementation(project(":home:api"))
-    implementation(project(":home:impl"))
     implementation(project(":navigation:home:controller"))
+
     implementation(project(":search:ui"))
     implementation(project(":navigation:search:controller"))
     implementation(project(":navigation:search:impl"))
@@ -60,27 +54,17 @@ dependencies {
     implementation(project(":navigation:detail:controller"))
     implementation(project(":navigation:detail:impl"))
 
-    implementation(libs.core.ktx)
     implementation(libs.appcompat)
-    implementation(libs.material)
-    implementation(libs.constraintlayout)
-    implementation(libs.navigation.ktx)
-    implementation(libs.navigation.ui)
-    implementation(libs.viewmodelscope)
+    implementation(libs.compose.material3)
 
-    kapt(libs.dagger.hilt.compiler)
     implementation(libs.dagger.hilt)
+    kapt(libs.dagger.hilt.compiler)
 
-    implementation(libs.compose.constraintlayout)
     implementation(libs.compose.activity)
     implementation(libs.compose.navigation)
 
     implementation(libs.coil)
     implementation(libs.paging.compose)
-
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.test.ext.junit)
-    androidTestImplementation(libs.espresso.core)
 }
 
 kapt {

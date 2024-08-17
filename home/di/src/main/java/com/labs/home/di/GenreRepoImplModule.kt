@@ -1,6 +1,5 @@
 package com.labs.home.di
 
-import com.labs.data.di.NetworkQualifierHomeService
 import com.labs.home.api.HomeService
 import com.labs.home.impl.genre.GenreRepo
 import com.labs.home.impl.genre.GenreRepoImpl
@@ -14,7 +13,7 @@ import dagger.hilt.components.SingletonComponent
 class GenreRepoImplModule {
 
     @Provides
-    fun provideGenreRepoImpl(@NetworkQualifierHomeService apiService: HomeService): GenreRepo {
+    fun provideGenreRepoImpl(apiService: HomeService): GenreRepo {
         return GenreRepoImpl(apiService)
     }
 

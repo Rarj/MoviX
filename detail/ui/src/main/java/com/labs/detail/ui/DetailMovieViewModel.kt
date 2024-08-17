@@ -25,10 +25,10 @@ class DetailMovieViewModel @Inject constructor(
             repo.getDetailMovie(movieId).collectLatest { response ->
                 _state.update {
                     it.copy(
-                        title = response.data?.title.orEmpty(),
-                        posterUrl = getBackdropUrl(response.data?.posterPath),
-                        rating = getRating(response.data?.rating),
-                        overview = response.data?.overview.orEmpty(),
+                        title = response.title,
+                        posterUrl = getBackdropUrl(response.posterPath),
+                        rating = getRating(response.rating),
+                        overview = response.overview,
                     )
                 }
             }

@@ -1,10 +1,5 @@
-package com.labs.data.di
+package com.labs.network.shared
 
-import com.labs.data.BuildConfig
-import com.labs.detail.api.DetailMovieService
-import com.labs.home.api.HomeService
-import com.labs.review.api.ReviewService
-import com.labs.search.api.SearchService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -54,36 +49,6 @@ class NetworkModule {
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
             .build()
-    }
-
-    @Provides
-    @NetworkQualifierApiService
-    fun provideApiService(retrofit: Retrofit): ApiService {
-        return retrofit.create(ApiService::class.java)
-    }
-
-    @Provides
-    @NetworkQualifierHomeService
-    fun provideHomeService(retrofit: Retrofit): HomeService {
-        return retrofit.create(HomeService::class.java)
-    }
-
-    @Provides
-    @NetworkQualifierSearchService
-    fun provideSearchService(retrofit: Retrofit): SearchService {
-        return retrofit.create(SearchService::class.java)
-    }
-
-    @Provides
-    @NetworkQualifierDetailMovieService
-    fun provideDetailMovieService(retrofit: Retrofit): DetailMovieService {
-        return retrofit.create(DetailMovieService::class.java)
-    }
-
-    @Provides
-    @NetworkQualifierReviewService
-    fun provideReviewService(retrofit: Retrofit): ReviewService {
-        return retrofit.create(ReviewService::class.java)
     }
 
 }

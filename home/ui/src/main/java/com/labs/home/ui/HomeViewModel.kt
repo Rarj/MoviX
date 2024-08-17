@@ -3,7 +3,6 @@ package com.labs.home.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
-import com.labs.data.Status
 import com.labs.home.impl.discover.DiscoverMovieRepository
 import com.labs.home.impl.genre.GenreRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -43,34 +42,14 @@ class HomeViewModel @Inject constructor(
     private fun getGenres() {
         viewModelScope.launch {
             genreRepo.getGenres().collectLatest { genres ->
-                when (genres.status) {
-                    Status.LOADING -> {
-                        _state.update {
-                            it.copy(
-                                isLoading = true
-                            )
-                        }
-                    }
-
-                    Status.SUCCESS -> {
-                        val genre = genres.data?.firstOrNull()
-                        if (genre?.id.toString() != state.value.selectedGenreId) {
-                            setSelectedGenre(
-                                id = genre?.id,
-                                name = genre?.name,
-                            )
-                        }
-                        async { getMovies() }.await()
-                    }
-
-                    Status.ERROR -> {
-                        _state.update {
-                            it.copy(
-                                errorMessage = genres.message
-                            )
-                        }
-                    }
+                val genre = genres.firstOrNull()
+                if (genre?.id.toString() != state.value.selectedGenreId) {
+                    setSelectedGenre(
+                        id = genre?.id,
+                        name = genre?.name,
+                    )
                 }
+                async { getMovies() }.await()
             }
         }
     }
