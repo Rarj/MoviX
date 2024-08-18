@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -68,7 +69,7 @@ fun HomeUI(
 
     ConstraintLayout(
         modifier = modifier
-            .background(color = ColorPrimary)
+            .background(color = MaterialTheme.colorScheme.primaryContainer)
             .padding(top = 24.dp)
     ) {
         val (toolbar, genre, movies) = createRefs()
@@ -92,7 +93,7 @@ fun HomeUI(
                 }
                 .padding(top = 16.dp, end = 16.dp, start = 16.dp),
             text = selectedGenre,
-            color = ColorSecondaryVariant,
+            color = MaterialTheme.colorScheme.tertiary,
             fontSize = 18.sp,
             fontFamily = FontFamily(Font(RUiKit.font.sono_medium)),
         )
@@ -115,12 +116,12 @@ fun HomeUI(
 @Composable
 private fun AlertAboutUI(isAboutClicked: MutableState<Boolean>) {
     AlertDialog(
-        containerColor = ColorPrimary,
+        containerColor = MaterialTheme.colorScheme.primaryContainer,
         title = {
             Text(
                 modifier = Modifier.clickable { isAboutClicked.value = !isAboutClicked.value },
                 text = "This product uses the TMDB API but is not endorsed or certified by TMDB.",
-                color = ColorWhite,
+                color = MaterialTheme.colorScheme.onPrimaryContainer,
                 fontSize = 18.sp,
                 fontFamily = FontFamily(Font(resId = RUiKit.font.sono_medium)),
             )
@@ -132,7 +133,7 @@ private fun AlertAboutUI(isAboutClicked: MutableState<Boolean>) {
                     .clickable { isAboutClicked.value = !isAboutClicked.value }
                     .padding(all = 8.dp),
                 text = "Got It",
-                color = ColorSecondaryVariant,
+                color = MaterialTheme.colorScheme.tertiary,
                 fontSize = 18.sp,
                 fontFamily = FontFamily(Font(resId = RUiKit.font.sono_medium)),
             )
