@@ -64,11 +64,8 @@ class MainActivity : ComponentActivity() {
                             )
                         }
                         composable(route = SEARCH_ROUTE) {
-                            val viewModel: SearchViewModel by viewModels()
                             SearchUI(
                                 onBack = { navController.popBackStack() },
-                                searchState = viewModel.state.collectAsState().value,
-                                onUpdateKeyword = { keyword -> viewModel.onUpdateKeywordNew(keyword) },
                                 onItemClicked = { movieId ->
                                     detailMovieNavigation.navigateToDetailMoviePage(
                                         navController,

@@ -13,9 +13,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -26,31 +28,29 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.paging.PagingData
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.labs.search.impl.mapper.Movie
 import com.labs.uikit.BuildConfig
 import com.labs.uikit.PosterUiKit
-import com.labs.uikit.appearance.ColorGray
-import com.labs.uikit.appearance.ColorPrimary
-import com.labs.uikit.appearance.ColorWhite
-import kotlinx.coroutines.flow.flow
 import com.labs.uikit.R as RUiKit
 
 @Composable
 fun SearchUI(
     modifier: Modifier = Modifier,
-    searchState: SearchState,
+    viewModel: SearchViewModel = hiltViewModel(),
     onBack: () -> Unit,
-    onUpdateKeyword: (String) -> Unit,
     onItemClicked: (movieId: String) -> Unit,
 ) {
+    val state = viewModel.state.collectAsState().value
+
     ConstraintLayout(
         modifier = modifier
             .fillMaxSize()
-            .background(color = ColorPrimary)
+            .background(color = MaterialTheme.colorScheme.primaryContainer)
     ) {
         val (topBar, movies) = createRefs()
 
@@ -69,8 +69,7 @@ fun SearchUI(
             ) {
                 Icon(
                     painter = painterResource(id = RUiKit.drawable.ic_back),
-                    tint = ColorWhite,
-                    contentDescription = null,
+                    contentDescription = "Back to Home page",
                 )
             }
 
@@ -78,26 +77,29 @@ fun SearchUI(
                 modifier = Modifier
                     .fillMaxWidth()
                     .align(alignment = Alignment.CenterVertically),
-                value = searchState.keyword.toString(),
-                onValueChange = {
-                    onUpdateKeyword.invoke(it)
+                value = state.keyword.toString(),
+                onValueChange = { text ->
+                    viewModel.onUpdateKeyword(keyword = text)
                 },
                 placeholder = {
                     Text(
+                        fontSize = 14.sp,
                         text = "Search Movie...",
-                        color = ColorGray,
+                        color = MaterialTheme.colorScheme.secondary,
                         fontFamily = FontFamily(Font(resId = RUiKit.font.sono_regular)),
                     )
                 },
                 trailingIcon = {
-                    ClearTextIcon(searchState.keyword.toString()) {
-                        onUpdateKeyword.invoke("")
+                    ClearTextIcon(state.keyword.toString()) {
+                        viewModel.onUpdateKeyword(keyword = "")
                     }
                 },
                 textStyle = TextStyle(
-                    color = ColorWhite,
+                    fontSize = 14.sp,
+                    color = MaterialTheme.colorScheme.onPrimaryContainer,
+                    fontFamily = FontFamily(Font(resId = RUiKit.font.sono_regular))
                 ),
-                shape = RoundedCornerShape(8.dp),
+                shape = RoundedCornerShape(percent = 50),
                 maxLines = 1,
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Done,
@@ -112,7 +114,7 @@ fun SearchUI(
                     top.linkTo(topBar.bottom)
                 }
                 .animateContentSize(),
-            pagingItems = searchState.moviePagingItems.collectAsLazyPagingItems(),
+            pagingItems = state.moviePagingItems.collectAsLazyPagingItems(),
         ) { movieId ->
             onItemClicked.invoke(movieId)
         }
@@ -150,8 +152,7 @@ private fun ClearTextIcon(
         IconButton(onClick = { onClearedText.invoke() }) {
             Icon(
                 painter = painterResource(id = RUiKit.drawable.ic_close),
-                contentDescription = null,
-                tint = ColorWhite,
+                contentDescription = "Clear Keyword",
             )
         }
     }
@@ -161,25 +162,7 @@ private fun ClearTextIcon(
 @Composable
 private fun SearchUIPreview() {
     SearchUI(
-        searchState = SearchState(
-            keyword = "Batman",
-            moviePagingItems = flow {
-                PagingData.from(
-                    listOf(
-                        Movie(
-                            id = 1,
-                            posterPath = "/40RZP4mEel441OVcNyFCTFzHi4o.jpg",
-                            genreIds = emptyList(),
-                            title = "Title",
-                            overview = "overview",
-                            rating = 1.3
-                        )
-                    )
-                )
-            }
-        ),
         onBack = { },
-        onUpdateKeyword = { },
         onItemClicked = { }
     )
 }
