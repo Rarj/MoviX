@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -34,7 +35,7 @@ fun ReviewEmptyUI() {
                 .fillMaxWidth()
                 .padding(bottom = 32.dp, start = 16.dp, end = 16.dp),
             text = "Ups, No Review Found!",
-            color = ColorWhite,
+            color = MaterialTheme.colorScheme.onPrimaryContainer,
             fontSize = 24.sp,
             fontFamily = FontFamily(Font(resId = R.font.sono_medium)),
             textAlign = TextAlign.Center,
@@ -42,7 +43,7 @@ fun ReviewEmptyUI() {
     }
 }
 
-@Preview(showSystemUi = true, backgroundColor = 0xFF2C394B, showBackground = true)
+@Preview(showSystemUi = true, showBackground = true)
 @Composable
 private fun ReviewEmptyUIPreview() {
     ReviewEmptyUI()
