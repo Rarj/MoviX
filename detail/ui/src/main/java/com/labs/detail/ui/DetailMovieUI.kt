@@ -14,9 +14,9 @@ import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -27,6 +27,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -44,7 +45,10 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.labs.review.ui.ReviewScreen
 import com.labs.uikit.R
+import com.labs.uikit.appearance.ColorPrimary
+import com.labs.uikit.appearance.ColorSecondaryVariant
 import com.labs.uikit.appearance.ColorStar
+import com.labs.uikit.appearance.ColorWhite
 import com.labs.uikit.R as RUiKit
 
 @Composable
@@ -81,7 +85,7 @@ private fun DetailMovieUI(
     ConstraintLayout(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = MaterialTheme.colorScheme.primaryContainer)
+            .background(color = ColorPrimary)
     ) {
         val (topBar, content, buttonSeeReview) = createRefs()
         createVerticalChain(
@@ -119,7 +123,8 @@ private fun DetailMovieUI(
                     .fillMaxWidth()
                     .padding(all = 16.dp)
                     .wrapContentHeight()
-                    .clip(RoundedCornerShape(CornerSize(percent = 5))),
+                    .clip(RoundedCornerShape(CornerSize(percent = 5)))
+                    .background(color = Color.LightGray),
                 model = ImageRequest.Builder(LocalContext.current)
                     .data(state.posterUrl)
                     .crossfade(true)
@@ -145,7 +150,7 @@ private fun DetailMovieUI(
                         .wrapContentSize(),
                     text = state.rating,
                     maxLines = 1,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer,
+                    color = ColorWhite,
                     fontSize = 16.sp,
                     fontFamily = FontFamily(Font(resId = R.font.sono_bold))
                 )
@@ -156,7 +161,7 @@ private fun DetailMovieUI(
                     .fillMaxSize()
                     .padding(16.dp),
                 text = state.overview,
-                color = MaterialTheme.colorScheme.onPrimaryContainer,
+                color = ColorWhite,
                 textAlign = TextAlign.Center,
                 fontSize = 18.sp,
                 fontFamily = FontFamily(Font(R.font.sono_light))
@@ -174,6 +179,9 @@ private fun DetailMovieUI(
                 .padding(start = 16.dp, end = 16.dp, bottom = 32.dp),
             onClick = { onReview.invoke() },
             shape = RoundedCornerShape(8.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = ColorSecondaryVariant
+            )
         ) {
             Text(text = "See Review")
         }
@@ -194,6 +202,7 @@ private fun ToolbarUI(
         ) {
             Icon(
                 imageVector = ImageVector.vectorResource(id = RUiKit.drawable.ic_back),
+                tint = ColorWhite,
                 contentDescription = null,
             )
         }
@@ -205,14 +214,14 @@ private fun ToolbarUI(
             textAlign = TextAlign.Start,
             maxLines = 3,
             text = title,
-            color = MaterialTheme.colorScheme.onPrimaryContainer,
+            color = ColorWhite,
             fontSize = 28.sp,
             fontFamily = FontFamily(Font(resId = R.font.sono_extrabold))
         )
     }
 }
 
-@Preview(showBackground = true, showSystemUi = true)
+@Preview(showBackground = true, showSystemUi = true, backgroundColor = 0xFF2C394B)
 @Composable
 private fun DetailMovieUIPreview() {
     DetailMovieUI(
