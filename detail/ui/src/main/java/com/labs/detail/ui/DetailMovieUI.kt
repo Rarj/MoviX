@@ -188,7 +188,10 @@ private fun ToolbarUI(
         Text(
             modifier = Modifier
                 .padding(start = 16.dp, top = 8.dp)
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .semantics {
+                    contentDescription = "Movie Title"
+                },
             textAlign = TextAlign.Start,
             maxLines = 3,
             text = title,
