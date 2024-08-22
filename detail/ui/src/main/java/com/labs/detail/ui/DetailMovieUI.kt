@@ -7,16 +7,14 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -26,11 +24,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -41,14 +35,10 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
 import com.labs.review.ui.ReviewScreen
+import com.labs.uikit.BackdropUiKit
 import com.labs.uikit.R
-import com.labs.uikit.appearance.ColorPrimary
-import com.labs.uikit.appearance.ColorSecondaryVariant
 import com.labs.uikit.appearance.ColorStar
-import com.labs.uikit.appearance.ColorWhite
 import com.labs.uikit.R as RUiKit
 
 @Composable
@@ -85,7 +75,7 @@ private fun DetailMovieUI(
     ConstraintLayout(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = ColorPrimary)
+            .background(color = MaterialTheme.colorScheme.primaryContainer)
     ) {
         val (topBar, content, buttonSeeReview) = createRefs()
         createVerticalChain(
@@ -118,20 +108,7 @@ private fun DetailMovieUI(
                 .padding(top = 8.dp)
                 .verticalScroll(state = rememberScrollState())
         ) {
-            AsyncImage(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(all = 16.dp)
-                    .wrapContentHeight()
-                    .clip(RoundedCornerShape(CornerSize(percent = 5)))
-                    .background(color = Color.LightGray),
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(state.posterUrl)
-                    .crossfade(true)
-                    .build(),
-                contentScale = ContentScale.FillBounds,
-                contentDescription = "Poster Movie"
-            )
+            BackdropUiKit(path = state.posterPath)
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -150,7 +127,7 @@ private fun DetailMovieUI(
                         .wrapContentSize(),
                     text = state.rating,
                     maxLines = 1,
-                    color = ColorWhite,
+                    color = MaterialTheme.colorScheme.onPrimaryContainer,
                     fontSize = 16.sp,
                     fontFamily = FontFamily(Font(resId = R.font.sono_bold))
                 )
@@ -161,7 +138,7 @@ private fun DetailMovieUI(
                     .fillMaxSize()
                     .padding(16.dp),
                 text = state.overview,
-                color = ColorWhite,
+                color = MaterialTheme.colorScheme.onPrimaryContainer,
                 textAlign = TextAlign.Center,
                 fontSize = 18.sp,
                 fontFamily = FontFamily(Font(R.font.sono_light))
@@ -179,9 +156,6 @@ private fun DetailMovieUI(
                 .padding(start = 16.dp, end = 16.dp, bottom = 32.dp),
             onClick = { onReview.invoke() },
             shape = RoundedCornerShape(8.dp),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = ColorSecondaryVariant
-            )
         ) {
             Text(text = "See Review")
         }
@@ -202,7 +176,6 @@ private fun ToolbarUI(
         ) {
             Icon(
                 imageVector = ImageVector.vectorResource(id = RUiKit.drawable.ic_back),
-                tint = ColorWhite,
                 contentDescription = null,
             )
         }
@@ -214,20 +187,20 @@ private fun ToolbarUI(
             textAlign = TextAlign.Start,
             maxLines = 3,
             text = title,
-            color = ColorWhite,
+            color = MaterialTheme.colorScheme.onPrimaryContainer,
             fontSize = 28.sp,
             fontFamily = FontFamily(Font(resId = R.font.sono_extrabold))
         )
     }
 }
 
-@Preview(showBackground = true, showSystemUi = true, backgroundColor = 0xFF2C394B)
+@Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun DetailMovieUIPreview() {
     DetailMovieUI(
         state = DetailMovieState(
             title = "Avenger",
-            posterUrl = "url",
+            posterPath = "url",
             rating = "8.9/10",
             overview = "Long OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong Overview"
         ),

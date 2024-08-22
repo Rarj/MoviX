@@ -37,7 +37,6 @@ android {
 dependencies {
     implementation(project(":detail:impl"))
     implementation(project(":detail:api"))
-    implementation(project(":data"))
 
     implementation(libs.dagger.hilt)
     kapt(libs.dagger.hilt.compiler)

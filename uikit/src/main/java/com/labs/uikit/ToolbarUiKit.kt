@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedIconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -16,6 +17,7 @@ import androidx.compose.material3.TopAppBarColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.PlatformTextStyle
@@ -25,10 +27,6 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.labs.uikit.appearance.ColorGray
-import com.labs.uikit.appearance.ColorPrimary
-import com.labs.uikit.appearance.ColorSecondary
-import com.labs.uikit.appearance.ColorWhite
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -38,8 +36,12 @@ fun ToolbarUiKit(
     onFilterClicked: () -> Unit,
     onAboutClicked: () -> Unit,
 ) {
-    TopAppBar(modifier = modifier, colors = TopAppBarColors(
-        containerColor = ColorPrimary,
+    TopAppBar(modifier = modifier
+        .shadow(
+            elevation = 8.dp,
+            spotColor = MaterialTheme.colorScheme.scrim,
+        ), colors = TopAppBarColors(
+        containerColor = MaterialTheme.colorScheme.primaryContainer,
         scrolledContainerColor = Color.Unspecified,
         navigationIconContentColor = Color.Unspecified,
         titleContentColor = Color.Unspecified,
@@ -48,7 +50,7 @@ fun ToolbarUiKit(
         OutlinedIconButton(
             modifier = Modifier.padding(start = 4.dp),
             onClick = { onAboutClicked.invoke() },
-            border = BorderStroke(1.dp, ColorSecondary)
+            border = BorderStroke(1.dp, MaterialTheme.colorScheme.inverseSurface)
         ) {
             Icon(
                 painter = painterResource(R.drawable.ic_movie),
@@ -63,14 +65,14 @@ fun ToolbarUiKit(
                 text = "Welcome Movie Buffs!",
                 fontFamily = FontFamily(Font(resId = R.font.sono_bold)),
                 fontSize = 18.sp,
-                color = ColorWhite,
+                color = MaterialTheme.colorScheme.onPrimaryContainer,
                 style = TextStyle(platformStyle = PlatformTextStyle(includeFontPadding = false))
             )
             Text(
                 text = "Find your funky movie!",
                 fontFamily = FontFamily(Font(resId = R.font.sono_light)),
                 fontSize = 12.sp,
-                color = ColorGray,
+                color = MaterialTheme.colorScheme.onPrimaryContainer,
                 style = TextStyle(platformStyle = PlatformTextStyle(includeFontPadding = false))
             )
         }

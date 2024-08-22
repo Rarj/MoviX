@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -26,10 +27,7 @@ import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.labs.review.impl.mapper.ReviewItem
-import com.labs.uikit.appearance.ColorGray
-import com.labs.uikit.appearance.ColorPrimary
 import com.labs.uikit.appearance.ColorStar
-import com.labs.uikit.appearance.ColorWhite
 import kotlinx.coroutines.flow.flow
 import com.labs.uikit.R as RUiKit
 
@@ -61,7 +59,7 @@ private fun ReviewUI(
     ModalBottomSheet(
         onDismissRequest = { onDismiss() },
         sheetState = sheetState,
-        containerColor = ColorPrimary,
+        containerColor = MaterialTheme.colorScheme.primaryContainer,
     ) {
         reviews.apply {
             when {
@@ -94,7 +92,7 @@ private fun ReviewItemUI(
         modifier = Modifier
             .wrapContentSize()
             .fillMaxWidth()
-            .background(color = ColorPrimary)
+            .background(color = MaterialTheme.colorScheme.primaryContainer)
             .padding(all = 16.dp)
     ) {
         val (author, content, divider) = createRefs()
@@ -105,7 +103,7 @@ private fun ReviewItemUI(
                 start.linkTo(parent.start)
             },
             text = review.author,
-            color = ColorGray,
+            color = MaterialTheme.colorScheme.tertiary,
             maxLines = 1,
             fontFamily = FontFamily(Font(resId = RUiKit.font.sono_medium)),
             fontSize = 16.sp
@@ -119,7 +117,7 @@ private fun ReviewItemUI(
                 }
                 .padding(top = 4.dp),
             text = review.content,
-            color = ColorWhite,
+            color = MaterialTheme.colorScheme.onPrimaryContainer,
             fontFamily = FontFamily(Font(resId = RUiKit.font.sono_medium)),
             fontSize = 14.sp,
             letterSpacing = 1.5.sp,

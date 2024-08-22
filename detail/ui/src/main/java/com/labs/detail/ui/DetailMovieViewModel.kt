@@ -25,10 +25,10 @@ class DetailMovieViewModel @Inject constructor(
             repo.getDetailMovie(movieId).collectLatest { response ->
                 _state.update {
                     it.copy(
-                        title = response.data?.title.orEmpty(),
-                        posterUrl = getBackdropUrl(response.data?.posterPath),
-                        rating = getRating(response.data?.rating),
-                        overview = response.data?.overview.orEmpty(),
+                        title = response.title,
+                        posterPath = response.posterPath,
+                        rating = getRating(response.rating),
+                        overview = response.overview,
                     )
                 }
             }
@@ -36,8 +36,12 @@ class DetailMovieViewModel @Inject constructor(
     }
 
     private fun getRating(rating: Double? = 0.0) = buildString {
-        append(rating?.times(10.0)?.roundToInt()?.div(10.0) ?: "N/A")
-        append("/10")
+        if (rating != 0.0) {
+            append(rating?.times(10.0)?.roundToInt()?.div(10.0))
+            append("/10")
+        } else {
+            append("No Rating")
+        }
     }
 
 }

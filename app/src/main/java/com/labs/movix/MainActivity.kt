@@ -14,12 +14,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import androidx.paging.compose.LazyPagingItems
-import androidx.paging.compose.collectAsLazyPagingItems
 import com.labs.detail.ui.DetailMovieScreen
-import com.labs.home.impl.discover.mapper.DiscoverMovie
 import com.labs.home.ui.HomeUI
-import com.labs.home.ui.HomeViewModel
+import com.labs.movix.appearance.MovixTheme
 import com.labs.navigation.detail.controller.DETAIL_MOVIE_ID_ARGS
 import com.labs.navigation.detail.controller.DETAIL_MOVIE_ROUTE
 import com.labs.navigation.home.controller.HOME_ROUTE
@@ -40,71 +37,56 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var detailMovieNavigation: DetailMovieNavigation
 
-    private val homeViewModel: HomeViewModel by viewModels()
-    private lateinit var pagingItems: LazyPagingItems<DiscoverMovie>
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setContent {
-            Surface {
-                val navController = rememberNavController()
-                val state = homeViewModel.state.collectAsState().value
-                pagingItems = state.moviePagingDataState.collectAsLazyPagingItems()
+            MovixTheme {
+                Surface {
+                    val navController = rememberNavController()
 
-                NavHost(
-                    navController, startDestination = HOME_ROUTE
-                ) {
-                    composable(route = HOME_ROUTE) {
+                    NavHost(
+                        navController, startDestination = HOME_ROUTE
+                    ) {
+                        composable(route = HOME_ROUTE) {
+                            HomeUI(
+                                modifier = Modifier.fillMaxSize(),
+                                onSearchClicked = {
+                                    searchNavigation.navigateToSearchPage(navController)
+                                },
+                                onItemClicked = { movieId ->
+                                    detailMovieNavigation.navigateToDetailMoviePage(
+                                        navController,
+                                        movieId,
+                                    )
+                                },
+                            )
+                        }
+                        composable(route = SEARCH_ROUTE) {
+                            SearchUI(
+                                onBack = { navController.popBackStack() },
+                                onItemClicked = { movieId ->
+                                    detailMovieNavigation.navigateToDetailMoviePage(
+                                        navController,
+                                        movieId,
+                                    )
+                                },
+                            )
+                        }
+                        composable(
+                            route = DETAIL_MOVIE_ROUTE,
+                            arguments = listOf(navArgument(DETAIL_MOVIE_ID_ARGS) {
+                                type = NavType.StringType
+                            })
+                        ) { backstackEntry ->
+                            val movieId = backstackEntry.arguments?.getString(DETAIL_MOVIE_ID_ARGS)
 
-                        HomeUI(
-                            modifier = Modifier.fillMaxSize(),
-                            pagingItems = pagingItems,
-                            state = state,
-                            onSearchClicked = {
-                                searchNavigation.navigateToSearchPage(navController)
-                            },
-                            onItemClicked = { movieId ->
-                                detailMovieNavigation.navigateToDetailMoviePage(
-                                    navController,
-                                    movieId,
-                                )
-                            },
-                            onFilterRefreshed = { genre ->
-                                homeViewModel.apply {
-                                    setSelectedGenre(genre.id, genre.name)
-                                    getMovies()
-                                }
-                            }
-                        )
-                    }
-                    composable(route = SEARCH_ROUTE) {
-                        val viewModel: SearchViewModel by viewModels()
-                        SearchUI(
-                            onBack = { navController.popBackStack() },
-                            searchState = viewModel.state.collectAsState().value,
-                            onUpdateKeyword = { keyword -> viewModel.onUpdateKeywordNew(keyword) },
-                            onItemClicked = { movieId ->
-                                detailMovieNavigation.navigateToDetailMoviePage(
-                                    navController,
-                                    movieId,
-                                )
-                            },
-                        )
-                    }
-                    composable(
-                        route = DETAIL_MOVIE_ROUTE,
-                        arguments = listOf(navArgument(DETAIL_MOVIE_ID_ARGS) {
-                            type = NavType.StringType
-                        })
-                    ) { backstackEntry ->
-                        val movieId = backstackEntry.arguments?.getString(DETAIL_MOVIE_ID_ARGS)
-
-                        DetailMovieScreen(
-                            movieId = movieId.orEmpty(),
-                            onBack = { navController.popBackStack() },
-                        )
+                            DetailMovieScreen(
+                                movieId = movieId.orEmpty(),
+                                onBack = { navController.popBackStack() },
+                            )
+                        }
                     }
                 }
             }

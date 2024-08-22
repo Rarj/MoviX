@@ -44,7 +44,6 @@ dependencies {
     implementation(project(":uikit"))
     implementation(project(":detail:di"))
     implementation(project(":detail:impl"))
-    implementation(project(":data"))
     implementation(project(":review:ui"))
 
     implementation(libs.compose.constraintlayout)
