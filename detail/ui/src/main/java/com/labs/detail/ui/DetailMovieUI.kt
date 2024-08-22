@@ -110,7 +110,10 @@ private fun DetailMovieUI(
                 .padding(top = 8.dp)
                 .verticalScroll(state = rememberScrollState())
         ) {
-            BackdropUiKit(path = state.posterPath)
+            BackdropUiKit(
+                path = state.posterPath,
+                contentDescription = state.title,
+            )
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
