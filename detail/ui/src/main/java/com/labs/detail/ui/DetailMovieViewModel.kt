@@ -26,7 +26,7 @@ class DetailMovieViewModel @Inject constructor(
                 _state.update {
                     it.copy(
                         title = response.title,
-                        posterUrl = getBackdropUrl(response.posterPath),
+                        posterPath = response.posterPath,
                         rating = getRating(response.rating),
                         overview = response.overview,
                     )
@@ -36,8 +36,12 @@ class DetailMovieViewModel @Inject constructor(
     }
 
     private fun getRating(rating: Double? = 0.0) = buildString {
-        append(rating?.times(10.0)?.roundToInt()?.div(10.0) ?: "N/A")
-        append("/10")
+        if (rating != 0.0) {
+            append(rating?.times(10.0)?.roundToInt()?.div(10.0))
+            append("/10")
+        } else {
+            append("No Rating")
+        }
     }
 
 }

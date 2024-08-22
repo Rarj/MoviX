@@ -7,10 +7,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
@@ -26,10 +24,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -40,9 +35,8 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
 import com.labs.review.ui.ReviewScreen
+import com.labs.uikit.BackdropUiKit
 import com.labs.uikit.R
 import com.labs.uikit.appearance.ColorStar
 import com.labs.uikit.R as RUiKit
@@ -114,19 +108,7 @@ private fun DetailMovieUI(
                 .padding(top = 8.dp)
                 .verticalScroll(state = rememberScrollState())
         ) {
-            AsyncImage(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(all = 16.dp)
-                    .wrapContentHeight()
-                    .clip(RoundedCornerShape(CornerSize(percent = 5))),
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(state.posterUrl)
-                    .crossfade(true)
-                    .build(),
-                contentScale = ContentScale.FillBounds,
-                contentDescription = "Poster Movie"
-            )
+            BackdropUiKit(path = state.posterPath)
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -218,7 +200,7 @@ private fun DetailMovieUIPreview() {
     DetailMovieUI(
         state = DetailMovieState(
             title = "Avenger",
-            posterUrl = "url",
+            posterPath = "url",
             rating = "8.9/10",
             overview = "Long OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong Overview"
         ),

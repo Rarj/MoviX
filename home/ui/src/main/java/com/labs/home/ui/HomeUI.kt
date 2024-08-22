@@ -26,12 +26,8 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.labs.home.impl.discover.mapper.DiscoverMovie
 import com.labs.home.ui.filter.FilterScreen
-import com.labs.uikit.BuildConfig
 import com.labs.uikit.PosterUiKit
 import com.labs.uikit.ToolbarUiKit
-import com.labs.uikit.appearance.ColorPrimary
-import com.labs.uikit.appearance.ColorSecondaryVariant
-import com.labs.uikit.appearance.ColorWhite
 import com.labs.uikit.R as RUiKit
 
 @Composable
@@ -152,10 +148,7 @@ private fun MoviesUI(
         modifier = modifier.padding(start = 8.dp, end = 8.dp, top = 16.dp),
     ) {
         items(pagingItems.itemCount) { index ->
-            PosterUiKit(url = buildString {
-                append(BuildConfig.IMAGE_BASE_URL)
-                append(pagingItems[index]?.posterPath)
-            }) {
+            PosterUiKit(path = pagingItems[index]?.posterPath) {
                 onItemClicked.invoke(pagingItems[index]?.id.toString())
             }
         }

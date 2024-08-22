@@ -34,7 +34,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.labs.search.impl.mapper.Movie
-import com.labs.uikit.BuildConfig
 import com.labs.uikit.PosterUiKit
 import com.labs.uikit.R as RUiKit
 
@@ -132,10 +131,7 @@ private fun MoviesUI(
         modifier = modifier.padding(start = 8.dp, end = 8.dp, top = 16.dp),
     ) {
         items(pagingItems.itemCount) { index ->
-            PosterUiKit(url = buildString {
-                append(BuildConfig.IMAGE_BASE_URL)
-                append(pagingItems[index]?.posterPath)
-            }) {
+            PosterUiKit(path = pagingItems[index]?.posterPath) {
                 onItemClicked.invoke(pagingItems[index]?.id.toString())
             }
         }
