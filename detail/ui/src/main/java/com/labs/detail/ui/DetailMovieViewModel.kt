@@ -26,7 +26,7 @@ class DetailMovieViewModel @Inject constructor(
                 _state.update {
                     it.copy(
                         title = response.title,
-                        posterUrl = getBackdropUrl(response.posterPath),
+                        posterPath = response.posterPath,
                         rating = getRating(response.rating),
                         overview = response.overview,
                     )
