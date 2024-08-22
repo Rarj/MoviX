@@ -91,7 +91,7 @@ private fun DetailMovieUI(
                 }
                 .fillMaxWidth()
                 .wrapContentSize()
-                .padding(top = 32.dp, end = 8.dp),
+                .padding(top = 56.dp, end = 8.dp),
             title = state.title,
             onBack = onBack,
         )
@@ -176,7 +176,7 @@ private fun ToolbarUI(
         ) {
             Icon(
                 imageVector = ImageVector.vectorResource(id = RUiKit.drawable.ic_back),
-                contentDescription = null,
+                contentDescription = "Back to Home page",
             )
         }
 
