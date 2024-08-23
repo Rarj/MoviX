@@ -54,7 +54,7 @@ fun ToolbarUiKit(
         ) {
             Icon(
                 painter = painterResource(R.drawable.ic_movie),
-                contentDescription = null,
+                contentDescription = "About Page",
             )
         }
     }, title = {
@@ -86,7 +86,7 @@ fun ToolbarUiKit(
                 onClick = { onSearchClicked.invoke() }) {
                 Icon(
                     painter = painterResource(R.drawable.ic_search),
-                    contentDescription = null,
+                    contentDescription = "Search Movie",
                 )
             }
             IconButton(modifier = Modifier
@@ -97,7 +97,7 @@ fun ToolbarUiKit(
                 onClick = { onFilterClicked.invoke() }) {
                 Icon(
                     painter = painterResource(R.drawable.ic_filter),
-                    contentDescription = null,
+                    contentDescription = "Filter Movie by Genre",
                 )
             }
         }

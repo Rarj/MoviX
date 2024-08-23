@@ -131,7 +131,10 @@ private fun MoviesUI(
         modifier = modifier.padding(start = 8.dp, end = 8.dp, top = 16.dp),
     ) {
         items(pagingItems.itemCount) { index ->
-            PosterUiKit(path = pagingItems[index]?.posterPath) {
+            PosterUiKit(
+                path = pagingItems[index]?.posterPath,
+                contentDescription = pagingItems[index]?.title,
+            ) {
                 onItemClicked.invoke(pagingItems[index]?.id.toString())
             }
         }
