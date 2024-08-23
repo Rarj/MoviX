@@ -2,6 +2,7 @@ package com.arj.search.ui
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,11 +22,14 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -131,10 +135,7 @@ private fun MoviesUI(
         modifier = modifier.padding(start = 8.dp, end = 8.dp, top = 16.dp),
     ) {
         items(pagingItems.itemCount) { index ->
-            PosterUiKit(
-                path = pagingItems[index]?.posterPath,
-                contentDescription = pagingItems[index]?.title,
-            ) {
+            Item(movie = pagingItems[index]) {
                 onItemClicked.invoke(pagingItems[index]?.id.toString())
             }
         }
@@ -154,6 +155,48 @@ private fun ClearTextIcon(
                 contentDescription = "Clear Keyword",
             )
         }
+    }
+}
+
+@Composable
+private fun Item(
+    movie: Movie?,
+    onItemClicked: (movieId: String) -> Unit,
+) {
+    Column {
+        PosterUiKit(
+            path = movie?.posterPath,
+            contentDescription = movie?.title,
+        ) { onItemClicked.invoke(movie?.id.toString()) }
+
+        Text(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 4.dp, end = 4.dp)
+                .semantics {
+                    contentDescription = movie?.title.orEmpty()
+                },
+            text = movie?.title.orEmpty(),
+            color = MaterialTheme.colorScheme.onPrimaryContainer,
+            maxLines = 1,
+            fontSize = 16.sp,
+            fontFamily = FontFamily(Font(resId = RUiKit.font.sono_semibold)),
+            overflow = TextOverflow.Ellipsis
+        )
+
+        Text(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 4.dp, end = 4.dp, bottom = 12.dp)
+                .semantics {
+                    contentDescription = movie?.title.orEmpty()
+                },
+            text = movie?.releaseDate.orEmpty(),
+            color = MaterialTheme.colorScheme.onPrimaryContainer,
+            maxLines = 1,
+            fontSize = 14.sp,
+            fontFamily = FontFamily(Font(resId = RUiKit.font.sono_medium)),
+        )
     }
 }
 
