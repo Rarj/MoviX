@@ -2,39 +2,35 @@
 
 MoviX is an innovative application designed to enhance your movie browsing experience by providing an intuitive and user-friendly interface. Discover and explore a vast collection of movies effortlessly with MoviX's robust search and detailed information features.
 
-## Features
-- Search for movies
-- View detailed information about each movie
-  - Title
-  - Synopsys
-  - Poster
-  - Reviews
-  - Rating
-- Filter movie by genre
+https://github.com/user-attachments/assets/fcc27cf3-33de-4e37-a547-311fd124c679
 
-https://github.com/user-attachments/assets/4047a6a4-690c-4427-b2a0-510bdab80d9f
+------
 
-### Technology Stack
+| Features |
+| --- |
+| Search for movies |
+| View detailed information about each movie |
+| Filter movie by genre |
+| See Review |
 
-* Kotlin
-* Jetpack Compose and View System (XML)
-* Jetpack Navigation
-* Coroutines + FLow
-* Coil Compose
-* Hilt
-* Paging3
-* Retrofit + OkHTTP3 + GSON (converter)
-* Material3
+-----
+  
+| Technology Stacks |
+| --- |
+| Kotlin |
+| Jetpack Compose |
+| Navigation Compose |
+| Paging3 Compose |
+| Coroutines + Flow |
+| Hilt |
+| Retrofit2 |
+| OkHttp |
+| Logging Interceptor |
+| GSON |
+| Coil Compose |
+| Material3 |
 
-### Folder structures
-
-| module | description | notes |
-| ------ | ----------- | ----- |
-| app	| Main application code | gradually migrate |
-| data | Data management and network | gradually migrate |
-| home |	Home page | |
-| network |	Shared Network Response | |
-| uikit | UI Kit for reusable components | |
+-----
 
 ## Getting Started
 
