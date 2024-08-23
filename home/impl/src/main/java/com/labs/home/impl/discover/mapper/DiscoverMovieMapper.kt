@@ -16,6 +16,8 @@ fun Movie.toDiscoverMovie() = DiscoverMovie(
 )
 
 fun String.getDateFormatted(): String {
+    if (this.isEmpty()) return ""
+
     val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(this)
     return dateFormat?.let { SimpleDateFormat("dd MMMM yyyy", Locale.getDefault()).format(it) } ?: ""
 }
