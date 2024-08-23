@@ -26,6 +26,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
@@ -91,7 +93,7 @@ private fun DetailMovieUI(
                 }
                 .fillMaxWidth()
                 .wrapContentSize()
-                .padding(top = 32.dp, end = 8.dp),
+                .padding(top = 56.dp, end = 8.dp),
             title = state.title,
             onBack = onBack,
         )
@@ -108,7 +110,10 @@ private fun DetailMovieUI(
                 .padding(top = 8.dp)
                 .verticalScroll(state = rememberScrollState())
         ) {
-            BackdropUiKit(path = state.posterPath)
+            BackdropUiKit(
+                path = state.posterPath,
+                contentDescription = state.title,
+            )
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -136,7 +141,10 @@ private fun DetailMovieUI(
             Text(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(16.dp),
+                    .padding(16.dp)
+                    .semantics {
+                        contentDescription = "Synopsys"
+                    },
                 text = state.overview,
                 color = MaterialTheme.colorScheme.onPrimaryContainer,
                 textAlign = TextAlign.Center,
@@ -176,14 +184,17 @@ private fun ToolbarUI(
         ) {
             Icon(
                 imageVector = ImageVector.vectorResource(id = RUiKit.drawable.ic_back),
-                contentDescription = null,
+                contentDescription = "Back to Home page",
             )
         }
 
         Text(
             modifier = Modifier
                 .padding(start = 16.dp, top = 8.dp)
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .semantics {
+                    contentDescription = "Movie Title"
+                },
             textAlign = TextAlign.Start,
             maxLines = 3,
             text = title,

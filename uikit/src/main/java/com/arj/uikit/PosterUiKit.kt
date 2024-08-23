@@ -29,6 +29,7 @@ import coil.request.ImageRequest
 fun PosterUiKit(
     modifier: Modifier = Modifier,
     path: String?,
+    contentDescription: String? = null,
     onClick: () -> Unit
 ) {
     val url = if (path.isNullOrEmpty()) path else buildString {
@@ -47,7 +48,7 @@ fun PosterUiKit(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        ImageUiKit(url = url)
+        ImageUiKit(url = url, contentDescription = contentDescription)
     }
 }
 
@@ -55,6 +56,7 @@ fun PosterUiKit(
 fun BackdropUiKit(
     path: String?,
     modifier: Modifier = Modifier,
+    contentDescription: String? = null,
 ) {
     val url = if (path.isNullOrEmpty()) path else buildString {
         append(BuildConfig.BACKDROP_IMAGE_BASE_URL)
@@ -71,16 +73,19 @@ fun BackdropUiKit(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        ImageUiKit(url = url)
+        ImageUiKit(url = url, contentDescription = contentDescription)
     }
 }
 
 @Composable
-private fun ImageUiKit(url: String?) {
+private fun ImageUiKit(
+    url: String?,
+    contentDescription: String?,
+) {
     if (url.isNullOrEmpty()) {
         Image(
             imageVector = ImageVector.vectorResource(id = R.drawable.ic_poster_empty),
-            contentDescription = "Image - Error",
+            contentDescription = "Couldn't Load Image - $contentDescription",
         )
     } else {
 
@@ -91,7 +96,7 @@ private fun ImageUiKit(url: String?) {
                 .crossfade(true)
                 .build(),
             contentScale = ContentScale.FillBounds,
-            contentDescription = "Poster Movie"
+            contentDescription = "Poster Movie - $contentDescription"
         )
     }
 }
