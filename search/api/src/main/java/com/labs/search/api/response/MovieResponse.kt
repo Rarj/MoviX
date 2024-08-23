@@ -12,4 +12,6 @@ data class MovieResponse(
     val overview: String,
     @SerializedName("vote_average")
     val rating: Double,
+    @SerializedName("release_date")
+    val releaseDate: String,
 )
