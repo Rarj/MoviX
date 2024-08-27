@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.labs.review.di"
+    namespace = "com.arj.review.di"
     compileSdk = 34
 
     defaultConfig {

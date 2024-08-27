@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.labs.navigation.home.controller"
+    namespace = "com.arj.navigation.home.controller"
     compileSdk = 34
 
     defaultConfig {

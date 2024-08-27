@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.labs.search.controller"
+    namespace = "com.arj.search.controller"
     compileSdk = 34
 
     defaultConfig {

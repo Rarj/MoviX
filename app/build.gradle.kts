@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "com.labs.movix"
+    namespace = "com.arj.movix"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.labs.movix"
+        applicationId = "com.arj.movix"
         minSdk = 23
         targetSdk = 34
         versionCode = 200002

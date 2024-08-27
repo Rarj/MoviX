@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.labs.search.impl"
+    namespace = "com.arj.search.impl"
     compileSdk = 34
 
     defaultConfig {

@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.labs.navigation.detail.controller"
+    namespace = "com.arj.navigation.detail.controller"
     compileSdk = 34
 
     defaultConfig {

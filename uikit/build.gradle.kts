@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.labs.uikit"
+    namespace = "com.arj.uikit"
     compileSdk = 34
 
     defaultConfig {

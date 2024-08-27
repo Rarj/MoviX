@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.labs.network.shared"
+    namespace = "com.arj.network.shared"
     compileSdk = 34
 
     defaultConfig {

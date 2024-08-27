@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.labs.detail.api"
+    namespace = "com.arj.detail.api"
     compileSdk = 34
 
     defaultConfig {
