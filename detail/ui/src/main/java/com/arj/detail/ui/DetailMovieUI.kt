@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -84,52 +85,59 @@ private fun DetailMovieUI(
             buttonSeeReview,
         )
 
-        ToolbarUI(
-            Modifier
-                .constrainAs(topBar) {
-                    top.linkTo(parent.top)
-                }
-                .fillMaxWidth()
-                .wrapContentSize()
-                .padding(top = 56.dp, end = 8.dp),
-            title = state.title,
-            onBack = onBack,
-        )
+        LazyColumn {
+            item {
+                ToolbarUI(
+                    Modifier
+                        .constrainAs(topBar) {
+                            top.linkTo(parent.top)
+                        }
+                        .fillMaxWidth()
+                        .wrapContentSize()
+                        .padding(top = 56.dp, end = 8.dp),
+                    title = state.title,
+                    onBack = onBack,
+                )
+            }
+            item {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .constrainAs(content) {
+                            top.linkTo(topBar.bottom)
+                            start.linkTo(parent.start)
+                            end.linkTo(parent.end)
+                            height = Dimension.fillToConstraints
+                        }
+                        .padding(top = 8.dp)
+//                .verticalScroll(state = rememberScrollState())
+                ) {
+                    BackdropUiKit(
+                        path = state.posterPath,
+                        contentDescription = state.title,
+                    )
 
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .constrainAs(content) {
-                    top.linkTo(topBar.bottom)
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                    height = Dimension.fillToConstraints
+                    TabUI(state = state)
                 }
-                .padding(top = 8.dp)
-                .verticalScroll(state = rememberScrollState())
-        ) {
-            BackdropUiKit(
-                path = state.posterPath,
-                contentDescription = state.title,
-            )
-
-            TabUI(state = state)
+            }
+            item {
+                Button(
+                    modifier = Modifier
+                        .constrainAs(buttonSeeReview) {
+                            bottom.linkTo(parent.bottom)
+                            start.linkTo(parent.start)
+                            end.linkTo(parent.end)
+                        }
+                        .fillMaxWidth()
+                        .padding(start = 16.dp, end = 16.dp, bottom = 32.dp),
+                    onClick = { onReview.invoke() },
+                    shape = RoundedCornerShape(8.dp),
+                ) {
+                    Text(text = "See Review")
+                }
+            }
         }
 
-        Button(
-            modifier = Modifier
-                .constrainAs(buttonSeeReview) {
-                    bottom.linkTo(parent.bottom)
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                }
-                .fillMaxWidth()
-                .padding(start = 16.dp, end = 16.dp, bottom = 32.dp),
-            onClick = { onReview.invoke() },
-            shape = RoundedCornerShape(8.dp),
-        ) {
-            Text(text = "See Review")
-        }
     }
 }
 
