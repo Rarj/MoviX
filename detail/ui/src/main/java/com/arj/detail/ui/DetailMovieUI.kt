@@ -1,9 +1,7 @@
 package com.arj.detail.ui
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -41,7 +39,6 @@ import com.arj.detail.ui.tab.TabUI
 import com.arj.review.ui.ReviewScreen
 import com.arj.uikit.BackdropUiKit
 import com.arj.uikit.R
-import com.arj.uikit.appearance.ColorStar
 import com.arj.uikit.R as RUiKit
 
 @Composable
@@ -116,42 +113,7 @@ private fun DetailMovieUI(
                 contentDescription = state.title,
             )
 
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center
-            ) {
-                Icon(
-                    modifier = Modifier
-                        .wrapContentSize(),
-                    tint = ColorStar,
-                    imageVector = ImageVector.vectorResource(id = RUiKit.drawable.ic_star),
-                    contentDescription = "Rating Icon - Star"
-                )
-
-                Text(
-                    modifier = Modifier
-                        .wrapContentSize(),
-                    text = state.rating,
-                    maxLines = 1,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer,
-                    fontSize = 16.sp,
-                    fontFamily = FontFamily(Font(resId = R.font.sono_bold))
-                )
-            }
-
-            Text(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(16.dp)
-                    .semantics {
-                        contentDescription = "Synopsys"
-                    },
-                text = state.overview,
-                color = MaterialTheme.colorScheme.onPrimaryContainer,
-                textAlign = TextAlign.Center,
-                fontSize = 18.sp,
-                fontFamily = FontFamily(Font(R.font.sono_light))
-            )
+            TabUI(state = state)
         }
 
         Button(
