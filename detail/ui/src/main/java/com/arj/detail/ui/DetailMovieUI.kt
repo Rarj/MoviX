@@ -37,6 +37,7 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.arj.detail.ui.tab.TabUI
 import com.arj.review.ui.ReviewScreen
 import com.arj.uikit.BackdropUiKit
 import com.arj.uikit.R
