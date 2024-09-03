@@ -11,6 +11,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import com.arj.detail.ui.DetailMovieState
+import com.arj.detail.ui.tab.caster.CastUI
 import com.arj.detail.ui.tab.overview.OverviewUI
 
 @Composable
@@ -48,7 +49,7 @@ internal fun TabUI(
 
     when (selectedIndex) {
         0 -> OverviewUI(state = state)
-        1 -> DetailMovieUI()
+        1 -> CastUI(state = state)
         2 -> CrewUI()
     }
 }

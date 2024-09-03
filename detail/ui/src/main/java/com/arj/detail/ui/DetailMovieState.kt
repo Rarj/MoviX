@@ -1,6 +1,8 @@
 package com.arj.detail.ui
 
 import androidx.compose.runtime.Immutable
+import com.arj.detail.impl.mapper.Cast
+import com.arj.detail.impl.mapper.Crew
 
 @Immutable
 data class DetailMovieState(
@@ -8,4 +10,6 @@ data class DetailMovieState(
     val posterPath: String? = null,
     val rating: String = "",
     val overview: String = "",
+    val casts: List<Cast> = emptyList(),
+    val crews: List<Crew> = emptyList(),
 )
