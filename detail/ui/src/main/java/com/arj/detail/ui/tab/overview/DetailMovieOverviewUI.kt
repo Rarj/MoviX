@@ -1,13 +1,13 @@
 package com.arj.detail.ui.tab.overview
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -23,33 +23,65 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.constraintlayout.compose.ChainStyle
+import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 import com.arj.detail.ui.DetailMovieState
+import com.arj.uikit.BackdropUiKit
 import com.arj.uikit.R
 import com.arj.uikit.appearance.ColorStar
 
 @Composable
 internal fun OverviewUI(
+    modifier: Modifier = Modifier,
     state: DetailMovieState,
 ) {
-    Column {
+    ConstraintLayout(
+        modifier = modifier
+            .fillMaxWidth()
+            .fillMaxHeight()
+            .padding(top = 8.dp)
+            .verticalScroll(rememberScrollState())
+    ) {
+        val (poster, rating, synopsys) = createRefs()
+        createVerticalChain(
+            poster,
+            rating,
+            synopsys,
+            chainStyle = ChainStyle.Packed(0f)
+        )
+
+        BackdropUiKit(
+            modifier = Modifier.constrainAs(poster) {
+                top.linkTo(parent.top)
+                start.linkTo(parent.start)
+                end.linkTo(parent.end)
+                height = Dimension.wrapContent
+                width = Dimension.fillToConstraints
+            },
+            path = state.posterPath,
+            contentDescription = state.title,
+        )
+
         Row(
             modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight()
-                .padding(top = 16.dp),
+                .constrainAs(rating) {
+                    top.linkTo(poster.bottom)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                    height = Dimension.wrapContent
+                    width = Dimension.fillToConstraints
+                }
+                .wrapContentHeight(),
             horizontalArrangement = Arrangement.Center,
         ) {
             Icon(
-                modifier = Modifier
-                    .wrapContentSize(),
                 tint = ColorStar,
                 imageVector = ImageVector.vectorResource(id = R.drawable.ic_star),
                 contentDescription = "Rating Icon - Star",
             )
 
             Text(
-                modifier = Modifier
-                    .wrapContentSize(),
                 text = state.rating,
                 maxLines = 1,
                 color = MaterialTheme.colorScheme.onPrimaryContainer,
@@ -60,8 +92,14 @@ internal fun OverviewUI(
 
         Text(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp)
+                .constrainAs(synopsys) {
+                    top.linkTo(rating.bottom)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                    height = Dimension.wrapContent
+                    width = Dimension.fillToConstraints
+                }
+                .padding(start = 16.dp, end = 16.dp, top = 8.dp)
                 .semantics {
                     contentDescription = "Synopsys"
                 },
