@@ -5,10 +5,10 @@ import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -18,6 +18,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -46,16 +47,14 @@ internal fun OverviewUI(
 ) {
     ConstraintLayout(
         modifier = modifier
-            .fillMaxWidth()
-            .fillMaxHeight()
+            .fillMaxSize()
             .verticalScroll(rememberScrollState())
     ) {
-        val (poster, releaseStatus, genre, rating, synopsys) = createRefs()
+        val (poster, releaseStatus, genre, synopsys) = createRefs()
         createVerticalChain(
             poster,
             releaseStatus,
             genre,
-            rating,
             synopsys,
             chainStyle = ChainStyle.Packed(0f)
         )
@@ -82,7 +81,10 @@ internal fun OverviewUI(
                     width = Dimension.fillToConstraints
                 }
                 .padding(bottom = 8.dp),
-            releaseDate = state.releaseDate, status = state.status)
+            releaseDate = state.releaseDate,
+            status = state.status,
+            rating = state.rating,
+        )
 
         GenreComponent(
             modifier = Modifier
@@ -97,43 +99,16 @@ internal fun OverviewUI(
             genres = state.genres,
         )
 
-        Row(
+        Text(
             modifier = Modifier
-                .constrainAs(rating) {
+                .constrainAs(synopsys) {
                     top.linkTo(genre.bottom)
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
                     height = Dimension.wrapContent
                     width = Dimension.fillToConstraints
                 }
-                .wrapContentHeight(),
-            horizontalArrangement = Arrangement.Center,
-        ) {
-            Icon(
-                tint = ColorStar,
-                imageVector = ImageVector.vectorResource(id = R.drawable.ic_star),
-                contentDescription = "Rating Icon - Star",
-            )
-
-            Text(
-                text = state.rating,
-                maxLines = 1,
-                color = MaterialTheme.colorScheme.onPrimaryContainer,
-                fontSize = 16.sp,
-                fontFamily = FontFamily(Font(resId = R.font.sono_bold)),
-            )
-        }
-
-        Text(
-            modifier = Modifier
-                .constrainAs(synopsys) {
-                    top.linkTo(rating.bottom)
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                    height = Dimension.wrapContent
-                    width = Dimension.fillToConstraints
-                }
-                .padding(start = 16.dp, end = 16.dp, top = 8.dp)
+                .padding(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 32.dp)
                 .semantics {
                     contentDescription = "Synopsys"
                 },
@@ -178,11 +153,26 @@ fun ReleaseDateComponent(
     modifier: Modifier = Modifier,
     releaseDate: String,
     status: String,
+    rating: String,
 ) {
     Row(
         modifier = modifier
-            .wrapContentSize()
+            .wrapContentSize(),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
+        Text(
+            text = status,
+            color = MaterialTheme.colorScheme.onPrimaryContainer,
+            fontSize = 16.sp,
+            fontFamily = FontFamily(Font(resId = R.font.sono_bold)),
+        )
+        VerticalDivider(
+            modifier = Modifier
+                .height(18.dp)
+                .padding(horizontal = 8.dp),
+            thickness = 2.dp,
+            color = MaterialTheme.colorScheme.secondary
+        )
         Text(
             text = releaseDate,
             color = MaterialTheme.colorScheme.onPrimaryContainer,
@@ -196,8 +186,15 @@ fun ReleaseDateComponent(
             thickness = 2.dp,
             color = MaterialTheme.colorScheme.secondary
         )
+        Icon(
+            tint = ColorStar,
+            imageVector = ImageVector.vectorResource(id = R.drawable.ic_star),
+            contentDescription = "Rating Icon - Star",
+        )
         Text(
-            text = status,
+            modifier = Modifier.padding(start = 2.dp),
+            text = rating,
+            maxLines = 1,
             color = MaterialTheme.colorScheme.onPrimaryContainer,
             fontSize = 16.sp,
             fontFamily = FontFamily(Font(resId = R.font.sono_bold)),
@@ -209,8 +206,9 @@ fun ReleaseDateComponent(
 @Composable
 private fun ReleaseDatePreview() {
     ReleaseDateComponent(
-        releaseDate = "17 Aug 2024",
-        status = "Released",
+        releaseDate = "2024",
+        status = "Canceled",
+        rating = "8.9/10",
     )
 }
 
