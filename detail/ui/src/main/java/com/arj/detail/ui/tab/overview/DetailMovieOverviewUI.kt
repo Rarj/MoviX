@@ -1,10 +1,12 @@
 package com.arj.detail.ui.tab.overview
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
@@ -14,6 +16,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -47,9 +50,10 @@ internal fun OverviewUI(
             .fillMaxHeight()
             .verticalScroll(rememberScrollState())
     ) {
-        val (poster, genre, rating, synopsys) = createRefs()
+        val (poster, releaseStatus, genre, rating, synopsys) = createRefs()
         createVerticalChain(
             poster,
+            releaseStatus,
             genre,
             rating,
             synopsys,
@@ -68,10 +72,22 @@ internal fun OverviewUI(
             contentDescription = state.title,
         )
 
+        ReleaseDateComponent(
+            modifier = Modifier
+                .constrainAs(releaseStatus) {
+                    top.linkTo(poster.bottom)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                    height = Dimension.wrapContent
+                    width = Dimension.fillToConstraints
+                }
+                .padding(bottom = 8.dp),
+            releaseDate = state.releaseDate, status = state.status)
+
         GenreComponent(
             modifier = Modifier
                 .constrainAs(genre) {
-                    top.linkTo(poster.bottom)
+                    top.linkTo(releaseStatus.bottom)
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
                     height = Dimension.wrapContent
@@ -136,7 +152,9 @@ private fun GenreComponent(
     genres: List<String>,
 ) {
     Row(
-        modifier = modifier.wrapContentSize(),
+        modifier = modifier
+            .wrapContentSize()
+            .horizontalScroll(rememberScrollState()),
         horizontalArrangement = Arrangement.Center
     ) {
         genres.forEach { genre ->
@@ -153,6 +171,47 @@ private fun GenreComponent(
             )
         }
     }
+}
+
+@Composable
+fun ReleaseDateComponent(
+    modifier: Modifier = Modifier,
+    releaseDate: String,
+    status: String,
+) {
+    Row(
+        modifier = modifier
+            .wrapContentSize()
+    ) {
+        Text(
+            text = releaseDate,
+            color = MaterialTheme.colorScheme.onPrimaryContainer,
+            fontSize = 16.sp,
+            fontFamily = FontFamily(Font(resId = R.font.sono_bold)),
+        )
+        VerticalDivider(
+            modifier = Modifier
+                .height(18.dp)
+                .padding(horizontal = 8.dp),
+            thickness = 2.dp,
+            color = MaterialTheme.colorScheme.secondary
+        )
+        Text(
+            text = status,
+            color = MaterialTheme.colorScheme.onPrimaryContainer,
+            fontSize = 16.sp,
+            fontFamily = FontFamily(Font(resId = R.font.sono_bold)),
+        )
+    }
+}
+
+@Preview(name = "Release Date Component", showBackground = true, showSystemUi = true)
+@Composable
+private fun ReleaseDatePreview() {
+    ReleaseDateComponent(
+        releaseDate = "17 Aug 2024",
+        status = "Released",
+    )
 }
 
 @Preview(name = "Genre Component", showBackground = true, showSystemUi = true)
@@ -173,7 +232,7 @@ private fun OverviewUIPreview() {
             rating = "8.9/10",
             overview = "Long Overview",
             genres = listOf("Action", "Adventure", "Fantasy"),
-            releaseDate = "12 January 2023",
+            releaseDate = "2023",
             status = "Released",
         )
     )
