@@ -2,6 +2,8 @@ package com.arj.detail.impl.mapper
 
 import com.arj.detail.api.response.DetailMovieCreditsResponse
 import com.arj.detail.api.response.DetailMovieResponse
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 fun DetailMovieResponse.toDetailMovie() = DetailMovie(
     id = id,
@@ -10,6 +12,14 @@ fun DetailMovieResponse.toDetailMovie() = DetailMovie(
     title = title,
     overview = overview,
     rating = rating,
+    releaseDate = releaseDate.getDateFormatted(),
+    status = status,
+    genres = genres.map {
+        Genre(
+            id = it.id,
+            name = it.name
+        )
+    }
 )
 
 fun DetailMovieCreditsResponse.toCreditsMovie() = CreditsMovie(
@@ -49,4 +59,12 @@ private enum class GenderEnum(val value: Int?) {
     };
 
     abstract val gender: String
+}
+
+private fun String.getDateFormatted(): String {
+    if (this.isEmpty()) return ""
+
+    val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(this)
+    return dateFormat?.let { SimpleDateFormat("dd MMMM yyyy", Locale.getDefault()).format(it) }
+        ?: ""
 }

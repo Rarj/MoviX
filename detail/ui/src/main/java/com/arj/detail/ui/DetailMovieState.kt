@@ -10,6 +10,9 @@ data class DetailMovieState(
     val posterPath: String? = null,
     val rating: String = "",
     val overview: String = "",
+    val releaseDate: String = "",
+    val status: String= "",
+    val genres: List<String> = emptyList(),
     val casts: List<Cast> = emptyList(),
     val crews: List<Crew> = emptyList(),
 )

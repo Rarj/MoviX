@@ -34,6 +34,9 @@ class DetailMovieViewModel @Inject constructor(
                             posterPath = response.posterPath,
                             rating = getRating(response.rating),
                             overview = response.overview,
+                            releaseDate = response.releaseDate,
+                            status = response.status,
+                            genres = response.genres.orEmpty().map { genre -> genre.name },
                         )
                     }
                 }
