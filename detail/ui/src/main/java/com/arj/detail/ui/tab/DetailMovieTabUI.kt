@@ -51,7 +51,7 @@ internal fun TabUI(
             selectedTabIndex = selectedIndex,
             containerColor = MaterialTheme.colorScheme.onPrimaryContainer,
             modifier = Modifier
-                .padding(vertical = 4.dp, horizontal = 8.dp)
+                .padding(vertical = 4.dp, horizontal = 16.dp)
                 .clip(RoundedCornerShape(percent = 25))
                 .background(MaterialTheme.colorScheme.onPrimaryContainer)
                 .padding(1.dp),

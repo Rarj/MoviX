@@ -1,18 +1,22 @@
 package com.arj.detail.ui.tab.overview
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.semantics.contentDescription
@@ -30,6 +34,7 @@ import com.arj.detail.ui.DetailMovieState
 import com.arj.uikit.BackdropUiKit
 import com.arj.uikit.R
 import com.arj.uikit.appearance.ColorStar
+import com.arj.uikit.R as RUiKit
 
 @Composable
 internal fun OverviewUI(
@@ -40,12 +45,12 @@ internal fun OverviewUI(
         modifier = modifier
             .fillMaxWidth()
             .fillMaxHeight()
-            .padding(top = 8.dp)
             .verticalScroll(rememberScrollState())
     ) {
-        val (poster, rating, synopsys) = createRefs()
+        val (poster, genre, rating, synopsys) = createRefs()
         createVerticalChain(
             poster,
+            genre,
             rating,
             synopsys,
             chainStyle = ChainStyle.Packed(0f)
@@ -63,10 +68,23 @@ internal fun OverviewUI(
             contentDescription = state.title,
         )
 
+        GenreComponent(
+            modifier = Modifier
+                .constrainAs(genre) {
+                    top.linkTo(poster.bottom)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                    height = Dimension.wrapContent
+                    width = Dimension.fillToConstraints
+                }
+                .padding(horizontal = 16.dp, vertical = 8.dp),
+            genres = state.genres,
+        )
+
         Row(
             modifier = Modifier
                 .constrainAs(rating) {
-                    top.linkTo(poster.bottom)
+                    top.linkTo(genre.bottom)
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
                     height = Dimension.wrapContent
@@ -112,6 +130,39 @@ internal fun OverviewUI(
     }
 }
 
+@Composable
+private fun GenreComponent(
+    modifier: Modifier = Modifier,
+    genres: List<String>,
+) {
+    Row(
+        modifier = modifier.wrapContentSize(),
+        horizontalArrangement = Arrangement.Center
+    ) {
+        genres.forEach { genre ->
+            Text(
+                modifier = Modifier
+                    .padding(horizontal = 1.dp)
+                    .clip(RoundedCornerShape(50))
+                    .background(color = MaterialTheme.colorScheme.tertiary)
+                    .padding(horizontal = 8.dp, vertical = 4.dp),
+                text = genre,
+                color = MaterialTheme.colorScheme.onTertiary,
+                fontSize = 12.sp,
+                fontFamily = FontFamily(Font(RUiKit.font.sono_medium)),
+            )
+        }
+    }
+}
+
+@Preview(name = "Genre Component", showBackground = true, showSystemUi = true)
+@Composable
+private fun GenreComponentPreview() {
+    GenreComponent(
+        genres = listOf("Action", "Adventure", "Fantasy")
+    )
+}
+
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun OverviewUIPreview() {
@@ -120,7 +171,10 @@ private fun OverviewUIPreview() {
             title = "Avenger",
             posterPath = "url",
             rating = "8.9/10",
-            overview = "Long Overview"
+            overview = "Long Overview",
+            genres = listOf("Action", "Adventure", "Fantasy"),
+            releaseDate = "12 January 2023",
+            status = "Released",
         )
     )
 }
