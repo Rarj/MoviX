@@ -1,20 +1,21 @@
 package com.arj.detail.ui.tab
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
@@ -22,18 +23,20 @@ import androidx.compose.ui.unit.dp
 import com.arj.detail.ui.DetailMovieState
 import com.arj.detail.ui.tab.caster.CastUI
 import com.arj.detail.ui.tab.overview.OverviewUI
+import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun TabUI(
     modifier: Modifier,
     state: DetailMovieState,
 ) {
-    var selectedIndex by remember { mutableIntStateOf(0) }
+    val scope = rememberCoroutineScope()
     val tabItems = listOf(
         DetailMovieTabItem(
             name = "Overview",
             selectedIndex = 0
-        ) { OverviewUI( state = state) },
+        ) { OverviewUI(state = state) },
         DetailMovieTabItem(
             name = "Casters",
             selectedIndex = 1,
@@ -43,12 +46,13 @@ internal fun TabUI(
             selectedIndex = 2,
         ) { CastUI(state = state) }
     )
+    val pagerState = rememberPagerState { tabItems.size }
 
     Column(
         modifier = modifier,
     ) {
         TabRow(
-            selectedTabIndex = selectedIndex,
+            selectedTabIndex = pagerState.currentPage,
             containerColor = MaterialTheme.colorScheme.onPrimaryContainer,
             modifier = Modifier
                 .padding(vertical = 4.dp, horizontal = 16.dp)
@@ -64,11 +68,15 @@ internal fun TabUI(
                         .wrapContentWidth()
                         .clip(RoundedCornerShape(percent = 25))
                         .background(
-                            if (selectedIndex == index) MaterialTheme.colorScheme.primaryContainer
+                            if (pagerState.currentPage == index) MaterialTheme.colorScheme.primaryContainer
                             else MaterialTheme.colorScheme.onPrimaryContainer
                         ),
-                    selected = selectedIndex == index,
-                    onClick = { selectedIndex = index },
+                    selected = pagerState.currentPage == index,
+                    onClick = {
+                        scope.launch {
+                            pagerState.animateScrollToPage(index)
+                        }
+                    },
                     text = {
                         Text(text = item.name)
                     }
@@ -76,7 +84,15 @@ internal fun TabUI(
             }
         }
 
-        tabItems[selectedIndex].screen()
+        HorizontalPager(
+
+            state = pagerState,
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f)
+        ) { index ->
+            tabItems[index].screen()
+        }
     }
 }
 
