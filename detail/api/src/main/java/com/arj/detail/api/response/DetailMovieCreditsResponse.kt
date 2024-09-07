@@ -24,4 +24,6 @@ data class DetailMovieCrewResponse(
     @SerializedName("profile_path")
     val profilePath: String?,
     val gender: Int?,
+    @SerializedName("known_for_department")
+    val department: String?,
 )

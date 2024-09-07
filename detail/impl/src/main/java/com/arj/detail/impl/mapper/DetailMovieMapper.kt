@@ -39,6 +39,7 @@ fun DetailMovieCreditsResponse.toCreditsMovie() = CreditsMovie(
             name = it.name,
             profilePath = it.profilePath,
             gender = it.gender?.getGender(),
+            department = it.department,
         )
     },
 )

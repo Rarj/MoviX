@@ -19,4 +19,5 @@ data class Crew(
     val name: String,
     val profilePath: String?,
     val gender: String?,
+    val department: String?,
 )
