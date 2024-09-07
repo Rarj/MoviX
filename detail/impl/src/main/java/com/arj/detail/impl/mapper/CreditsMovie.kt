@@ -11,6 +11,7 @@ data class Cast(
     val name: String,
     val profilePath: String?,
     val gender: String?,
+    val department: String?,
 )
 
 data class Crew(
