@@ -30,6 +30,7 @@ fun DetailMovieCreditsResponse.toCreditsMovie() = CreditsMovie(
             name = it.name,
             profilePath = it.profilePath,
             gender = it.gender?.getGender(),
+            department = it.department,
         )
     },
     crews = crew?.map {
@@ -42,9 +43,13 @@ fun DetailMovieCreditsResponse.toCreditsMovie() = CreditsMovie(
     },
 )
 
-private fun Int.getGender() = GenderEnum.entries.find { gender -> gender.value == this }?.name
+private fun Int.getGender() = GenderEnum.entries.find { gender -> gender.value == this }?.gender
 
 private enum class GenderEnum(val value: Int?) {
+    NOT_SPECIFIED(0) {
+        override val gender: String
+            get() = "Not Specified"
+    },
     SHE(1) {
         override val gender: String
             get() = "She"
@@ -52,6 +57,10 @@ private enum class GenderEnum(val value: Int?) {
     HE(2) {
         override val gender: String
             get() = "He"
+    },
+    NON_BINARY(3) {
+        override val gender: String
+            get() = "Non-binary"
     },
     UNKNOWN(null) {
         override val gender: String
