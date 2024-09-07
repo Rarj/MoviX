@@ -22,6 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.arj.detail.ui.DetailMovieState
 import com.arj.detail.ui.tab.caster.CastUI
+import com.arj.detail.ui.tab.crew.CrewUI
 import com.arj.detail.ui.tab.overview.OverviewUI
 import kotlinx.coroutines.launch
 
@@ -50,7 +51,7 @@ internal fun TabUI(
         DetailMovieTabItem(
             name = "Crews",
             selectedIndex = 2,
-        ) {  }
+        ) { CrewUI(crews = state.crews) }
     )
     val pagerState = rememberPagerState { tabItems.size }
 
