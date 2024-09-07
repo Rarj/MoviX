@@ -46,11 +46,11 @@ internal fun TabUI(
         DetailMovieTabItem(
             name = "Casters",
             selectedIndex = 1,
-        ) { CastUI(state = state) },
+        ) { CastUI(casts = state.casts) },
         DetailMovieTabItem(
             name = "Crews",
             selectedIndex = 2,
-        ) { CastUI(state = state) }
+        ) {  }
     )
     val pagerState = rememberPagerState { tabItems.size }
 
