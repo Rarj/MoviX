@@ -5,12 +5,14 @@ import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -42,18 +44,20 @@ import com.arj.uikit.R as RUiKit
 internal fun OverviewUI(
     modifier: Modifier = Modifier,
     state: DetailMovieState,
+    onReview: () -> Unit,
 ) {
     ConstraintLayout(
         modifier = modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
     ) {
-        val (poster, releaseStatus, genre, synopsys) = createRefs()
+        val (poster, releaseStatus, genre, synopsys, review) = createRefs()
         createVerticalChain(
             poster,
             releaseStatus,
             genre,
             synopsys,
+            review,
             chainStyle = ChainStyle.Packed(0f)
         )
 
@@ -116,6 +120,23 @@ internal fun OverviewUI(
             fontSize = 18.sp,
             fontFamily = FontFamily(Font(R.font.sono_light)),
         )
+
+        Button(
+            modifier = Modifier
+                .constrainAs(review) {
+                    top.linkTo(synopsys.bottom)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                    height = Dimension.wrapContent
+                    width = Dimension.fillToConstraints
+                }
+                .fillMaxWidth()
+                .padding(start = 16.dp, end = 16.dp, bottom = 32.dp),
+            onClick = onReview,
+            shape = RoundedCornerShape(8.dp),
+        ) {
+            Text(text = "See Review")
+        }
     }
 }
 
@@ -230,6 +251,7 @@ private fun OverviewUIPreview() {
             genres = listOf("Action", "Adventure", "Fantasy"),
             releaseDate = "2023",
             status = "Released",
-        )
+        ),
+        onReview = {}
     )
 }

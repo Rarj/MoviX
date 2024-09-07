@@ -108,18 +108,8 @@ private fun DetailMovieUI(
                 }
                 .padding(top = 8.dp),
             state = state,
+            onReview = onReview
         )
-
-//        Button(
-//            modifier = Modifier
-//                .fillMaxWidth()
-//                .padding(start = 16.dp, end = 16.dp, bottom = 32.dp),
-//            onClick = { onReview.invoke() },
-//            shape = RoundedCornerShape(8.dp),
-//        ) {
-//            Text(text = "See Review")
-//        }
-
     }
 }
 

@@ -30,13 +30,19 @@ import kotlinx.coroutines.launch
 internal fun TabUI(
     modifier: Modifier,
     state: DetailMovieState,
+    onReview: () -> Unit,
 ) {
     val scope = rememberCoroutineScope()
     val tabItems = listOf(
         DetailMovieTabItem(
             name = "Overview",
             selectedIndex = 0
-        ) { OverviewUI(state = state) },
+        ) {
+            OverviewUI(
+                state = state,
+                onReview = onReview,
+            )
+        },
         DetailMovieTabItem(
             name = "Casters",
             selectedIndex = 1,
@@ -104,6 +110,7 @@ private fun TabPreview() {
             title = "Avenger",
             posterPath = "url",
             rating = "8.9/10",
-        )
+        ),
+        onReview = {}
     )
 }
