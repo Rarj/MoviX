@@ -13,8 +13,8 @@ android {
         applicationId = "com.arj.movix"
         minSdk = 23
         targetSdk = 34
-        versionCode = 200003
-        versionName = "2.3"
+        versionCode = 200301
+        versionName = "2.3.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
