@@ -12,4 +12,13 @@ data class DetailMovieResponse(
     val overview: String,
     @SerializedName("vote_average")
     val rating: Double,
+    @SerializedName("release_date")
+    val releaseDate: String = "",
+    val status: String = "",
+    val genres: List<GenreResponse> = emptyList(),
+)
+
+data class GenreResponse(
+    val id: Int,
+    val name: String,
 )

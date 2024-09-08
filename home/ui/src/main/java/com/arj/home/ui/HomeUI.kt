@@ -3,6 +3,8 @@ package com.arj.home.ui
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -16,8 +18,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -148,9 +154,67 @@ private fun MoviesUI(
         modifier = modifier.padding(start = 8.dp, end = 8.dp, top = 16.dp),
     ) {
         items(pagingItems.itemCount) { index ->
-            PosterUiKit(path = pagingItems[index]?.posterPath) {
+            Item(discoverMovie = pagingItems[index]) {
                 onItemClicked.invoke(pagingItems[index]?.id.toString())
             }
         }
     }
+}
+
+@Composable
+private fun Item(
+    discoverMovie: DiscoverMovie?,
+    onItemClicked: (movieId: String) -> Unit,
+) {
+    Column {
+        PosterUiKit(
+            path = discoverMovie?.posterPath,
+            contentDescription = discoverMovie?.title,
+        ) { onItemClicked.invoke(discoverMovie?.id.toString()) }
+
+        Text(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 4.dp, end = 4.dp)
+                .semantics {
+                contentDescription = discoverMovie?.title.orEmpty()
+            },
+            text = discoverMovie?.title.orEmpty(),
+            color = MaterialTheme.colorScheme.onPrimaryContainer,
+            maxLines = 1,
+            fontSize = 16.sp,
+            fontFamily = FontFamily(Font(resId = RUiKit.font.sono_semibold)),
+            overflow = TextOverflow.Ellipsis
+        )
+
+        Text(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 4.dp, end = 4.dp, bottom = 12.dp)
+                .semantics {
+                    contentDescription = discoverMovie?.title.orEmpty()
+                },
+            text = discoverMovie?.releaseDate.orEmpty(),
+            color = MaterialTheme.colorScheme.onPrimaryContainer,
+            maxLines = 1,
+            fontSize = 14.sp,
+            fontFamily = FontFamily(Font(resId = RUiKit.font.sono_medium)),
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun HomePreview() {
+    Item(
+        discoverMovie = DiscoverMovie(
+            id = 1,
+            posterPath = "poster_path",
+            genreIds = emptyList(),
+            title = "Garfield",
+            overview = "overview",
+            rating = 10.0,
+            releaseDate = "17 August 2024"
+        )
+    ) { }
 }
