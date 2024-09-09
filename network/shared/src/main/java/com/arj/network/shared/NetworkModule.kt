@@ -1,5 +1,6 @@
 package com.arj.network.shared
 
+import com.arj.network.RetryMechanismInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,18 +24,8 @@ class NetworkModule {
     @Provides
     fun provideOkHttp(loggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
         val okHttpClient = OkHttpClient.Builder()
-            .addInterceptor { chain ->
-                val original = chain.request()
-                val request = original.newBuilder()
-                    .addHeader("accept", "application/json")
-                    .addHeader(
-                        "Authorization",
-                        "Bearer ${BuildConfig.AUTH_TOKEN}"
-                    )
-                    .build()
-
-                chain.proceed(request)
-            }
+            .retryOnConnectionFailure(true)
+            .addInterceptor(RetryMechanismInterceptor(BuildConfig.AUTH_TOKEN))
 
         if (BuildConfig.DEBUG)
             okHttpClient.addInterceptor(loggingInterceptor)
