@@ -3,6 +3,8 @@ plugins {
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.hilt)
     alias(libs.plugins.kotlinkapt)
+    alias(libs.plugins.googleService)
+    alias(libs.plugins.crashlytics)
 }
 
 android {
@@ -65,6 +67,9 @@ dependencies {
 
     implementation(libs.coil)
     implementation(libs.paging.compose)
+
+    implementation(libs.firebase.crashlytics)
+    implementation(libs.firebase.analytics)
 }
 
 kapt {
