@@ -1,6 +1,7 @@
 package com.arj.movix
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,6 +19,7 @@ import com.arj.movix.appearance.MovixTheme
 import com.arj.navigation.detail.controller.DETAIL_MOVIE_ID_ARGS
 import com.arj.navigation.detail.controller.DETAIL_MOVIE_ROUTE
 import com.arj.navigation.home.controller.HOME_ROUTE
+import com.arj.network.connectivity.ConnectivityManager
 import com.arj.search.controller.SEARCH_ROUTE
 import com.arj.search.ui.SearchUI
 import dagger.hilt.android.AndroidEntryPoint
@@ -33,6 +35,9 @@ class MainActivity : ComponentActivity() {
 
     @Inject
     lateinit var detailMovieNavigation: DetailMovieNavigation
+
+    @Inject
+    lateinit var connectivityManager: ConnectivityManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -88,6 +93,22 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+
+        connectivityManager.apply {
+            registerCallback(onShow = {
+                Toast.makeText(this@MainActivity, "No Internet Access", Toast.LENGTH_SHORT).show()
+            }, onHide = {
+                Toast.makeText(this@MainActivity, "Connected To Internet", Toast.LENGTH_SHORT).show()
+            })
+            registerInstance()
+        }
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        connectivityManager.clearInstance()
     }
 
 }
