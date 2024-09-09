@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.arj.network.shared"
+    namespace = "com.arj.network.connectivity"
     compileSdk = 34
 
     defaultConfig {
@@ -14,14 +14,11 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
-
-        buildConfigField("String", "AUTH_TOKEN", "\"eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4Nzg2N2Q3NTI1ODAyOTllNDJkNTc1ZTlhNGY4YjU0NSIsIm5iZiI6MTcyMzUxNjQ0Ny4wOTIwMTMsInN1YiI6IjYwNTBjNGRjNmRjNmMwMDA2YTBjZjQ0MCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ZvTojoEh7_osZKiIJNLBYvxU9Vof6sss086_gYL6tyE\"")
-        buildConfigField("String", "BASE_URL", "\"https://api.themoviedb.org/3/\"")
     }
 
     buildTypes {
         release {
-            isMinifyEnabled = true
+            isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -35,24 +32,14 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    buildFeatures {
-        buildConfig = true
-    }
 }
 
 dependencies {
-    implementation(project(":network:connectivity"))
-
-    api(libs.retrofit)
-    implementation(libs.okHttp)
-    implementation(libs.logging.interceptor)
-    api(libs.gson)
-    implementation(libs.gson.converter)
-
     implementation(libs.dagger.hilt)
     kapt(libs.dagger.hilt.compiler)
 
-    api(libs.paging3)
+    implementation(libs.logging.interceptor)
+
 }
 
 kapt {
