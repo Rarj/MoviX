@@ -22,6 +22,15 @@ android {
     }
 
     buildTypes {
+        debug {
+            isDebuggable = true
+            isMinifyEnabled = false
+            isShrinkResources = false
+
+            applicationIdSuffix = ".debug"
+            versionNameSuffix = "-DEBUG"
+            resValue(type = "string", name = "app_name", value = "MoviX Debug")
+        }
         release {
             isDebuggable = false
             isMinifyEnabled = false
