@@ -9,6 +9,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -41,7 +42,9 @@ class HomeViewModel @Inject constructor(
 
     private fun getGenres() {
         viewModelScope.launch {
-            genreRepo.getGenres().collectLatest { genres ->
+            genreRepo.getGenres()
+                .catch {  }
+                .collectLatest { genres ->
                 val genre = genres.firstOrNull()
                 if (genre?.id.toString() != state.value.selectedGenreId) {
                     setSelectedGenre(
@@ -58,6 +61,7 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             val response = movieRepository.getDiscoverMovie(state.value.selectedGenreId)
                 .cachedIn(this)
+                .catch {  }
 
             _state.update {
                 it.copy(

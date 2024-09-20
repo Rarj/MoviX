@@ -11,4 +11,6 @@ interface ConnectivityManager {
     fun registerInstance()
 
     fun clearInstance()
+
+    fun checkConnectionStatus(): Boolean
 }

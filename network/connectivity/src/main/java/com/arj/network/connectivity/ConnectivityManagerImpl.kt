@@ -2,8 +2,8 @@ package com.arj.network.connectivity
 
 import android.content.Context
 import android.net.Network
+import android.net.NetworkRequest
 import android.os.Build
-import android.util.Log
 import javax.inject.Inject
 
 class ConnectivityManagerImpl @Inject constructor(
@@ -27,19 +27,19 @@ class ConnectivityManagerImpl @Inject constructor(
             override fun onLosing(network: Network, maxMsToLive: Int) {
                 super.onLosing(network, maxMsToLive)
 
-                onShow()
+                if (checkConnectionStatus()) onShow()
             }
 
             override fun onLost(network: Network) {
                 super.onLost(network)
 
-                onShow()
+                if (checkConnectionStatus()) onShow()
             }
 
             override fun onUnavailable() {
                 super.onUnavailable()
 
-                onShow()
+                if (checkConnectionStatus()) onShow()
             }
         }
 
@@ -48,10 +48,23 @@ class ConnectivityManagerImpl @Inject constructor(
 
     override fun registerInstance() {
         connectivityManager = context.getSystemService(android.net.ConnectivityManager::class.java)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            connectivityManager.registerDefaultNetworkCallback(callback)
+        connectivityManager.apply {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) registerDefaultNetworkCallback(callback)
+            else registerNetworkCallback(NetworkRequest.Builder().build(), callback)
         }
     }
+
+    override fun checkConnectionStatus(): Boolean {
+        return !isCellularTransportEnabled() && !isWifiTransportEnabled()
+    }
+
+    private fun isCellularTransportEnabled() = connectivityManager.activeNetwork != null &&
+            connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+                ?.hasTransport(android.net.NetworkCapabilities.TRANSPORT_CELLULAR) ?: false
+
+    private fun isWifiTransportEnabled() = connectivityManager.activeNetwork != null &&
+            connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+                ?.hasTransport(android.net.NetworkCapabilities.TRANSPORT_WIFI) ?: false
 
     override fun clearInstance() {
         callback.let {
