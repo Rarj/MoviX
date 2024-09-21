@@ -4,8 +4,8 @@ import android.net.ConnectivityManager
 
 interface ConnectivityManager {
     fun registerCallback(
-        onShow: () -> Unit,
-        onHide: () -> Unit,
+        onDisconnected: () -> Unit,
+        onConnected: () -> Unit,
     ): ConnectivityManager.NetworkCallback
 
     fun registerInstance()

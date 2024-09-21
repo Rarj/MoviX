@@ -5,11 +5,21 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.core.view.WindowCompat
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -25,6 +35,7 @@ import com.arj.navigation.home.controller.HOME_ROUTE
 import com.arj.network.ConnectivityManagerViewModel
 import com.arj.search.controller.SEARCH_ROUTE
 import com.arj.search.ui.SearchUI
+import com.arj.uikit.R
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import com.arj.navigation.detail.controller.Navigation as DetailMovieNavigation
@@ -50,7 +61,7 @@ class MainActivity : ComponentActivity() {
                 Surface {
                     val isConnected = connectivityViewModel.state.collectAsState().value.connectionIsConnected
                     if (isConnected != null && isConnected == false) {
-                        // TODO: Show "No Internet Connection" banner/dialog/bottom sheet
+                        NoConnectionAlert()
                     }
 
                     val navController = rememberNavController()
@@ -101,6 +112,33 @@ class MainActivity : ComponentActivity() {
             }
         }
 
+    }
+
+    @Composable
+    private fun NoConnectionAlert() {
+        AlertDialog(
+            containerColor = MaterialTheme.colorScheme.primaryContainer,
+            title = {
+                Text(
+                    text = "You're not connected to internet",
+                    color = MaterialTheme.colorScheme.onPrimaryContainer,
+                    fontSize = 18.sp,
+                    fontFamily = FontFamily(Font(resId = R.font.sono_medium)),
+                )
+            },
+            onDismissRequest = {  },
+            confirmButton = {
+                Text(
+                    modifier = Modifier
+                        .clickable { connectivityViewModel.setOnRetry(status = true) }
+                        .padding(all = 8.dp),
+                    text = "Retry",
+                    color = MaterialTheme.colorScheme.tertiary,
+                    fontSize = 18.sp,
+                    fontFamily = FontFamily(Font(resId = R.font.sono_medium)),
+                )
+            },
+        )
     }
 
     override fun onStart() {

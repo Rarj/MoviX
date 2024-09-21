@@ -14,32 +14,32 @@ class ConnectivityManagerImpl @Inject constructor(
     private lateinit var callback: android.net.ConnectivityManager.NetworkCallback
 
     override fun registerCallback(
-        onShow: () -> Unit,
-        onHide: () -> Unit,
+        onDisconnected: () -> Unit,
+        onConnected: () -> Unit,
     ): android.net.ConnectivityManager.NetworkCallback {
         callback = object : android.net.ConnectivityManager.NetworkCallback() {
             override fun onAvailable(network: Network) {
                 super.onAvailable(network)
 
-                onHide()
+                onConnected()
             }
 
             override fun onLosing(network: Network, maxMsToLive: Int) {
                 super.onLosing(network, maxMsToLive)
 
-                if (checkConnectionStatus()) onShow()
+                if (!checkConnectionStatus()) onDisconnected()
             }
 
             override fun onLost(network: Network) {
                 super.onLost(network)
 
-                if (checkConnectionStatus()) onShow()
+                if (!checkConnectionStatus()) onDisconnected()
             }
 
             override fun onUnavailable() {
                 super.onUnavailable()
 
-                if (checkConnectionStatus()) onShow()
+                if (!checkConnectionStatus()) onDisconnected()
             }
         }
 
@@ -55,7 +55,7 @@ class ConnectivityManagerImpl @Inject constructor(
     }
 
     override fun checkConnectionStatus(): Boolean {
-        return !isCellularTransportEnabled() && !isWifiTransportEnabled()
+        return isCellularTransportEnabled() || isWifiTransportEnabled()
     }
 
     private fun isCellularTransportEnabled() = connectivityManager.activeNetwork != null &&

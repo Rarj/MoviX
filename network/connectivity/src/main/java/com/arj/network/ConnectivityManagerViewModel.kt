@@ -18,10 +18,10 @@ class ConnectivityManagerViewModel @Inject constructor(
 
     fun register() {
         connectivityManager.apply {
-            registerCallback(onShow = {
-                setConnectedStatus(false)
-            }, onHide = {
-                setConnectedStatus(true)
+            registerCallback(onDisconnected = {
+                setConnectedStatus(status = false)
+            }, onConnected = {
+                setConnectedStatus(status = true)
             })
             registerInstance()
         }
@@ -35,6 +35,14 @@ class ConnectivityManagerViewModel @Inject constructor(
         _state.update {
             it.copy(
                 connectionIsConnected = status,
+            )
+        }
+    }
+
+    fun setOnRetry(status: Boolean) {
+        _state.update {
+            it.copy(
+                onRetry = status,
             )
         }
     }
