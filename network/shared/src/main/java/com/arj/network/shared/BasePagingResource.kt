@@ -25,6 +25,6 @@ class BasePagingSource<V : Any>(
     }
 
     override fun getRefreshKey(state: PagingState<Int, V>): Int? {
-        return null
+        return state.anchorPosition
     }
 }
