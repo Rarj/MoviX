@@ -44,6 +44,7 @@ dependencies {
     implementation(project(":uikit"))
     implementation(project(":home:di"))
     implementation(project(":home:impl"))
+    implementation(project(":network:connectivity"))
 
     implementation(libs.compose.constraintlayout)
     implementation(libs.compose.material3)

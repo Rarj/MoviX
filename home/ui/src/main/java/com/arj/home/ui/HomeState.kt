@@ -2,6 +2,8 @@ package com.arj.home.ui
 
 import androidx.paging.PagingData
 import com.arj.home.impl.discover.mapper.DiscoverMovie
+import com.arj.network.ConnectivityManagerState
+import com.arj.network.ConnectivityManagerStatus
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 
@@ -10,5 +12,6 @@ data class HomeState(
     val selectedGenre: String? = null,
     var selectedGenreId: String? = null,
     val errorMessage: String? = null,
-    val moviePagingDataState: Flow<PagingData<DiscoverMovie>> = emptyFlow()
+    val moviePagingDataState: Flow<PagingData<DiscoverMovie>> = emptyFlow(),
+    val connectionStatus: ConnectivityManagerStatus = ConnectivityManagerStatus.Connected,
 )

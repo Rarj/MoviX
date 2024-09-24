@@ -32,9 +32,34 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.arj.home.impl.discover.mapper.DiscoverMovie
 import com.arj.home.ui.filter.FilterScreen
+import com.arj.network.ConnectivityManagerStatus
+import com.arj.network.ConnectivityManagerViewModel
 import com.arj.uikit.PosterUiKit
 import com.arj.uikit.ToolbarUiKit
 import com.arj.uikit.R as RUiKit
+
+@Composable
+private fun ConnectionDialog(
+    onDismissRequest: () -> Unit,
+    onRetry: () -> Unit,
+) {
+    AlertDialog(
+        containerColor = MaterialTheme.colorScheme.primaryContainer,
+        title = { },
+        onDismissRequest = { onDismissRequest() },
+        confirmButton = {
+            Text(
+                modifier = Modifier
+                    .clickable { onRetry() }
+                    .padding(all = 8.dp),
+                text = "Retry Home",
+                color = MaterialTheme.colorScheme.tertiary,
+                fontSize = 18.sp,
+                fontFamily = FontFamily(Font(resId = com.arj.uikit.R.font.sono_medium)),
+            )
+        },
+    )
+}
 
 @Composable
 fun HomeUI(
@@ -53,6 +78,19 @@ fun HomeUI(
 
     if (isAboutClicked.value) AlertAboutUI(isAboutClicked)
     val filterPageState = remember { mutableStateOf(false) }
+
+    if (state.connectionStatus is ConnectivityManagerStatus.Disconnected) {
+        ConnectionDialog(
+            onDismissRequest = { },
+            onRetry = {
+                if (state.selectedGenreId.isNullOrEmpty()) {
+                    viewModel.getGenres()
+                } else {
+                    viewModel.getMovies()
+                }
+            }
+        )
+    }
 
     if (filterPageState.value) {
         FilterScreen(
@@ -177,8 +215,8 @@ private fun Item(
                 .fillMaxWidth()
                 .padding(start = 4.dp, end = 4.dp)
                 .semantics {
-                contentDescription = discoverMovie?.title.orEmpty()
-            },
+                    contentDescription = discoverMovie?.title.orEmpty()
+                },
             text = discoverMovie?.title.orEmpty(),
             color = MaterialTheme.colorScheme.onPrimaryContainer,
             maxLines = 1,
