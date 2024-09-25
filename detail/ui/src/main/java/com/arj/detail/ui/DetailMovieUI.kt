@@ -141,7 +141,7 @@ private fun ToolbarUI(
             textAlign = TextAlign.Start,
             text = title,
             color = MaterialTheme.colorScheme.onPrimaryContainer,
-            fontSize = 28.sp,
+            fontSize = 24.sp,
             fontFamily = FontFamily(Font(resId = RUiKit.font.sono_extrabold))
         )
     }
