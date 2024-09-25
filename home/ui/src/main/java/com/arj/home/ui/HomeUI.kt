@@ -4,6 +4,7 @@ import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -27,6 +28,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -71,10 +73,12 @@ fun HomeUI(
 
     ConstraintLayout(
         modifier = modifier
+            .fillMaxSize()
             .background(color = MaterialTheme.colorScheme.primaryContainer)
-            .padding(top = 24.dp)
+            .padding(top = 24.dp, bottom = 24.dp)
     ) {
         val (toolbar, genre, movies) = createRefs()
+        createVerticalChain(toolbar, genre, movies)
 
         ToolbarUiKit(
             modifier = Modifier.constrainAs(toolbar) {
@@ -102,10 +106,12 @@ fun HomeUI(
 
         MoviesUI(
             modifier = Modifier
+                .fillMaxSize()
                 .constrainAs(movies) {
                     top.linkTo(genre.bottom)
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
+                    height = Dimension.fillToConstraints
                 }
                 .animateContentSize(),
             pagingItems = state.moviePagingDataState.collectAsLazyPagingItems(),
