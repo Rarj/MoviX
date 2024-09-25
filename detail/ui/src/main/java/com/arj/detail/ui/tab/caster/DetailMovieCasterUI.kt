@@ -1,6 +1,7 @@
 package com.arj.detail.ui.tab.caster
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -37,6 +38,7 @@ internal fun CastUI(
 ) {
     LazyColumn(
         modifier = Modifier.padding(8.dp)
+            .fillMaxSize()
     ) {
         items(casts.size) { index ->
             val cast = casts[index]

@@ -1,6 +1,7 @@
 package com.arj.detail.ui.tab.crew
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -37,6 +38,7 @@ internal fun CrewUI(
 ) {
     LazyColumn(
         modifier = Modifier.padding(8.dp)
+            .fillMaxSize()
     ) {
         items(crews.size) { index ->
             val crew = crews[index]
