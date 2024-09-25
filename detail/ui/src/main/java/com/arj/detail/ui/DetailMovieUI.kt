@@ -139,7 +139,6 @@ private fun ToolbarUI(
                     contentDescription = "Movie Title"
                 },
             textAlign = TextAlign.Start,
-            maxLines = 3,
             text = title,
             color = MaterialTheme.colorScheme.onPrimaryContainer,
             fontSize = 28.sp,
