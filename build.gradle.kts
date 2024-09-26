@@ -6,4 +6,5 @@ plugins {
     alias(libs.plugins.hilt) apply false
     alias(libs.plugins.kotlinkapt) apply false
     alias(libs.plugins.googleService) apply false
+    alias(libs.plugins.androidTest) apply false
 }
