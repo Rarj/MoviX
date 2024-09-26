@@ -3,6 +3,8 @@ plugins {
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.hilt)
     alias(libs.plugins.kotlinkapt)
+    alias(libs.plugins.googleService)
+    alias(libs.plugins.crashlytics)
 }
 
 android {
@@ -13,13 +15,22 @@ android {
         applicationId = "com.arj.movix"
         minSdk = 23
         targetSdk = 34
-        versionCode = 200301
-        versionName = "2.3.1"
+        versionCode = 200302
+        versionName = "2.3.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
+        debug {
+            isDebuggable = true
+            isMinifyEnabled = false
+            isShrinkResources = false
+
+            applicationIdSuffix = ".debug"
+            versionNameSuffix = "-DEBUG"
+            resValue(type = "string", name = "app_name", value = "MoviX Debug")
+        }
         release {
             isDebuggable = false
             isMinifyEnabled = false
@@ -65,6 +76,9 @@ dependencies {
 
     implementation(libs.coil)
     implementation(libs.paging.compose)
+
+    implementation(libs.firebase.crashlytics)
+    implementation(libs.firebase.analytics)
 }
 
 kapt {

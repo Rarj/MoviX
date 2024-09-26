@@ -34,6 +34,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -53,9 +54,11 @@ fun SearchUI(
     ConstraintLayout(
         modifier = modifier
             .fillMaxSize()
+            .padding(bottom = 24.dp)
             .background(color = MaterialTheme.colorScheme.primaryContainer)
     ) {
         val (topBar, movies) = createRefs()
+        createVerticalChain(topBar, movies)
 
         Row(
             modifier = Modifier
@@ -113,8 +116,10 @@ fun SearchUI(
 
         MoviesUI(
             modifier = Modifier
+                .fillMaxSize()
                 .constrainAs(movies) {
                     top.linkTo(topBar.bottom)
+                    height = Dimension.fillToConstraints
                 }
                 .animateContentSize(),
             pagingItems = state.moviePagingItems.collectAsLazyPagingItems(),
