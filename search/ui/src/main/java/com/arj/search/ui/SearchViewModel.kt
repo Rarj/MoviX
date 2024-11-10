@@ -3,7 +3,7 @@ package com.arj.search.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
-import com.arj.search.impl.SearchRepository
+import com.arj.search.domain.usecase.SearchMovieUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-    private val searchRepository: SearchRepository,
+    private val searchMovieUseCase: SearchMovieUseCase,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(SearchState())
@@ -27,7 +27,7 @@ class SearchViewModel @Inject constructor(
         viewModelScope.launch {
             _state.update {
                 it.copy(
-                    moviePagingItems = searchRepository.searchMovie(keyword = keyword)
+                    moviePagingItems = searchMovieUseCase.invoke(keyword = keyword)
                         .debounce(2000L)
                         .cachedIn(this)
                 )

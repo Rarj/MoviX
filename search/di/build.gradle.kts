@@ -35,8 +35,11 @@ android {
 }
 
 dependencies {
+    implementation(project(":network:shared"))
+
     implementation(project(":search:impl"))
     implementation(project(":search:api"))
+    implementation(project(":search:domain"))
 
     implementation(libs.dagger.hilt)
     kapt(libs.dagger.hilt.compiler)

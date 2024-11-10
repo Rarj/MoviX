@@ -1,6 +1,6 @@
-package com.arj.search.impl.mapper
+package com.arj.search.domain.model
 
-data class Movie(
+data class MovieModel(
     val id: Int,
     val posterPath: String?,
     val genreIds: List<String>,
