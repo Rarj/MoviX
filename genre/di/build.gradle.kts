@@ -35,6 +35,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":network:shared"))
     implementation(project(":genre:impl"))
     implementation(project(":genre:api"))
     implementation(project(":genre:domain"))
