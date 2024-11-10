@@ -35,7 +35,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":home:api"))
+    implementation(project(":genre:api"))
     implementation(project(":network:shared"))
 
     kapt(libs.dagger.hilt.compiler)
