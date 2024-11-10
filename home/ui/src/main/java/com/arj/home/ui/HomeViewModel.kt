@@ -3,8 +3,8 @@ package com.arj.home.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
-import com.arj.home.domain.DiscoverMovieRepository
 import com.arj.home.domain.usecase.HomeWithDefaultGenreUseCase
+import com.arj.home.domain.usecase.HomeWithGenreUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -14,8 +14,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val movieRepository: DiscoverMovieRepository,
     private val homeUseCase: HomeWithDefaultGenreUseCase,
+    private val homeGenreUseCase: HomeWithGenreUseCase,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(HomeState())
@@ -39,7 +39,7 @@ class HomeViewModel @Inject constructor(
 
     fun getMovies() {
         viewModelScope.launch {
-            val response = movieRepository.getDiscoverMovie(state.value.selectedGenreId)
+            val response = homeGenreUseCase.invoke(state.value.selectedGenreId)
                 .cachedIn(this)
 
             _state.update {
