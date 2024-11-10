@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.arj.home.di"
+    namespace = "com.arj.genre.di"
     compileSdk = 34
 
     defaultConfig {
@@ -36,11 +36,8 @@ android {
 
 dependencies {
     implementation(project(":network:shared"))
-
-    implementation(project(":home:impl"))
-    implementation(project(":home:api"))
-    implementation(project(":home:domain"))
-
+    implementation(project(":genre:impl"))
+    implementation(project(":genre:api"))
     implementation(project(":genre:domain"))
 
     kapt(libs.dagger.hilt.compiler)
