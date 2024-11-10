@@ -1,7 +1,7 @@
 package com.arj.home.ui.filter
 
-import com.arj.home.impl.genre.mapper.Genre
+import com.arj.genre.domain.model.GenreItemModel
 
 data class GenreState(
-    val genres: List<Genre>? = null,
+    val genres: List<GenreItemModel>? = null,
 )

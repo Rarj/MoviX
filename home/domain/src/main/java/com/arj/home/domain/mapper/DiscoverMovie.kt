@@ -1,4 +1,4 @@
-package com.arj.home.impl.discover.mapper
+package com.arj.home.domain.mapper
 
 data class DiscoverMovie(
     val id: Int,

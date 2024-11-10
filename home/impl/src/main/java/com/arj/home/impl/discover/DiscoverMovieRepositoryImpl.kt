@@ -2,8 +2,9 @@ package com.arj.home.impl.discover
 
 import androidx.paging.PagingData
 import com.arj.home.api.HomeService
-import com.arj.home.impl.discover.mapper.DiscoverMovie
-import com.arj.home.impl.discover.mapper.toDiscoverMovie
+import com.arj.home.domain.DiscoverMovieRepository
+import com.arj.home.domain.mapper.DiscoverMovie
+import com.arj.home.domain.mapper.toDiscoverMovie
 import com.arj.network.shared.NetworkResponse
 import com.arj.network.shared.createPager
 import kotlinx.coroutines.Dispatchers
