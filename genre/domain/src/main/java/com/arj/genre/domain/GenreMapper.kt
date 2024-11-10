@@ -1,10 +1,10 @@
-package com.arj.genre.impl
+package com.arj.genre.domain
 
 import com.arj.genre.api.response.GenreResponse
-import com.arj.genre.impl.model.GenreItemModel
-import com.arj.genre.impl.model.GenreModel
+import com.arj.genre.domain.model.GenreItemModel
+import com.arj.genre.domain.model.GenreModel
 
-internal fun GenreResponse.toGenres() = GenreModel(
+fun GenreResponse.toGenres() = GenreModel(
     genres = genres.map {
         GenreItemModel(
             id = it.id,
