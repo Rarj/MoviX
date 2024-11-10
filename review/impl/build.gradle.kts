@@ -36,6 +36,7 @@ android {
 
 dependencies {
     implementation(project(":review:api"))
+    implementation(project(":review:domain"))
     implementation(project(":network:shared"))
 
     kapt(libs.dagger.hilt.compiler)
