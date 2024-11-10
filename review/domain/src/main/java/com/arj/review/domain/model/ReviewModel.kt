@@ -1,6 +1,6 @@
-package com.arj.review.impl.mapper
+package com.arj.review.domain.model
 
-data class ReviewItem(
+data class ReviewModel(
     val id: String,
     val author: String,
     val content: String,
