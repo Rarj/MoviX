@@ -43,7 +43,7 @@ android {
 dependencies {
     implementation(project(":uikit"))
     implementation(project(":search:di"))
-    implementation(project(":search:impl"))
+    implementation(project(":search:domain"))
 
     implementation(libs.compose.constraintlayout)
     implementation(libs.compose.material3)

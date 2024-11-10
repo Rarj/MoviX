@@ -38,7 +38,7 @@ import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.arj.search.impl.mapper.Movie
+import com.arj.search.domain.model.MovieModel
 import com.arj.uikit.PosterUiKit
 import com.arj.uikit.R as RUiKit
 
@@ -132,7 +132,7 @@ fun SearchUI(
 @Composable
 private fun MoviesUI(
     modifier: Modifier,
-    pagingItems: LazyPagingItems<Movie>,
+    pagingItems: LazyPagingItems<MovieModel>,
     onItemClicked: (movieId: String) -> Unit,
 ) {
     LazyVerticalGrid(
@@ -165,7 +165,7 @@ private fun ClearTextIcon(
 
 @Composable
 private fun Item(
-    movie: Movie?,
+    movie: MovieModel?,
     onItemClicked: (movieId: String) -> Unit,
 ) {
     Column {

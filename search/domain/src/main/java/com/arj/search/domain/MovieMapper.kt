@@ -1,10 +1,11 @@
-package com.arj.search.impl.mapper
+package com.arj.search.domain
 
 import com.arj.search.api.response.MovieResponse
+import com.arj.search.domain.model.MovieModel
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-fun MovieResponse.toMovie() = Movie(
+fun MovieResponse.toMovie() = MovieModel(
     id = id,
     posterPath = posterPath,
     genreIds = genreIds,

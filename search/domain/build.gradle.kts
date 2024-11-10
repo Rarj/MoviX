@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.arj.search.di"
+    namespace = "com.arj.search.domain"
     compileSdk = 34
 
     defaultConfig {
@@ -35,14 +35,11 @@ android {
 }
 
 dependencies {
+    implementation(project(":search:api"))
     implementation(project(":network:shared"))
 
-    implementation(project(":search:impl"))
-    implementation(project(":search:api"))
-    implementation(project(":search:domain"))
-
-    implementation(libs.dagger.hilt)
     kapt(libs.dagger.hilt.compiler)
+    implementation(libs.dagger.hilt)
 }
 
 kapt {
