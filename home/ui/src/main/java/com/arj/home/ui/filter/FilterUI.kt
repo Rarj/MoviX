@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.arj.home.impl.genre.mapper.Genre
+import com.arj.genre.domain.model.GenreItemModel
 import com.arj.uikit.R
 
 @Composable
@@ -31,7 +31,7 @@ fun FilterScreen(
     selectedGenre: String,
     viewModel: GenreViewModel = hiltViewModel(),
     onDismiss: () -> Unit,
-    onGenreClicked: (Genre?) -> Unit
+    onGenreClicked: (GenreItemModel?) -> Unit
 ) {
     val state = viewModel.state.collectAsState()
 
@@ -51,9 +51,9 @@ fun FilterScreen(
 @Composable
 private fun FilterUI(
     selectedGenre: String,
-    genres: List<Genre>?,
+    genres: List<GenreItemModel>?,
     onDismiss: () -> Unit,
-    onGenreClicked: (Genre?) -> Unit,
+    onGenreClicked: (GenreItemModel?) -> Unit,
 ) {
     val sheetState = rememberModalBottomSheetState()
 
@@ -80,8 +80,8 @@ private fun FilterUI(
 @Composable
 private fun GenreItem(
     selectedGenre: String,
-    genre: Genre?,
-    onGenreClicked: (Genre?) -> Unit,
+    genre: GenreItemModel?,
+    onGenreClicked: (GenreItemModel?) -> Unit,
 ) {
     ConstraintLayout(
         modifier = Modifier
@@ -126,7 +126,7 @@ private fun GenreItem(
 private fun GenrePreview() {
     GenreItem(
         selectedGenre = "1",
-        genre = Genre(id = 1, name = "Action"),
+        genre = GenreItemModel(id = 1, name = "Action"),
         {}
     )
 }

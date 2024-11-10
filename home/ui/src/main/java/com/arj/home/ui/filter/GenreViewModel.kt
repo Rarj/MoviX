@@ -2,7 +2,7 @@ package com.arj.home.ui.filter
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.arj.home.impl.genre.GenreRepo
+import com.arj.genre.domain.GenreRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class GenreViewModel @Inject constructor(
-    private val genreRepo: GenreRepo
+    private val genreRepo: GenreRepository
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(GenreState())
@@ -25,7 +25,7 @@ class GenreViewModel @Inject constructor(
             response.collectLatest { genres ->
                 _state.update {
                     it.copy(
-                        genres = genres
+                        genres = genres.genres
                     )
                 }
             }

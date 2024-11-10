@@ -32,7 +32,6 @@ import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.arj.home.impl.discover.mapper.DiscoverMovie
 import com.arj.home.ui.filter.FilterScreen
 import com.arj.uikit.PosterUiKit
 import com.arj.uikit.ToolbarUiKit
@@ -152,7 +151,7 @@ private fun AlertAboutUI(isAboutClicked: MutableState<Boolean>) {
 @Composable
 private fun MoviesUI(
     modifier: Modifier,
-    pagingItems: LazyPagingItems<DiscoverMovie>,
+    pagingItems: LazyPagingItems<com.arj.home.domain.mapper.DiscoverMovie>,
     onItemClicked: (movieId: String) -> Unit,
 ) {
     LazyVerticalGrid(
@@ -169,7 +168,7 @@ private fun MoviesUI(
 
 @Composable
 private fun Item(
-    discoverMovie: DiscoverMovie?,
+    discoverMovie: com.arj.home.domain.mapper.DiscoverMovie?,
     onItemClicked: (movieId: String) -> Unit,
 ) {
     Column {
@@ -213,7 +212,7 @@ private fun Item(
 @Composable
 private fun HomePreview() {
     Item(
-        discoverMovie = DiscoverMovie(
+        discoverMovie = com.arj.home.domain.mapper.DiscoverMovie(
             id = 1,
             posterPath = "poster_path",
             genreIds = emptyList(),

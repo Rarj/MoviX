@@ -3,28 +3,26 @@ package com.arj.home.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
-import com.arj.home.impl.discover.DiscoverMovieRepository
-import com.arj.home.impl.genre.GenreRepo
+import com.arj.home.domain.usecase.HomeWithDefaultGenreUseCase
+import com.arj.home.domain.usecase.HomeWithGenreUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val genreRepo: GenreRepo,
-    private val movieRepository: DiscoverMovieRepository,
+    private val homeUseCase: HomeWithDefaultGenreUseCase,
+    private val homeGenreUseCase: HomeWithGenreUseCase,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(HomeState())
     val state get() = _state.asStateFlow()
 
     init {
-        getGenres()
+        getMoviesWithDefaultGenre()
     }
 
     fun setSelectedGenre(
@@ -39,26 +37,22 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun getGenres() {
+    fun getMovies() {
         viewModelScope.launch {
-            genreRepo.getGenres().collectLatest { genres ->
-                val genre = genres.firstOrNull()
-                if (genre?.id.toString() != state.value.selectedGenreId) {
-                    setSelectedGenre(
-                        id = genre?.id,
-                        name = genre?.name,
-                    )
-                }
-                async { getMovies() }.await()
+            val response = homeGenreUseCase.invoke(state.value.selectedGenreId)
+                .cachedIn(this)
+
+            _state.update {
+                it.copy(
+                    moviePagingDataState = response,
+                )
             }
         }
     }
 
-    fun getMovies() {
+    private fun getMoviesWithDefaultGenre() {
         viewModelScope.launch {
-            val response = movieRepository.getDiscoverMovie(state.value.selectedGenreId)
-                .cachedIn(this)
-
+            val response = homeUseCase.invoke().cachedIn(this)
             _state.update {
                 it.copy(
                     moviePagingDataState = response,

@@ -1,7 +1,7 @@
-package com.arj.home.impl.discover
+package com.arj.home.domain
 
 import androidx.paging.PagingData
-import com.arj.home.impl.discover.mapper.DiscoverMovie
+import com.arj.home.domain.mapper.DiscoverMovie
 import kotlinx.coroutines.flow.Flow
 
 interface DiscoverMovieRepository {

@@ -1,8 +1,7 @@
-package com.arj.home.impl.discover.mapper
+package com.arj.home.domain.mapper
 
 import com.arj.home.api.response.discover.Movie
 import java.text.SimpleDateFormat
-import java.util.Date
 import java.util.Locale
 
 fun Movie.toDiscoverMovie() = DiscoverMovie(
