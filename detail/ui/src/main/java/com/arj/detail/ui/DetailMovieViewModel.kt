@@ -2,7 +2,8 @@ package com.arj.detail.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.arj.detail.impl.DetailMovieRepository
+import com.arj.detail.domain.usecase.CreditUseCase
+import com.arj.detail.domain.usecase.DetailMovieUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,7 +16,8 @@ import kotlin.math.roundToInt
 
 @HiltViewModel
 class DetailMovieViewModel @Inject constructor(
-    private val repo: DetailMovieRepository
+    private val detailUseCase: DetailMovieUseCase,
+    private val creditsCreditUseCase: CreditUseCase,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(DetailMovieState())
@@ -23,8 +25,8 @@ class DetailMovieViewModel @Inject constructor(
 
     fun getDetailMovie(movieId: String) {
         viewModelScope.launch {
-            val detailMovieFlow = repo.getDetailMovie(movieId)
-            val creditsFlow = repo.getCredits(movieId)
+            val detailMovieFlow = detailUseCase.invoke(movieId)
+            val creditsFlow = creditsCreditUseCase.invoke(movieId)
 
             async {
                 detailMovieFlow.collectLatest { response ->

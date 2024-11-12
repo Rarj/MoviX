@@ -1,4 +1,4 @@
-package com.arj.detail.impl.mapper
+package com.arj.detail.domain.mapper
 
 data class CreditsMovie(
     val id: Int,

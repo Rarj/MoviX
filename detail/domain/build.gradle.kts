@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.arj.detail.impl"
+    namespace = "com.arj.detail.domain"
     compileSdk = 34
 
     defaultConfig {
@@ -18,7 +18,7 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = true
+            isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -36,10 +36,10 @@ android {
 
 dependencies {
     implementation(project(":detail:api"))
-    implementation(project(":detail:domain"))
+    implementation(project(":network:shared"))
 
-    kapt(libs.dagger.hilt.compiler)
     implementation(libs.dagger.hilt)
+    kapt(libs.dagger.hilt.compiler)
 }
 
 kapt {
