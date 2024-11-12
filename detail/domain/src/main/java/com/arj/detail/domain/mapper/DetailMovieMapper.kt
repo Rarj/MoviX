@@ -1,4 +1,4 @@
-package com.arj.detail.impl.mapper
+package com.arj.detail.domain.mapper
 
 import com.arj.detail.api.response.DetailMovieCreditsResponse
 import com.arj.detail.api.response.DetailMovieResponse

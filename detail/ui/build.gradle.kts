@@ -43,7 +43,7 @@ android {
 dependencies {
     implementation(project(":uikit"))
     implementation(project(":detail:di"))
-    implementation(project(":detail:impl"))
+    implementation(project(":detail:domain"))
     implementation(project(":review:ui"))
 
     implementation(libs.compose.constraintlayout)

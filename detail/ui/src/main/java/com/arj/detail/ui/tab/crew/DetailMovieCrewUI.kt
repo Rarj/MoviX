@@ -28,7 +28,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.arj.detail.impl.mapper.Crew
+import com.arj.detail.domain.mapper.Crew
 import com.arj.uikit.BuildConfig
 import com.arj.uikit.R
 
