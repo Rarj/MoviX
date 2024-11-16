@@ -1,4 +1,4 @@
-package com.arj.network.shared
+package com.arj.network.state
 
 import dagger.Module
 import dagger.Provides

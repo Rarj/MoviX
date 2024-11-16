@@ -1,4 +1,4 @@
-package com.arj.network.shared
+package com.arj.network.state
 
 sealed class MovixNetworkResult<out T> {
     class Loading<T> : MovixNetworkResult<T>()
