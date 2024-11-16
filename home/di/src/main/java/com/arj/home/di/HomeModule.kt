@@ -4,10 +4,12 @@ import com.arj.home.api.HomeService
 import com.arj.home.domain.DiscoverMovieRepository
 import com.arj.home.domain.usecase.HomeWithDefaultGenreUseCase
 import com.arj.home.impl.discover.DiscoverMovieRepositoryImpl
+import com.arj.network.state.IoDispatcher
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineDispatcher
 import retrofit2.Retrofit
 
 @Module
@@ -20,9 +22,11 @@ class HomeModule {
     }
 
     @Provides
-    fun provideDiscoverMovieRepoImpl(apiService: HomeService): DiscoverMovieRepository {
-        return DiscoverMovieRepositoryImpl(apiService)
-
+    fun provideDiscoverMovieRepoImpl(
+        apiService: HomeService,
+        @IoDispatcher dispatcher: CoroutineDispatcher,
+    ): DiscoverMovieRepository {
+        return DiscoverMovieRepositoryImpl(apiService, dispatcher)
     }
 
     @Provides

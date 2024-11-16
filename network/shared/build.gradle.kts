@@ -41,6 +41,8 @@ android {
 }
 
 dependencies {
+    implementation(project(":network:state"))
+
     api(libs.retrofit)
     implementation(libs.okHttp)
     implementation(libs.logging.interceptor)

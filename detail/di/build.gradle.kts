@@ -36,6 +36,8 @@ android {
 
 dependencies {
     implementation(project(":network:shared"))
+    implementation(project(":network:state"))
+
     implementation(project(":detail:impl"))
     implementation(project(":detail:api"))
     implementation(project(":detail:domain"))
