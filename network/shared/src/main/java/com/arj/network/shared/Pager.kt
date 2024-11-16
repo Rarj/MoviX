@@ -7,7 +7,7 @@ private const val DEFAULT_PAGE_SIZE = 20
 
 fun <V : Any> createPager(
     enablePlaceholders: Boolean = false,
-    apiCall: suspend (latestPage: Int) -> MovixNetworkResult<NetworkResponse<V>>
+    apiCall: suspend (latestPage: Int) -> com.arj.network.state.MovixNetworkResult<NetworkResponse<V>>
 ): Pager<Int, V> = Pager(
     config = PagingConfig(enablePlaceholders = enablePlaceholders, pageSize = DEFAULT_PAGE_SIZE),
     pagingSourceFactory = { BasePagingSource(apiCall) }
