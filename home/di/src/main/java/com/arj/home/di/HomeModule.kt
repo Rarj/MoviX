@@ -4,7 +4,7 @@ import com.arj.home.api.HomeService
 import com.arj.home.domain.DiscoverMovieRepository
 import com.arj.home.domain.usecase.HomeWithDefaultGenreUseCase
 import com.arj.home.impl.discover.DiscoverMovieRepositoryImpl
-import com.arj.network.shared.IoDispatcher
+import com.arj.network.state.IoDispatcher
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

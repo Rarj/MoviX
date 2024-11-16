@@ -1,6 +1,6 @@
 package com.arj.search.di
 
-import com.arj.network.shared.IoDispatcher
+import com.arj.network.state.IoDispatcher
 import com.arj.search.api.SearchService
 import com.arj.search.domain.SearchRepository
 import com.arj.search.domain.usecase.SearchMovieUseCase

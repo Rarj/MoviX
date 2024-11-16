@@ -1,7 +1,7 @@
 package com.arj.search.impl
 
 import androidx.paging.PagingData
-import com.arj.network.shared.MovixNetworkResult
+import com.arj.network.state.MovixNetworkResult
 import com.arj.network.shared.NetworkResponse
 import com.arj.network.shared.createPager
 import com.arj.search.api.SearchService
