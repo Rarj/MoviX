@@ -101,6 +101,9 @@ class MainActivity : ComponentActivity() {
                                 creditState = creditState,
                                 movieId = movieId.orEmpty(),
                                 onBack = { navController.popBackStack() },
+                                onRetry = {
+                                    movieId?.let { id -> detailMovieViewModel.getDetailMovie(id) }
+                                },
                             )
                         }
                     }

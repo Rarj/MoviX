@@ -37,6 +37,7 @@ import androidx.constraintlayout.compose.Dimension
 import com.arj.detail.ui.DetailMovieState
 import com.arj.detail.ui.DetailMovieUIState
 import com.arj.uikit.BackdropUiKit
+import com.arj.uikit.GenericErrorUI
 import com.arj.uikit.R
 import com.arj.uikit.appearance.ColorStar
 import com.arj.uikit.R as RUiKit
@@ -45,12 +46,13 @@ import com.arj.uikit.R as RUiKit
 internal fun OverviewUI(
     state: DetailMovieUIState,
     onReview: () -> Unit,
+    onRetry: () -> Unit,
 ) {
     when (state) {
         is DetailMovieUIState.Init -> {}
         is DetailMovieUIState.Loading -> LoadingUI()
         is DetailMovieUIState.Success -> OverviewUIStateHandler(state = state.data) { onReview.invoke() }
-        is DetailMovieUIState.Error -> {}
+        is DetailMovieUIState.Error -> GenericErrorUI(state.message) { onRetry.invoke() }
     }
 }
 
@@ -250,15 +252,19 @@ private fun GenreComponentPreview() {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun OverviewUIPreview() {
-    OverviewUI(state = DetailMovieUIState.Success(
-        DetailMovieState(
-            title = "Avenger",
-            posterPath = "url",
-            rating = "8.9/10",
-            overview = "Long Overview",
-            genres = listOf("Action", "Adventure", "Fantasy"),
-            releaseDate = "2023",
-            status = "Released",
-        )
-    ), onReview = {})
+    OverviewUI(
+        state = DetailMovieUIState.Success(
+            DetailMovieState(
+                title = "Avenger",
+                posterPath = "url",
+                rating = "8.9/10",
+                overview = "Long Overview",
+                genres = listOf("Action", "Adventure", "Fantasy"),
+                releaseDate = "2023",
+                status = "Released",
+            )
+        ),
+        onReview = {},
+        onRetry = {},
+    )
 }

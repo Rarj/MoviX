@@ -35,6 +35,7 @@ internal fun TabUI(
     movieState: DetailMovieUIState,
     creditState: CreditsMovieUIState,
     onReview: () -> Unit,
+    onRetry: () -> Unit,
 ) {
     val scope = rememberCoroutineScope()
     val tabItems = listOf(
@@ -44,6 +45,7 @@ internal fun TabUI(
             OverviewUI(
                 state = movieState,
                 onReview = onReview,
+                onRetry = onRetry,
             )
         },
         DetailMovieTabItem(
@@ -128,5 +130,6 @@ private fun TabPreview() {
         ),
         creditState = CreditsMovieUIState.Loading,
         onReview = {},
+        onRetry = {},
     )
 }

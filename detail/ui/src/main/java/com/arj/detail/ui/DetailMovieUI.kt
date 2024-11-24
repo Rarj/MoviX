@@ -40,6 +40,7 @@ fun DetailMovieScreen(
     creditState: CreditsMovieUIState,
     movieId: String,
     onBack: () -> Unit,
+    onRetry: () -> Unit,
 ) {
     var showBottomSheet by remember { mutableStateOf(false) }
 
@@ -49,6 +50,7 @@ fun DetailMovieScreen(
         creditState = creditState,
         onBack = { onBack.invoke() },
         onReview = { showBottomSheet = !showBottomSheet },
+        onRetry = { onRetry.invoke() },
     )
 
     if (showBottomSheet) {
@@ -67,6 +69,7 @@ private fun DetailMovieUI(
     creditState: CreditsMovieUIState,
     onBack: () -> Unit,
     onReview: () -> Unit,
+    onRetry: () -> Unit,
 ) {
     ConstraintLayout(
         modifier = modifier
@@ -95,19 +98,22 @@ private fun DetailMovieUI(
             onBack = onBack,
         )
 
-        TabUI(modifier = Modifier
-            .constrainAs(tab) {
-                top.linkTo(topBar.bottom)
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
-                bottom.linkTo(parent.bottom)
-                width = Dimension.fillToConstraints
-                height = Dimension.fillToConstraints
-            }
-            .padding(top = 8.dp),
+        TabUI(
+            modifier = Modifier
+                .constrainAs(tab) {
+                    top.linkTo(topBar.bottom)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                    bottom.linkTo(parent.bottom)
+                    width = Dimension.fillToConstraints
+                    height = Dimension.fillToConstraints
+                }
+                .padding(top = 8.dp),
             movieState = movieState,
             creditState = creditState,
-            onReview = onReview)
+            onReview = onReview,
+            onRetry = onRetry,
+        )
     }
 }
 
@@ -159,5 +165,6 @@ private fun DetailMovieUIPreview() {
         creditState = CreditsMovieUIState.Loading,
         onBack = {},
         onReview = {},
+        onRetry = {},
     )
 }
