@@ -56,7 +56,7 @@ fun DetailMovieScreen(
     ) {
         when (val movieUIState = viewModel.state.collectAsState().value) {
             is DetailMovieUIState.Init -> Unit
-            is DetailMovieUIState.Loading -> LoadingUI()
+            is DetailMovieUIState.Loading -> LoadingUI { onBack.invoke() }
             is DetailMovieUIState.Success -> {
                 DetailMovieUI(
                     movieState = movieUIState.data,

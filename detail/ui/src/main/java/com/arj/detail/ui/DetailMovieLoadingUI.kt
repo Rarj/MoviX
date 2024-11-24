@@ -26,10 +26,13 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import com.arj.uikit.ToolbarShimmerLoading
 import com.arj.uikit.shimmerLoadingUI
 
 @Composable
-internal fun LoadingUI() {
+internal fun LoadingUI(
+    onBackEvent: () -> Unit,
+) {
     ConstraintLayout(
         modifier = Modifier
             .fillMaxSize()
@@ -47,19 +50,31 @@ internal fun LoadingUI() {
             chainStyle = ChainStyle.Packed(0f)
         )
 
-        Box(
+        ToolbarShimmerLoading(
             modifier = Modifier
-                .constrainAs(tab) {
+                .constrainAs(topBar) {
                     top.linkTo(parent.top)
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
                     height = Dimension.wrapContent
                     width = Dimension.fillToConstraints
                 }
-                .padding(top = 100.dp)
+                .padding(top = 56.dp)
+        ) { onBackEvent.invoke() }
+
+        Box(
+            modifier = Modifier
+                .constrainAs(tab) {
+                    top.linkTo(topBar.bottom)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                    height = Dimension.wrapContent
+                    width = Dimension.fillToConstraints
+                }
+                .padding(top = 8.dp)
                 .padding(horizontal = 16.dp, vertical = 8.dp)
                 .fillMaxWidth()
-                .height(56.dp)
+                .height(50.dp)
                 .clip(shape = RoundedCornerShape(16.dp))
                 .background(brush = shimmerLoadingUI()),
         ) {}
@@ -185,5 +200,7 @@ internal fun LoadingUI() {
 @Preview(showBackground = true)
 @Composable
 private fun LoadingUIPreview() {
-    LoadingUI()
+    LoadingUI(
+        onBackEvent = {},
+    )
 }
