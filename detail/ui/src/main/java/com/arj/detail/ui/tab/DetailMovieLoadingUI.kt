@@ -1,4 +1,4 @@
-package com.arj.detail.ui.tab.overview
+package com.arj.detail.ui.tab
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll

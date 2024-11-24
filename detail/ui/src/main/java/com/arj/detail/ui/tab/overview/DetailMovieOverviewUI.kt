@@ -36,6 +36,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.arj.detail.ui.DetailMovieState
 import com.arj.detail.ui.DetailMovieUIState
+import com.arj.detail.ui.tab.LoadingUI
 import com.arj.uikit.BackdropUiKit
 import com.arj.uikit.GenericErrorUI
 import com.arj.uikit.R
