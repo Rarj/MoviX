@@ -35,6 +35,7 @@ import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.arj.detail.ui.DetailMovieState
+import com.arj.detail.ui.DetailMovieUIState
 import com.arj.uikit.BackdropUiKit
 import com.arj.uikit.R
 import com.arj.uikit.appearance.ColorStar
@@ -42,6 +43,19 @@ import com.arj.uikit.R as RUiKit
 
 @Composable
 internal fun OverviewUI(
+    state: DetailMovieUIState,
+    onReview: () -> Unit,
+) {
+    when (state) {
+        is DetailMovieUIState.Init -> {}
+        is DetailMovieUIState.Loading -> {}
+        is DetailMovieUIState.Success -> OverviewUIStateHandler(state = state.data) { onReview.invoke() }
+        is DetailMovieUIState.Error -> {}
+    }
+}
+
+@Composable
+private fun OverviewUIStateHandler(
     modifier: Modifier = Modifier,
     state: DetailMovieState,
     onReview: () -> Unit,
@@ -53,12 +67,7 @@ internal fun OverviewUI(
     ) {
         val (poster, releaseStatus, genre, synopsys, review) = createRefs()
         createVerticalChain(
-            poster,
-            releaseStatus,
-            genre,
-            synopsys,
-            review,
-            chainStyle = ChainStyle.Packed(0f)
+            poster, releaseStatus, genre, synopsys, review, chainStyle = ChainStyle.Packed(0f)
         )
 
         BackdropUiKit(
@@ -175,8 +184,7 @@ fun ReleaseDateComponent(
     rating: String,
 ) {
     Row(
-        modifier = modifier
-            .wrapContentSize(),
+        modifier = modifier.wrapContentSize(),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
@@ -242,8 +250,8 @@ private fun GenreComponentPreview() {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun OverviewUIPreview() {
-    OverviewUI(
-        state = DetailMovieState(
+    OverviewUI(state = DetailMovieUIState.Success(
+        DetailMovieState(
             title = "Avenger",
             posterPath = "url",
             rating = "8.9/10",
@@ -251,7 +259,6 @@ private fun OverviewUIPreview() {
             genres = listOf("Action", "Adventure", "Fantasy"),
             releaseDate = "2023",
             status = "Released",
-        ),
-        onReview = {}
-    )
+        )
+    ), onReview = {})
 }

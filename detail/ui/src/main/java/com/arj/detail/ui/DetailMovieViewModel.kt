@@ -22,8 +22,8 @@ class DetailMovieViewModel @Inject constructor(
     private val creditsCreditUseCase: CreditUseCase,
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow<DetailMovieUIState>(DetailMovieUIState.Init)
-    val state get() = _state.asStateFlow()
+    private val _movieState = MutableStateFlow<DetailMovieUIState>(DetailMovieUIState.Init)
+    val movieState get() = _movieState.asStateFlow()
 
     private val _creditsState = MutableStateFlow<CreditsMovieUIState>(CreditsMovieUIState.Init)
     val creditsState get() = _creditsState.asStateFlow()
@@ -79,7 +79,7 @@ class DetailMovieViewModel @Inject constructor(
     }
 
     private fun setDetailMovieUiState(state: DetailMovieUIState) {
-        _state.value = state
+        _movieState.value = state
     }
 
     private fun getRating(rating: Double? = 0.0) = buildString {

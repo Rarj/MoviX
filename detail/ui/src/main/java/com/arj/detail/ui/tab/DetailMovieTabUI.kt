@@ -22,6 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.arj.detail.ui.CreditsMovieUIState
 import com.arj.detail.ui.DetailMovieState
+import com.arj.detail.ui.DetailMovieUIState
 import com.arj.detail.ui.tab.caster.CastUI
 import com.arj.detail.ui.tab.crew.CrewUI
 import com.arj.detail.ui.tab.overview.OverviewUI
@@ -31,7 +32,7 @@ import kotlinx.coroutines.launch
 @Composable
 internal fun TabUI(
     modifier: Modifier,
-    movieState: DetailMovieState,
+    movieState: DetailMovieUIState,
     creditState: CreditsMovieUIState,
     onReview: () -> Unit,
 ) {
@@ -103,10 +104,12 @@ internal fun TabUI(
             tabItems[1].screen = { CasterLoading() }
             tabItems[2].screen = { CasterLoading() }
         }
+
         is CreditsMovieUIState.Success -> {
             tabItems[1].screen = { CastUI(casts = creditState.data.casts) }
             tabItems[2].screen = { CrewUI(crews = creditState.data.crews) }
         }
+
         is CreditsMovieUIState.Error -> {}
     }
 }
@@ -116,10 +119,12 @@ internal fun TabUI(
 private fun TabPreview() {
     TabUI(
         modifier = Modifier,
-        movieState = DetailMovieState(
-            title = "Avenger",
-            posterPath = "url",
-            rating = "8.9/10",
+        movieState = DetailMovieUIState.Success(
+            DetailMovieState(
+                title = "Avenger",
+                posterPath = "url",
+                rating = "8.9/10",
+            )
         ),
         creditState = CreditsMovieUIState.Loading,
         onReview = {},
