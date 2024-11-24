@@ -47,7 +47,7 @@ fun SearchUI(
     modifier: Modifier = Modifier,
     viewModel: SearchViewModel = hiltViewModel(),
     onBack: () -> Unit,
-    onItemClicked: (movieId: String) -> Unit,
+    onItemClicked: (movieId: String, movieTitle: String) -> Unit,
 ) {
     val state = viewModel.state.collectAsState().value
 
@@ -123,8 +123,8 @@ fun SearchUI(
                 }
                 .animateContentSize(),
             pagingItems = state.moviePagingItems.collectAsLazyPagingItems(),
-        ) { movieId ->
-            onItemClicked.invoke(movieId)
+        ) { movieId, movieTitle ->
+            onItemClicked.invoke(movieId, movieTitle)
         }
     }
 }
@@ -133,7 +133,7 @@ fun SearchUI(
 private fun MoviesUI(
     modifier: Modifier,
     pagingItems: LazyPagingItems<MovieModel>,
-    onItemClicked: (movieId: String) -> Unit,
+    onItemClicked: (movieId: String, movieTitle: String) -> Unit,
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(count = 2),
@@ -141,7 +141,10 @@ private fun MoviesUI(
     ) {
         items(pagingItems.itemCount) { index ->
             Item(movie = pagingItems[index]) {
-                onItemClicked.invoke(pagingItems[index]?.id.toString())
+                onItemClicked.invoke(
+                    pagingItems[index]?.id.toString(),
+                    pagingItems[index]?.title.toString(),
+                )
             }
         }
     }
@@ -210,6 +213,6 @@ private fun Item(
 private fun SearchUIPreview() {
     SearchUI(
         onBack = { },
-        onItemClicked = { }
+        onItemClicked = { _, _ -> }
     )
 }

@@ -20,9 +20,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.arj.detail.ui.CreditsMovieUIState
 import com.arj.detail.ui.DetailMovieState
-import com.arj.detail.ui.tab.caster.CastUI
-import com.arj.detail.ui.tab.crew.CrewUI
+import com.arj.detail.ui.DetailMovieUIState
+import com.arj.detail.ui.tab.caster.CasterScreen
+import com.arj.detail.ui.tab.crew.CrewScreen
 import com.arj.detail.ui.tab.overview.OverviewUI
 import kotlinx.coroutines.launch
 
@@ -30,28 +32,40 @@ import kotlinx.coroutines.launch
 @Composable
 internal fun TabUI(
     modifier: Modifier,
-    state: DetailMovieState,
+    movieState: DetailMovieUIState,
+    creditState: CreditsMovieUIState,
     onReview: () -> Unit,
+    onRetry: () -> Unit,
 ) {
     val scope = rememberCoroutineScope()
     val tabItems = listOf(
         DetailMovieTabItem(
-            name = "Overview",
-            selectedIndex = 0
+            name = "Overview", selectedIndex = 0
         ) {
             OverviewUI(
-                state = state,
+                state = movieState,
                 onReview = onReview,
+                onRetry = onRetry,
             )
         },
         DetailMovieTabItem(
             name = "Casters",
             selectedIndex = 1,
-        ) { CastUI(casts = state.casts) },
+        ) {
+            CasterScreen(
+                state = creditState,
+                onRetry = onRetry,
+            )
+        },
         DetailMovieTabItem(
             name = "Crews",
             selectedIndex = 2,
-        ) { CrewUI(crews = state.crews) }
+        ) {
+            CrewScreen(
+                state = creditState,
+                onRetry = onRetry,
+            )
+        },
     )
     val pagerState = rememberPagerState { tabItems.size }
 
@@ -70,31 +84,24 @@ internal fun TabUI(
             divider = { },
         ) {
             tabItems.forEachIndexed { index, item ->
-                Tab(
-                    modifier = Modifier
-                        .wrapContentWidth()
-                        .clip(RoundedCornerShape(percent = 25))
-                        .background(
-                            if (pagerState.currentPage == index) MaterialTheme.colorScheme.primaryContainer
-                            else MaterialTheme.colorScheme.onPrimaryContainer
-                        ),
-                    selected = pagerState.currentPage == index,
-                    onClick = {
-                        scope.launch {
-                            pagerState.animateScrollToPage(index)
-                        }
-                    },
-                    text = {
-                        Text(text = item.name)
+                Tab(modifier = Modifier
+                    .wrapContentWidth()
+                    .clip(RoundedCornerShape(percent = 25))
+                    .background(
+                        if (pagerState.currentPage == index) MaterialTheme.colorScheme.primaryContainer
+                        else MaterialTheme.colorScheme.onPrimaryContainer
+                    ), selected = pagerState.currentPage == index, onClick = {
+                    scope.launch {
+                        pagerState.animateScrollToPage(index)
                     }
-                )
+                }, text = {
+                    Text(text = item.name)
+                })
             }
         }
 
         HorizontalPager(
-
-            state = pagerState,
-            modifier = Modifier
+            state = pagerState, modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f)
         ) { index ->
@@ -107,11 +114,16 @@ internal fun TabUI(
 @Composable
 private fun TabPreview() {
     TabUI(
-        modifier = Modifier, state = DetailMovieState(
-            title = "Avenger",
-            posterPath = "url",
-            rating = "8.9/10",
+        modifier = Modifier,
+        movieState = DetailMovieUIState.Success(
+            DetailMovieState(
+                title = "Avenger",
+                posterPath = "url",
+                rating = "8.9/10",
+            )
         ),
-        onReview = {}
+        creditState = CreditsMovieUIState.Loading,
+        onReview = {},
+        onRetry = {},
     )
 }

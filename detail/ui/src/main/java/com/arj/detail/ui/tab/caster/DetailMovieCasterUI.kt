@@ -29,41 +29,55 @@ import androidx.constraintlayout.compose.Dimension
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.arj.detail.domain.mapper.Cast
+import com.arj.detail.ui.CreditsMovieUIState
+import com.arj.detail.ui.tab.CasterLoading
 import com.arj.uikit.BuildConfig
-import com.arj.uikit.R as RUiKit
+import com.arj.uikit.GenericErrorUI
+import com.arj.uikit.R
 
 @Composable
-internal fun CastUI(
-    casts: List<Cast>,
+internal fun CasterScreen(
+    state: CreditsMovieUIState,
+    onRetry: () -> Unit,
 ) {
+    when (state) {
+        is CreditsMovieUIState.Init -> {}
+        is CreditsMovieUIState.Loading -> CasterLoading()
+        is CreditsMovieUIState.Success -> CasterUI(casts = state.data.casts)
+        is CreditsMovieUIState.Error -> GenericErrorUI(state.message) { onRetry.invoke() }
+    }
+}
+
+@Composable
+private fun CasterUI(casts: List<Cast>) {
     LazyColumn(
-        modifier = Modifier.padding(8.dp)
+        modifier = Modifier
+            .padding(8.dp)
             .fillMaxSize()
     ) {
         items(casts.size) { index ->
             val cast = casts[index]
 
             ConstraintLayout(
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
                     .padding(bottom = 12.dp, start = 8.dp, end = 8.dp)
             ) {
                 val (image, name, department) = createRefs()
 
-                AsyncImage(
-                    modifier = Modifier
-                        .constrainAs(image) {
-                            top.linkTo(parent.top)
-                            start.linkTo(parent.start)
-                            bottom.linkTo(parent.bottom)
-                        }
-                        .height(72.dp)
-                        .width(72.dp)
-                        .clip(CircleShape)
-                        .background(color = MaterialTheme.colorScheme.surfaceVariant),
-                    placeholder = rememberVectorPainter(image = ImageVector.vectorResource(id = RUiKit.drawable.ic_person)),
+                AsyncImage(modifier = Modifier
+                    .constrainAs(image) {
+                        top.linkTo(parent.top)
+                        start.linkTo(parent.start)
+                        bottom.linkTo(parent.bottom)
+                    }
+                    .height(72.dp)
+                    .width(72.dp)
+                    .clip(CircleShape)
+                    .background(color = MaterialTheme.colorScheme.surfaceVariant),
+                    placeholder = rememberVectorPainter(image = ImageVector.vectorResource(id = R.drawable.ic_person)),
                     model = ImageRequest.Builder(LocalContext.current)
-                        .data(cast.profilePath?.let { getCasterImageUrl(it) })
-                        .crossfade(true)
+                        .data(cast.profilePath?.let { getCasterImageUrl(it) }).crossfade(true)
                         .build(),
                     contentScale = ContentScale.Inside,
                     contentDescription = "Caster - ${cast.name}"
@@ -81,7 +95,7 @@ internal fun CastUI(
                     text = "${cast.name} (${cast.gender})",
                     maxLines = 1,
                     color = MaterialTheme.colorScheme.onPrimaryContainer,
-                    fontFamily = FontFamily(Font(resId = RUiKit.font.sono_medium)),
+                    fontFamily = FontFamily(Font(resId = R.font.sono_medium)),
                     fontSize = 16.sp,
                     overflow = TextOverflow.Ellipsis,
                 )
@@ -98,7 +112,7 @@ internal fun CastUI(
                     text = cast.department ?: "Unknown",
                     maxLines = 1,
                     color = MaterialTheme.colorScheme.secondary,
-                    fontFamily = FontFamily(Font(resId = RUiKit.font.sono_light)),
+                    fontFamily = FontFamily(Font(resId = R.font.sono_light)),
                     fontSize = 14.sp,
                     overflow = TextOverflow.Ellipsis,
                 )
@@ -117,7 +131,7 @@ private fun getCasterImageUrl(path: String): String {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun CastUIPreview() {
-    CastUI(
+    CasterUI(
         casts = listOf(
             Cast(
                 id = 1,
@@ -125,8 +139,7 @@ private fun CastUIPreview() {
                 profilePath = "path",
                 gender = "He",
                 department = "Acting"
-            ),
-            Cast(
+            ), Cast(
                 id = 1,
                 name = "Tom Holland Tom Holland Tom Holland",
                 profilePath = "path",

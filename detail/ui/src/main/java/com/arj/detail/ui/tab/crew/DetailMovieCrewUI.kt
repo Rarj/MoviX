@@ -29,15 +29,32 @@ import androidx.constraintlayout.compose.Dimension
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.arj.detail.domain.mapper.Crew
+import com.arj.detail.ui.CreditsMovieUIState
+import com.arj.detail.ui.tab.CasterLoading
 import com.arj.uikit.BuildConfig
+import com.arj.uikit.GenericErrorUI
 import com.arj.uikit.R
 
 @Composable
-internal fun CrewUI(
+internal fun CrewScreen(
+    state: CreditsMovieUIState,
+    onRetry: () -> Unit,
+) {
+    when (state) {
+        is CreditsMovieUIState.Init -> {}
+        is CreditsMovieUIState.Loading -> CasterLoading()
+        is CreditsMovieUIState.Success -> CrewUI(crews = state.data.crews)
+        is CreditsMovieUIState.Error -> GenericErrorUI(state.message) { onRetry.invoke() }
+    }
+}
+
+@Composable
+fun CrewUI(
     crews: List<Crew>,
 ) {
     LazyColumn(
-        modifier = Modifier.padding(8.dp)
+        modifier = Modifier
+            .padding(8.dp)
             .fillMaxSize()
     ) {
         items(crews.size) { index ->
@@ -50,21 +67,19 @@ internal fun CrewUI(
             ) {
                 val (image, name, department) = createRefs()
 
-                AsyncImage(
-                    modifier = Modifier
-                        .constrainAs(image) {
-                            top.linkTo(parent.top)
-                            start.linkTo(parent.start)
-                            bottom.linkTo(parent.bottom)
-                        }
-                        .height(72.dp)
-                        .width(72.dp)
-                        .clip(CircleShape)
-                        .background(color = MaterialTheme.colorScheme.surfaceVariant),
+                AsyncImage(modifier = Modifier
+                    .constrainAs(image) {
+                        top.linkTo(parent.top)
+                        start.linkTo(parent.start)
+                        bottom.linkTo(parent.bottom)
+                    }
+                    .height(72.dp)
+                    .width(72.dp)
+                    .clip(CircleShape)
+                    .background(color = MaterialTheme.colorScheme.surfaceVariant),
                     placeholder = rememberVectorPainter(image = ImageVector.vectorResource(id = R.drawable.ic_person)),
                     model = ImageRequest.Builder(LocalContext.current)
-                        .data(crew.profilePath?.let { getCasterImageUrl(it) })
-                        .crossfade(true)
+                        .data(crew.profilePath?.let { getCasterImageUrl(it) }).crossfade(true)
                         .build(),
                     contentScale = ContentScale.Inside,
                     contentDescription = "Caster - ${crew.name}"
@@ -126,8 +141,7 @@ private fun CrewUIPreview() {
                 profilePath = "path",
                 gender = "He",
                 department = "Acting"
-            ),
-            Crew(
+            ), Crew(
                 id = 1,
                 name = "Tom Holland Tom Holland Tom Holland",
                 profilePath = "path",

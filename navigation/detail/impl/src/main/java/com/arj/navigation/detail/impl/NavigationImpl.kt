@@ -9,9 +9,10 @@ class NavigationImpl @Inject constructor() : Navigation {
     override fun navigateToDetailMoviePage(
         navHostController: NavHostController,
         movieId: String,
+        movieTitle: String,
     ) {
         navHostController.navigate(
-            route = "detail_movie_route/${movieId}"
+            route = "detail_movie_route/${movieId}/${movieTitle}"
         )
     }
 

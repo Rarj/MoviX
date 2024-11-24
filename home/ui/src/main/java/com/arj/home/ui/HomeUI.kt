@@ -42,7 +42,7 @@ fun HomeUI(
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = hiltViewModel(),
     onSearchClicked: () -> Unit,
-    onItemClicked: (movieId: String) -> Unit,
+    onItemClicked: (movieId: String, movieTitle: String) -> Unit,
 ) {
     val state = viewModel.state.collectAsState().value
     val context = LocalContext.current
@@ -114,8 +114,8 @@ fun HomeUI(
                 }
                 .animateContentSize(),
             pagingItems = state.moviePagingDataState.collectAsLazyPagingItems(),
-        ) { movieId ->
-            onItemClicked.invoke(movieId)
+        ) { movieId, movieTitle ->
+            onItemClicked.invoke(movieId, movieTitle)
         }
     }
 }
@@ -152,7 +152,7 @@ private fun AlertAboutUI(isAboutClicked: MutableState<Boolean>) {
 private fun MoviesUI(
     modifier: Modifier,
     pagingItems: LazyPagingItems<com.arj.home.domain.mapper.DiscoverMovie>,
-    onItemClicked: (movieId: String) -> Unit,
+    onItemClicked: (movieId: String, movieTitle: String) -> Unit,
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(count = 2),
@@ -160,7 +160,10 @@ private fun MoviesUI(
     ) {
         items(pagingItems.itemCount) { index ->
             Item(discoverMovie = pagingItems[index]) {
-                onItemClicked.invoke(pagingItems[index]?.id.toString())
+                onItemClicked.invoke(
+                    pagingItems[index]?.id.toString(),
+                    pagingItems[index]?.title.toString(),
+                )
             }
         }
     }
