@@ -48,7 +48,7 @@ internal fun OverviewUI(
 ) {
     when (state) {
         is DetailMovieUIState.Init -> {}
-        is DetailMovieUIState.Loading -> {}
+        is DetailMovieUIState.Loading -> LoadingUI()
         is DetailMovieUIState.Success -> OverviewUIStateHandler(state = state.data) { onReview.invoke() }
         is DetailMovieUIState.Error -> {}
     }
