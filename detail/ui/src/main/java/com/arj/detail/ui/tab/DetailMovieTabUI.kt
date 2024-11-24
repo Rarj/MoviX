@@ -99,12 +99,14 @@ internal fun TabUI(
 
     when (creditState) {
         is CreditsMovieUIState.Init -> {}
-        is CreditsMovieUIState.Loading -> {}
+        is CreditsMovieUIState.Loading -> {
+            tabItems[1].screen = { CasterLoading() }
+            tabItems[2].screen = { CasterLoading() }
+        }
         is CreditsMovieUIState.Success -> {
             tabItems[1].screen = { CastUI(casts = creditState.data.casts) }
             tabItems[2].screen = { CrewUI(crews = creditState.data.crews) }
         }
-
         is CreditsMovieUIState.Error -> {}
     }
 }
