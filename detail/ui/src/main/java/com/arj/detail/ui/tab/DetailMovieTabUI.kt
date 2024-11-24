@@ -23,8 +23,8 @@ import androidx.compose.ui.unit.dp
 import com.arj.detail.ui.CreditsMovieUIState
 import com.arj.detail.ui.DetailMovieState
 import com.arj.detail.ui.DetailMovieUIState
-import com.arj.detail.ui.tab.caster.CastUI
-import com.arj.detail.ui.tab.crew.CrewUI
+import com.arj.detail.ui.tab.caster.CasterScreen
+import com.arj.detail.ui.tab.crew.CrewScreen
 import com.arj.detail.ui.tab.overview.OverviewUI
 import kotlinx.coroutines.launch
 
@@ -51,11 +51,21 @@ internal fun TabUI(
         DetailMovieTabItem(
             name = "Casters",
             selectedIndex = 1,
-        ) {},
+        ) {
+            CasterScreen(
+                state = creditState,
+                onRetry = onRetry,
+            )
+        },
         DetailMovieTabItem(
             name = "Crews",
             selectedIndex = 2,
-        ) {},
+        ) {
+            CrewScreen(
+                state = creditState,
+                onRetry = onRetry,
+            )
+        },
     )
     val pagerState = rememberPagerState { tabItems.size }
 
@@ -91,28 +101,12 @@ internal fun TabUI(
         }
 
         HorizontalPager(
-
             state = pagerState, modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f)
         ) { index ->
             tabItems[index].screen()
         }
-    }
-
-    when (creditState) {
-        is CreditsMovieUIState.Init -> {}
-        is CreditsMovieUIState.Loading -> {
-            tabItems[1].screen = { CasterLoading() }
-            tabItems[2].screen = { CasterLoading() }
-        }
-
-        is CreditsMovieUIState.Success -> {
-            tabItems[1].screen = { CastUI(casts = creditState.data.casts) }
-            tabItems[2].screen = { CrewUI(crews = creditState.data.crews) }
-        }
-
-        is CreditsMovieUIState.Error -> {}
     }
 }
 
