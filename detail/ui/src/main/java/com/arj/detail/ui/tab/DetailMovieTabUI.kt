@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.arj.detail.ui.CreditsMovieUIState
 import com.arj.detail.ui.DetailMovieState
 import com.arj.detail.ui.tab.caster.CastUI
 import com.arj.detail.ui.tab.crew.CrewUI
@@ -30,28 +31,28 @@ import kotlinx.coroutines.launch
 @Composable
 internal fun TabUI(
     modifier: Modifier,
-    state: DetailMovieState,
+    movieState: DetailMovieState,
+    creditState: CreditsMovieUIState,
     onReview: () -> Unit,
 ) {
     val scope = rememberCoroutineScope()
     val tabItems = listOf(
         DetailMovieTabItem(
-            name = "Overview",
-            selectedIndex = 0
+            name = "Overview", selectedIndex = 0
         ) {
             OverviewUI(
-                state = state,
+                state = movieState,
                 onReview = onReview,
             )
         },
         DetailMovieTabItem(
             name = "Casters",
             selectedIndex = 1,
-        ) { CastUI(casts = state.casts) },
+        ) {},
         DetailMovieTabItem(
             name = "Crews",
             selectedIndex = 2,
-        ) { CrewUI(crews = state.crews) }
+        ) {},
     )
     val pagerState = rememberPagerState { tabItems.size }
 
@@ -70,36 +71,41 @@ internal fun TabUI(
             divider = { },
         ) {
             tabItems.forEachIndexed { index, item ->
-                Tab(
-                    modifier = Modifier
-                        .wrapContentWidth()
-                        .clip(RoundedCornerShape(percent = 25))
-                        .background(
-                            if (pagerState.currentPage == index) MaterialTheme.colorScheme.primaryContainer
-                            else MaterialTheme.colorScheme.onPrimaryContainer
-                        ),
-                    selected = pagerState.currentPage == index,
-                    onClick = {
-                        scope.launch {
-                            pagerState.animateScrollToPage(index)
-                        }
-                    },
-                    text = {
-                        Text(text = item.name)
+                Tab(modifier = Modifier
+                    .wrapContentWidth()
+                    .clip(RoundedCornerShape(percent = 25))
+                    .background(
+                        if (pagerState.currentPage == index) MaterialTheme.colorScheme.primaryContainer
+                        else MaterialTheme.colorScheme.onPrimaryContainer
+                    ), selected = pagerState.currentPage == index, onClick = {
+                    scope.launch {
+                        pagerState.animateScrollToPage(index)
                     }
-                )
+                }, text = {
+                    Text(text = item.name)
+                })
             }
         }
 
         HorizontalPager(
 
-            state = pagerState,
-            modifier = Modifier
+            state = pagerState, modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f)
         ) { index ->
             tabItems[index].screen()
         }
+    }
+
+    when (creditState) {
+        is CreditsMovieUIState.Init -> {}
+        is CreditsMovieUIState.Loading -> {}
+        is CreditsMovieUIState.Success -> {
+            tabItems[1].screen = { CastUI(casts = creditState.data.casts) }
+            tabItems[2].screen = { CrewUI(crews = creditState.data.crews) }
+        }
+
+        is CreditsMovieUIState.Error -> {}
     }
 }
 
@@ -107,11 +113,13 @@ internal fun TabUI(
 @Composable
 private fun TabPreview() {
     TabUI(
-        modifier = Modifier, state = DetailMovieState(
+        modifier = Modifier,
+        movieState = DetailMovieState(
             title = "Avenger",
             posterPath = "url",
             rating = "8.9/10",
         ),
-        onReview = {}
+        creditState = CreditsMovieUIState.Loading,
+        onReview = {},
     )
 }

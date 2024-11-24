@@ -1,6 +1,7 @@
 package com.arj.detail.ui
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -43,15 +44,31 @@ fun DetailMovieScreen(
     onBack: () -> Unit,
 ) {
     var showBottomSheet by remember { mutableStateOf(false) }
+    val creditState = viewModel.creditsState.collectAsState().value
 
     LaunchedEffect(movieId.isNotEmpty()) {
         viewModel.getDetailMovie(movieId)
     }
 
-    DetailMovieUI(
-        state = viewModel.state.collectAsState().value,
-        onBack = { onBack.invoke() },
-        onReview = { showBottomSheet = !showBottomSheet })
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+    ) {
+        when (val movieUIState = viewModel.state.collectAsState().value) {
+            is DetailMovieUIState.Init -> Unit
+            is DetailMovieUIState.Loading -> LoadingUI()
+            is DetailMovieUIState.Success -> {
+                DetailMovieUI(
+                    movieState = movieUIState.data,
+                    creditState = creditState,
+                    onBack = { onBack.invoke() },
+                    onReview = { showBottomSheet = !showBottomSheet },
+                )
+            }
+
+            is DetailMovieUIState.Error -> {}
+        }
+    }
 
     if (showBottomSheet) {
         ReviewScreen(
@@ -63,20 +80,20 @@ fun DetailMovieScreen(
 
 @Composable
 private fun DetailMovieUI(
-    state: DetailMovieState,
+    modifier: Modifier = Modifier,
+    movieState: DetailMovieState,
+    creditState: CreditsMovieUIState,
     onBack: () -> Unit,
     onReview: () -> Unit,
 ) {
     ConstraintLayout(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(color = MaterialTheme.colorScheme.primaryContainer)
     ) {
         val (topBar, tab) = createRefs()
         createVerticalChain(
-            topBar,
-            tab,
-            chainStyle = ChainStyle.Packed(0f)
+            topBar, tab, chainStyle = ChainStyle.Packed(0f)
         )
 
         ToolbarUI(
@@ -92,24 +109,23 @@ private fun DetailMovieUI(
                 .fillMaxWidth()
                 .wrapContentSize()
                 .padding(top = 56.dp),
-            title = state.title,
+            title = movieState.title,
             onBack = onBack,
         )
 
-        TabUI(
-            modifier = Modifier
-                .constrainAs(tab) {
-                    top.linkTo(topBar.bottom)
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                    bottom.linkTo(parent.bottom)
-                    width = Dimension.fillToConstraints
-                    height = Dimension.fillToConstraints
-                }
-                .padding(top = 8.dp),
-            state = state,
-            onReview = onReview
-        )
+        TabUI(modifier = Modifier
+            .constrainAs(tab) {
+                top.linkTo(topBar.bottom)
+                start.linkTo(parent.start)
+                end.linkTo(parent.end)
+                bottom.linkTo(parent.bottom)
+                width = Dimension.fillToConstraints
+                height = Dimension.fillToConstraints
+            }
+            .padding(top = 8.dp),
+            movieState = movieState,
+            creditState = creditState,
+            onReview = onReview)
     }
 }
 
@@ -122,9 +138,7 @@ private fun ToolbarUI(
     Row(
         modifier = modifier
     ) {
-        IconButton(
-            onClick = { onBack.invoke() }
-        ) {
+        IconButton(onClick = { onBack.invoke() }) {
             Icon(
                 imageVector = ImageVector.vectorResource(id = RUiKit.drawable.ic_back),
                 contentDescription = "Back to Home page",
@@ -151,12 +165,13 @@ private fun ToolbarUI(
 @Composable
 private fun DetailMovieUIPreview() {
     DetailMovieUI(
-        state = DetailMovieState(
+        movieState = DetailMovieState(
             title = "Avenger",
             posterPath = "url",
             rating = "8.9/10",
             overview = "Long OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong OverviewLong Overview"
         ),
+        creditState = CreditsMovieUIState.Loading,
         onBack = {},
         onReview = {},
     )
