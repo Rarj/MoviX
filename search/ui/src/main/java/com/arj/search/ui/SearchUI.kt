@@ -38,7 +38,7 @@ import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.arj.search.impl.mapper.Movie
+import com.arj.search.domain.model.MovieModel
 import com.arj.uikit.PosterUiKit
 import com.arj.uikit.R as RUiKit
 
@@ -47,7 +47,7 @@ fun SearchUI(
     modifier: Modifier = Modifier,
     viewModel: SearchViewModel = hiltViewModel(),
     onBack: () -> Unit,
-    onItemClicked: (movieId: String) -> Unit,
+    onItemClicked: (movieId: String, movieTitle: String) -> Unit,
 ) {
     val state = viewModel.state.collectAsState().value
 
@@ -123,8 +123,8 @@ fun SearchUI(
                 }
                 .animateContentSize(),
             pagingItems = state.moviePagingItems.collectAsLazyPagingItems(),
-        ) { movieId ->
-            onItemClicked.invoke(movieId)
+        ) { movieId, movieTitle ->
+            onItemClicked.invoke(movieId, movieTitle)
         }
     }
 }
@@ -132,8 +132,8 @@ fun SearchUI(
 @Composable
 private fun MoviesUI(
     modifier: Modifier,
-    pagingItems: LazyPagingItems<Movie>,
-    onItemClicked: (movieId: String) -> Unit,
+    pagingItems: LazyPagingItems<MovieModel>,
+    onItemClicked: (movieId: String, movieTitle: String) -> Unit,
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(count = 2),
@@ -141,7 +141,10 @@ private fun MoviesUI(
     ) {
         items(pagingItems.itemCount) { index ->
             Item(movie = pagingItems[index]) {
-                onItemClicked.invoke(pagingItems[index]?.id.toString())
+                onItemClicked.invoke(
+                    pagingItems[index]?.id.toString(),
+                    pagingItems[index]?.title.toString(),
+                )
             }
         }
     }
@@ -165,7 +168,7 @@ private fun ClearTextIcon(
 
 @Composable
 private fun Item(
-    movie: Movie?,
+    movie: MovieModel?,
     onItemClicked: (movieId: String) -> Unit,
 ) {
     Column {
@@ -210,6 +213,6 @@ private fun Item(
 private fun SearchUIPreview() {
     SearchUI(
         onBack = { },
-        onItemClicked = { }
+        onItemClicked = { _, _ -> }
     )
 }

@@ -26,7 +26,7 @@ import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.arj.review.impl.mapper.ReviewItem
+import com.arj.review.domain.model.ReviewModel
 import com.arj.uikit.appearance.ColorStar
 import kotlinx.coroutines.flow.flow
 import com.arj.uikit.R as RUiKit
@@ -51,7 +51,7 @@ fun ReviewScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ReviewUI(
-    reviews: LazyPagingItems<ReviewItem>,
+    reviews: LazyPagingItems<ReviewModel>,
     onDismiss: () -> Unit
 ) {
     val sheetState = rememberModalBottomSheetState()
@@ -70,7 +70,7 @@ private fun ReviewUI(
                         items(reviews.itemCount) { index ->
                             val item = reviews[index]
                             ReviewItemUI(
-                                review = ReviewItem(
+                                review = ReviewModel(
                                     id = item?.id.orEmpty(),
                                     author = item?.author.orEmpty(),
                                     content = item?.content.orEmpty(),
@@ -86,7 +86,7 @@ private fun ReviewUI(
 
 @Composable
 private fun ReviewItemUI(
-    review: ReviewItem
+    review: ReviewModel
 ) {
     ConstraintLayout(
         modifier = Modifier
@@ -140,25 +140,25 @@ private fun ReviewItemUI(
 @Composable
 private fun ReviewUIPreview() {
     ReviewUI(
-        reviews = flow<PagingData<ReviewItem>> {
+        reviews = flow<PagingData<ReviewModel>> {
             PagingData.from(
                 listOf(
-                    ReviewItem(
+                    ReviewModel(
                         id = "1",
                         author = "Rio Arj",
                         content = "This is a good movie!",
                     ),
-                    ReviewItem(
+                    ReviewModel(
                         id = "1",
                         author = "Rio Arj",
                         content = "This is a good movie!",
                     ),
-                    ReviewItem(
+                    ReviewModel(
                         id = "1",
                         author = "Rio Arj",
                         content = "This is a good movie!",
                     ),
-                    ReviewItem(
+                    ReviewModel(
                         id = "1",
                         author = "Rio Arj",
                         content = "This is a good movie!",

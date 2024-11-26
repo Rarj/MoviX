@@ -7,5 +7,5 @@ import androidx.compose.runtime.Immutable
 data class DetailMovieTabItem(
     val name: String = "",
     val selectedIndex: Int? = null,
-    val screen: @Composable () -> Unit,
+    var screen: @Composable () -> Unit,
 )

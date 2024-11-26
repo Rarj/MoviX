@@ -32,7 +32,6 @@ import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.arj.home.impl.discover.mapper.DiscoverMovie
 import com.arj.home.ui.filter.FilterScreen
 import com.arj.uikit.PosterUiKit
 import com.arj.uikit.ToolbarUiKit
@@ -43,7 +42,7 @@ fun HomeUI(
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = hiltViewModel(),
     onSearchClicked: () -> Unit,
-    onItemClicked: (movieId: String) -> Unit,
+    onItemClicked: (movieId: String, movieTitle: String) -> Unit,
 ) {
     val state = viewModel.state.collectAsState().value
     val context = LocalContext.current
@@ -115,8 +114,8 @@ fun HomeUI(
                 }
                 .animateContentSize(),
             pagingItems = state.moviePagingDataState.collectAsLazyPagingItems(),
-        ) { movieId ->
-            onItemClicked.invoke(movieId)
+        ) { movieId, movieTitle ->
+            onItemClicked.invoke(movieId, movieTitle)
         }
     }
 }
@@ -152,8 +151,8 @@ private fun AlertAboutUI(isAboutClicked: MutableState<Boolean>) {
 @Composable
 private fun MoviesUI(
     modifier: Modifier,
-    pagingItems: LazyPagingItems<DiscoverMovie>,
-    onItemClicked: (movieId: String) -> Unit,
+    pagingItems: LazyPagingItems<com.arj.home.domain.mapper.DiscoverMovie>,
+    onItemClicked: (movieId: String, movieTitle: String) -> Unit,
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(count = 2),
@@ -161,7 +160,10 @@ private fun MoviesUI(
     ) {
         items(pagingItems.itemCount) { index ->
             Item(discoverMovie = pagingItems[index]) {
-                onItemClicked.invoke(pagingItems[index]?.id.toString())
+                onItemClicked.invoke(
+                    pagingItems[index]?.id.toString(),
+                    pagingItems[index]?.title.toString(),
+                )
             }
         }
     }
@@ -169,7 +171,7 @@ private fun MoviesUI(
 
 @Composable
 private fun Item(
-    discoverMovie: DiscoverMovie?,
+    discoverMovie: com.arj.home.domain.mapper.DiscoverMovie?,
     onItemClicked: (movieId: String) -> Unit,
 ) {
     Column {
@@ -213,7 +215,7 @@ private fun Item(
 @Composable
 private fun HomePreview() {
     Item(
-        discoverMovie = DiscoverMovie(
+        discoverMovie = com.arj.home.domain.mapper.DiscoverMovie(
             id = 1,
             posterPath = "poster_path",
             genreIds = emptyList(),
