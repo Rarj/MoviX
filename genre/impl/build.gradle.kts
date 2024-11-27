@@ -38,6 +38,8 @@ dependencies {
     implementation(project(":genre:api"))
     implementation(project(":genre:domain"))
 
+    implementation(project(":network:state"))
+
     kapt(libs.dagger.hilt.compiler)
     implementation(libs.dagger.hilt)
 }
