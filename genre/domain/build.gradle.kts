@@ -35,4 +35,5 @@ android {
 dependencies {
     implementation(project(":genre:api"))
     implementation(project(":network:shared"))
+    implementation(project(":network:state"))
 }
