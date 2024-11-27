@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.arj.genre.domain.GenreRepository
 import com.arj.genre.domain.model.GenreModel
+import com.arj.genre.domain.usecase.GenreUseCase
 import com.arj.network.state.MovixNetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class GenreViewModel @Inject constructor(
-    private val genreRepo: GenreRepository
+    private val genreUseCase: GenreUseCase,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow<GenreUIState>(GenreUIState.Init)
@@ -22,7 +23,7 @@ class GenreViewModel @Inject constructor(
 
     suspend fun getGenres() {
         viewModelScope.launch {
-            genreRepo.getGenres().collectLatest { response ->
+            genreUseCase.invoke().collectLatest { response ->
                 genreResponseHandler(response)
             }
         }
