@@ -180,7 +180,7 @@ private fun MoviesUI(
             is LoadState.Error -> {
                 item(span = { GridItemSpan(maxCurrentLineSpan) }) {
                     ItemErrorUI(
-                        onRetry = { },
+                        onRetry = { pagingItems.retry() },
                     )
                 }
             }
