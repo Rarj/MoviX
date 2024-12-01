@@ -47,6 +47,8 @@ dependencies {
     implementation(project(":genre:domain"))
     implementation(project(":genre:di"))
 
+    implementation(project(":network:state"))
+
     implementation(libs.compose.constraintlayout)
     implementation(libs.compose.material3)
     implementation(libs.compose.ui.tooling.preview)

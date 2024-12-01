@@ -3,11 +3,13 @@ package com.arj.home.ui
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.MaterialTheme
@@ -30,6 +32,7 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.arj.home.ui.filter.FilterScreen
@@ -47,8 +50,7 @@ fun HomeUI(
     val state = viewModel.state.collectAsState().value
     val context = LocalContext.current
     val selectedGenre = context.getString(
-        R.string.selected_genre_label,
-        state.selectedGenre.orEmpty()
+        R.string.selected_genre_label, state.selectedGenre.orEmpty()
     )
     val isAboutClicked = remember { mutableStateOf(false) }
 
@@ -56,8 +58,7 @@ fun HomeUI(
     val filterPageState = remember { mutableStateOf(false) }
 
     if (filterPageState.value) {
-        FilterScreen(
-            selectedGenre = state.selectedGenreId.orEmpty(),
+        FilterScreen(selectedGenre = state.selectedGenreId.orEmpty(),
             onDismiss = { filterPageState.value = !filterPageState.value },
             onGenreClicked = { genre ->
                 filterPageState.value = !filterPageState.value
@@ -66,8 +67,7 @@ fun HomeUI(
                     setSelectedGenre(genre?.id, genre?.name)
                     getMovies()
                 }
-            }
-        )
+            })
     }
 
     ConstraintLayout(
@@ -79,16 +79,14 @@ fun HomeUI(
         val (toolbar, genre, movies) = createRefs()
         createVerticalChain(toolbar, genre, movies)
 
-        ToolbarUiKit(
-            modifier = Modifier.constrainAs(toolbar) {
-                top.linkTo(parent.top)
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
-            },
+        ToolbarUiKit(modifier = Modifier.constrainAs(toolbar) {
+            top.linkTo(parent.top)
+            start.linkTo(parent.start)
+            end.linkTo(parent.end)
+        },
             onSearchClicked = { onSearchClicked.invoke() },
             onFilterClicked = { filterPageState.value = !filterPageState.value },
-            onAboutClicked = { isAboutClicked.value = !isAboutClicked.value }
-        )
+            onAboutClicked = { isAboutClicked.value = !isAboutClicked.value })
 
         Text(
             modifier = Modifier
@@ -155,15 +153,36 @@ private fun MoviesUI(
     onItemClicked: (movieId: String, movieTitle: String) -> Unit,
 ) {
     LazyVerticalGrid(
-        columns = GridCells.Fixed(count = 2),
+        columns = GridCells.Adaptive(150.dp),
         modifier = modifier.padding(start = 8.dp, end = 8.dp, top = 16.dp),
+        horizontalArrangement = Arrangement.Center,
     ) {
         items(pagingItems.itemCount) { index ->
-            Item(discoverMovie = pagingItems[index]) {
-                onItemClicked.invoke(
-                    pagingItems[index]?.id.toString(),
-                    pagingItems[index]?.title.toString(),
-                )
+            Item(
+                discoverMovie = pagingItems[index],
+                onItemClicked = {
+                    onItemClicked.invoke(
+                        pagingItems[index]?.id.toString(),
+                        pagingItems[index]?.title.toString(),
+                    )
+                },
+            )
+        }
+
+        when (pagingItems.loadState.append) {
+            is LoadState.NotLoading -> Unit
+            is LoadState.Loading -> {
+                item {
+                    ItemLoading()
+                }
+            }
+
+            is LoadState.Error -> {
+                item(span = { GridItemSpan(maxCurrentLineSpan) }) {
+                    ItemErrorUI(
+                        onRetry = { pagingItems.retry() },
+                    )
+                }
             }
         }
     }
@@ -185,8 +204,8 @@ private fun Item(
                 .fillMaxWidth()
                 .padding(start = 4.dp, end = 4.dp)
                 .semantics {
-                contentDescription = discoverMovie?.title.orEmpty()
-            },
+                    contentDescription = discoverMovie?.title.orEmpty()
+                },
             text = discoverMovie?.title.orEmpty(),
             color = MaterialTheme.colorScheme.onPrimaryContainer,
             maxLines = 1,
@@ -223,6 +242,7 @@ private fun HomePreview() {
             overview = "overview",
             rating = 10.0,
             releaseDate = "17 August 2024"
-        )
-    ) { }
+        ),
+        onItemClicked = { },
+    )
 }
