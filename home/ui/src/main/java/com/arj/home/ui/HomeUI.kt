@@ -7,9 +7,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -30,11 +33,13 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.arj.home.ui.filter.FilterScreen
 import com.arj.uikit.PosterUiKit
 import com.arj.uikit.ToolbarUiKit
+import com.arj.uikit.appearance.ColorSecondary
 import com.arj.uikit.R as RUiKit
 
 @Composable
@@ -165,6 +170,25 @@ private fun MoviesUI(
                     pagingItems[index]?.title.toString(),
                 )
             }
+        }
+
+        when (pagingItems.loadState.append) {
+            is LoadState.NotLoading -> Unit
+            is LoadState.Loading -> {
+                item(
+                    span = {
+                        GridItemSpan(maxCurrentLineSpan)
+                    }
+                ) {
+                    CircularProgressIndicator(
+                        modifier = Modifier
+                            .size(48.dp)
+                            .padding(bottom = 48.dp),
+                        color = ColorSecondary
+                    )
+                }
+            }
+            is LoadState.Error -> {}
         }
     }
 }
