@@ -18,15 +18,12 @@ import androidx.compose.ui.unit.dp
 import com.arj.uikit.shimmerLoadingUI
 
 @Composable
-internal fun ItemLoading(
-    width: Dp = 150.dp,
-) {
+internal fun ItemLoading() {
     Column {
         Spacer(
             modifier = Modifier
                 .padding(start = 4.dp, top = 8.dp, end = 4.dp)
                 .fillMaxWidth()
-//                .width(width)
                 .height(300.dp)
                 .clip(RoundedCornerShape(CornerSize(percent = 5)))
                 .background(shimmerLoadingUI())
@@ -36,7 +33,7 @@ internal fun ItemLoading(
             modifier = Modifier
                 .padding(vertical = 8.dp)
                 .padding(horizontal = 4.dp)
-//                .width(width)
+                .fillMaxWidth()
                 .height(24.dp)
                 .clip(RoundedCornerShape(8.dp))
                 .background(shimmerLoadingUI())
@@ -45,7 +42,7 @@ internal fun ItemLoading(
         Spacer(
             modifier = Modifier
                 .padding(start = 4.dp, end = 4.dp, bottom = 12.dp)
-//                .width(width)
+                .fillMaxWidth()
                 .height(24.dp)
                 .clip(RoundedCornerShape(8.dp))
                 .background(shimmerLoadingUI())
