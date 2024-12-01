@@ -180,12 +180,7 @@ private fun MoviesUI(
                         GridItemSpan(maxCurrentLineSpan)
                     }
                 ) {
-                    CircularProgressIndicator(
-                        modifier = Modifier
-                            .size(48.dp)
-                            .padding(bottom = 48.dp),
-                        color = ColorSecondary
-                    )
+                    ItemLoading()
                 }
             }
             is LoadState.Error -> {}
