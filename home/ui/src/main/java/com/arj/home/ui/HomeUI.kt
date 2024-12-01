@@ -3,6 +3,7 @@ package com.arj.home.ui
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -19,13 +20,16 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -49,8 +53,7 @@ fun HomeUI(
     val state = viewModel.state.collectAsState().value
     val context = LocalContext.current
     val selectedGenre = context.getString(
-        R.string.selected_genre_label,
-        state.selectedGenre.orEmpty()
+        R.string.selected_genre_label, state.selectedGenre.orEmpty()
     )
     val isAboutClicked = remember { mutableStateOf(false) }
 
@@ -58,8 +61,7 @@ fun HomeUI(
     val filterPageState = remember { mutableStateOf(false) }
 
     if (filterPageState.value) {
-        FilterScreen(
-            selectedGenre = state.selectedGenreId.orEmpty(),
+        FilterScreen(selectedGenre = state.selectedGenreId.orEmpty(),
             onDismiss = { filterPageState.value = !filterPageState.value },
             onGenreClicked = { genre ->
                 filterPageState.value = !filterPageState.value
@@ -68,8 +70,7 @@ fun HomeUI(
                     setSelectedGenre(genre?.id, genre?.name)
                     getMovies()
                 }
-            }
-        )
+            })
     }
 
     ConstraintLayout(
@@ -81,16 +82,14 @@ fun HomeUI(
         val (toolbar, genre, movies) = createRefs()
         createVerticalChain(toolbar, genre, movies)
 
-        ToolbarUiKit(
-            modifier = Modifier.constrainAs(toolbar) {
-                top.linkTo(parent.top)
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
-            },
+        ToolbarUiKit(modifier = Modifier.constrainAs(toolbar) {
+            top.linkTo(parent.top)
+            start.linkTo(parent.start)
+            end.linkTo(parent.end)
+        },
             onSearchClicked = { onSearchClicked.invoke() },
             onFilterClicked = { filterPageState.value = !filterPageState.value },
-            onAboutClicked = { isAboutClicked.value = !isAboutClicked.value }
-        )
+            onAboutClicked = { isAboutClicked.value = !isAboutClicked.value })
 
         Text(
             modifier = Modifier
@@ -156,30 +155,36 @@ private fun MoviesUI(
     pagingItems: LazyPagingItems<com.arj.home.domain.mapper.DiscoverMovie>,
     onItemClicked: (movieId: String, movieTitle: String) -> Unit,
 ) {
+    var itemWidth: Dp = 150.dp
+
     LazyVerticalGrid(
-        columns = GridCells.Fixed(count = 2),
+        columns = GridCells.Adaptive(150.dp),
         modifier = modifier.padding(start = 8.dp, end = 8.dp, top = 16.dp),
+        horizontalArrangement = Arrangement.Center,
     ) {
         items(pagingItems.itemCount) { index ->
-            Item(discoverMovie = pagingItems[index]) {
-                onItemClicked.invoke(
-                    pagingItems[index]?.id.toString(),
-                    pagingItems[index]?.title.toString(),
-                )
-            }
+            Item(
+                discoverMovie = pagingItems[index],
+                onItemClicked = {
+                    onItemClicked.invoke(
+                        pagingItems[index]?.id.toString(),
+                        pagingItems[index]?.title.toString(),
+                    )
+                },
+                onWidthMeasured = { itemWidth = it },
+            )
         }
 
         when (pagingItems.loadState.append) {
             is LoadState.NotLoading -> Unit
             is LoadState.Loading -> {
-                item(
-                    span = {
-                        GridItemSpan(maxCurrentLineSpan)
-                    }
-                ) {
-                    ItemLoading()
+                item(span = {
+                    GridItemSpan(maxCurrentLineSpan)
+                }) {
+                    ItemLoading(itemWidth)
                 }
             }
+
             is LoadState.Error -> {}
         }
     }
@@ -189,8 +194,17 @@ private fun MoviesUI(
 private fun Item(
     discoverMovie: com.arj.home.domain.mapper.DiscoverMovie?,
     onItemClicked: (movieId: String) -> Unit,
+    onWidthMeasured: (Dp) -> Unit,
 ) {
-    Column {
+    val density = LocalDensity.current
+    var width: Int
+
+    Column(
+        modifier = Modifier.onGloballyPositioned {
+            width = it.size.width
+            onWidthMeasured.invoke(with(density) { width.toDp() })
+        },
+    ) {
         PosterUiKit(
             path = discoverMovie?.posterPath,
             contentDescription = discoverMovie?.title,
@@ -201,8 +215,8 @@ private fun Item(
                 .fillMaxWidth()
                 .padding(start = 4.dp, end = 4.dp)
                 .semantics {
-                contentDescription = discoverMovie?.title.orEmpty()
-            },
+                    contentDescription = discoverMovie?.title.orEmpty()
+                },
             text = discoverMovie?.title.orEmpty(),
             color = MaterialTheme.colorScheme.onPrimaryContainer,
             maxLines = 1,
@@ -239,6 +253,8 @@ private fun HomePreview() {
             overview = "overview",
             rating = 10.0,
             releaseDate = "17 August 2024"
-        )
-    ) { }
+        ),
+        onItemClicked = { },
+        onWidthMeasured = { },
+    )
 }

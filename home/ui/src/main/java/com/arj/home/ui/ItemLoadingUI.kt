@@ -11,20 +11,20 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.arj.uikit.shimmerLoadingUI
 
 @Composable
-internal fun ItemLoading(modifier: Modifier = Modifier) {
-    val configuration = LocalConfiguration.current
-    val screenWidth = (configuration.screenWidthDp.dp / 2) - 16.dp
+internal fun ItemLoading(
+    width: Dp = 150.dp,
+) {
     Column {
         Spacer(
-            modifier = modifier
+            modifier = Modifier
                 .padding(start = 4.dp, top = 8.dp, end = 4.dp)
-                .width(screenWidth)
+                .width(width)
                 .height(300.dp)
                 .clip(RoundedCornerShape(CornerSize(percent = 5)))
                 .background(shimmerLoadingUI())
@@ -34,7 +34,7 @@ internal fun ItemLoading(modifier: Modifier = Modifier) {
             modifier = Modifier
                 .padding(vertical = 8.dp)
                 .padding(horizontal = 4.dp)
-                .width(screenWidth)
+                .width(width)
                 .height(24.dp)
                 .clip(RoundedCornerShape(8.dp))
                 .background(shimmerLoadingUI())
@@ -43,7 +43,7 @@ internal fun ItemLoading(modifier: Modifier = Modifier) {
         Spacer(
             modifier = Modifier
                 .padding(start = 4.dp, end = 4.dp, bottom = 12.dp)
-                .width(screenWidth)
+                .width(width)
                 .height(24.dp)
                 .clip(RoundedCornerShape(8.dp))
                 .background(shimmerLoadingUI())
