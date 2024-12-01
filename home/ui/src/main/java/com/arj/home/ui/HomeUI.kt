@@ -69,7 +69,8 @@ fun HomeUI(
                     setSelectedGenre(genre?.id, genre?.name)
                     getMovies()
                 }
-            })
+            }
+        )
     }
 
     HomeScreen(
