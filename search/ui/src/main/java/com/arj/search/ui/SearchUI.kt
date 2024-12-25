@@ -14,6 +14,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.arj.search.ui.component.EmptyState
 import com.arj.search.ui.component.MoviesUI
 import com.arj.search.ui.component.ToolbarUI
 
@@ -48,8 +49,34 @@ private fun SearchPage(
             .padding(bottom = 24.dp)
             .background(color = MaterialTheme.colorScheme.primaryContainer)
     ) {
-        val (topBar, movies) = createRefs()
+        val (topBar, movies, emptyUI) = createRefs()
         createVerticalChain(topBar, movies)
+
+        if (state.keyword?.isEmpty() == true) {
+            EmptyState(
+                modifier = Modifier.constrainAs(emptyUI) {
+                    top.linkTo(topBar.bottom)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                    bottom.linkTo(parent.bottom)
+                    height = Dimension.fillToConstraints
+                },
+                message = "Find out your movie!",
+            )
+        }
+
+        if (state.moviePagingItems.collectAsLazyPagingItems().loadState.source.hasError) {
+            EmptyState(
+                modifier = Modifier.constrainAs(emptyUI) {
+                    top.linkTo(topBar.bottom)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                    bottom.linkTo(parent.bottom)
+                    height = Dimension.fillToConstraints
+                },
+                message = "Ups, we got some error.",
+            )
+        }
 
         ToolbarUI(
             modifier = Modifier.constrainAs(topBar) {
