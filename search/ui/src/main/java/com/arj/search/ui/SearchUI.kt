@@ -4,6 +4,8 @@ import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -16,6 +18,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.arj.search.ui.component.EmptyState
+import com.arj.search.ui.component.LoadingState
 import com.arj.search.ui.component.MoviesUI
 import com.arj.search.ui.component.ToolbarUI
 
@@ -52,7 +55,7 @@ private fun SearchPage(
             .padding(bottom = 24.dp)
             .background(color = MaterialTheme.colorScheme.primaryContainer)
     ) {
-        val (topBar, movies, emptyUI) = createRefs()
+        val (topBar, movies, emptyUI, loadingUI) = createRefs()
         createVerticalChain(topBar, movies)
 
         if (state.keyword?.isEmpty() == true) {
@@ -79,6 +82,22 @@ private fun SearchPage(
                     .fillMaxSize(),
                 message = "Movie not found. \nJust try another keyword.",
             )
+        } else if (
+            state.keyword?.isNotBlank() == true &&
+            pagingItems.loadState.refresh is LoadState.Loading
+        ) {
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(count = 2),
+                modifier = modifier.padding(start = 8.dp, end = 8.dp, top = 16.dp)
+                    .constrainAs(loadingUI) {
+                        top.linkTo(topBar.bottom)
+
+                    },
+            ) {
+                items(2) { _ ->
+                    LoadingState()
+                }
+            }
         }
 
         ToolbarUI(
