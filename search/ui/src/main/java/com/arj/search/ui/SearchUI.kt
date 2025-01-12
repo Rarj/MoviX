@@ -2,45 +2,25 @@ package com.arj.search.ui
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.semantics.contentDescription
-import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardCapitalization
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.paging.compose.LazyPagingItems
+import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.arj.search.domain.model.MovieModel
-import com.arj.uikit.PosterUiKit
-import com.arj.uikit.R as RUiKit
+import com.arj.search.ui.component.EmptyState
+import com.arj.search.ui.component.LoadingState
+import com.arj.search.ui.component.MoviesUI
+import com.arj.search.ui.component.ToolbarUI
 
 @Composable
 fun SearchUI(
@@ -50,6 +30,24 @@ fun SearchUI(
     onItemClicked: (movieId: String, movieTitle: String) -> Unit,
 ) {
     val state = viewModel.state.collectAsState().value
+    SearchPage(
+        modifier = modifier,
+        state = state,
+        onValueChange = viewModel::onUpdateKeyword,
+        onBack = onBack::invoke,
+        onItemClicked = onItemClicked::invoke,
+    )
+}
+
+@Composable
+private fun SearchPage(
+    modifier: Modifier = Modifier,
+    state: SearchState,
+    onValueChange: (String) -> Unit,
+    onBack: () -> Unit,
+    onItemClicked: (movieId: String, movieTitle: String) -> Unit,
+) {
+    val pagingItems = state.moviePagingItems.collectAsLazyPagingItems()
 
     ConstraintLayout(
         modifier = modifier
@@ -57,62 +55,59 @@ fun SearchUI(
             .padding(bottom = 24.dp)
             .background(color = MaterialTheme.colorScheme.primaryContainer)
     ) {
-        val (topBar, movies) = createRefs()
+        val (topBar, movies, emptyUI, loadingUI) = createRefs()
         createVerticalChain(topBar, movies)
 
-        Row(
-            modifier = Modifier
-                .constrainAs(topBar) {
-                    top.linkTo(parent.top)
-                }
-                .wrapContentSize()
-                .padding(top = 62.dp, end = 16.dp)
-        ) {
-            IconButton(
+        if (state.keyword?.isEmpty() == true) {
+            EmptyState(
                 modifier = Modifier
-                    .align(alignment = Alignment.CenterVertically),
-                onClick = { onBack.invoke() }
-            ) {
-                Icon(
-                    painter = painterResource(id = RUiKit.drawable.ic_back),
-                    contentDescription = "Back to Home page",
-                )
-            }
-
-            OutlinedTextField(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .align(alignment = Alignment.CenterVertically),
-                value = state.keyword.toString(),
-                onValueChange = { text ->
-                    viewModel.onUpdateKeyword(keyword = text)
-                },
-                placeholder = {
-                    Text(
-                        fontSize = 14.sp,
-                        text = "Search Movie...",
-                        color = MaterialTheme.colorScheme.secondary,
-                        fontFamily = FontFamily(Font(resId = RUiKit.font.sono_regular)),
-                    )
-                },
-                trailingIcon = {
-                    ClearTextIcon(state.keyword.toString()) {
-                        viewModel.onUpdateKeyword(keyword = "")
-                    }
-                },
-                textStyle = TextStyle(
-                    fontSize = 14.sp,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer,
-                    fontFamily = FontFamily(Font(resId = RUiKit.font.sono_regular))
-                ),
-                shape = RoundedCornerShape(percent = 50),
-                maxLines = 1,
-                keyboardOptions = KeyboardOptions(
-                    imeAction = ImeAction.Done,
-                    capitalization = KeyboardCapitalization.Words,
-                ),
+                    .constrainAs(emptyUI) {
+                        top.linkTo(topBar.bottom)
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                    },
+                message = "Type to discover good movie",
             )
+        } else if (
+            pagingItems.itemCount <= 0 &&
+            pagingItems.loadState.refresh is LoadState.NotLoading
+        ) {
+            EmptyState(
+                modifier = Modifier
+                    .constrainAs(emptyUI) {
+                        top.linkTo(topBar.bottom)
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                    }
+                    .fillMaxSize(),
+                message = "Movie not found. \nJust try another keyword.",
+            )
+        } else if (
+            state.keyword?.isNotBlank() == true &&
+            pagingItems.loadState.refresh is LoadState.Loading
+        ) {
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(count = 2),
+                modifier = modifier.padding(start = 8.dp, end = 8.dp, top = 16.dp)
+                    .constrainAs(loadingUI) {
+                        top.linkTo(topBar.bottom)
+
+                    },
+            ) {
+                items(2) { _ ->
+                    LoadingState()
+                }
+            }
         }
+
+        ToolbarUI(
+            modifier = Modifier.constrainAs(topBar) {
+                top.linkTo(parent.top)
+            },
+            keyword = state.keyword.toString(),
+            onValueChange = onValueChange,
+            onBack = onBack::invoke,
+        )
 
         MoviesUI(
             modifier = Modifier
@@ -122,88 +117,8 @@ fun SearchUI(
                     height = Dimension.fillToConstraints
                 }
                 .animateContentSize(),
-            pagingItems = state.moviePagingItems.collectAsLazyPagingItems(),
-        ) { movieId, movieTitle ->
-            onItemClicked.invoke(movieId, movieTitle)
-        }
-    }
-}
-
-@Composable
-private fun MoviesUI(
-    modifier: Modifier,
-    pagingItems: LazyPagingItems<MovieModel>,
-    onItemClicked: (movieId: String, movieTitle: String) -> Unit,
-) {
-    LazyVerticalGrid(
-        columns = GridCells.Fixed(count = 2),
-        modifier = modifier.padding(start = 8.dp, end = 8.dp, top = 16.dp),
-    ) {
-        items(pagingItems.itemCount) { index ->
-            Item(movie = pagingItems[index]) {
-                onItemClicked.invoke(
-                    pagingItems[index]?.id.toString(),
-                    pagingItems[index]?.title.toString(),
-                )
-            }
-        }
-    }
-}
-
-
-@Composable
-private fun ClearTextIcon(
-    keyword: String,
-    onClearedText: () -> Unit
-) {
-    if (keyword.isBlank().not()) {
-        IconButton(onClick = { onClearedText.invoke() }) {
-            Icon(
-                painter = painterResource(id = RUiKit.drawable.ic_close),
-                contentDescription = "Clear Keyword",
-            )
-        }
-    }
-}
-
-@Composable
-private fun Item(
-    movie: MovieModel?,
-    onItemClicked: (movieId: String) -> Unit,
-) {
-    Column {
-        PosterUiKit(
-            path = movie?.posterPath,
-            contentDescription = movie?.title,
-        ) { onItemClicked.invoke(movie?.id.toString()) }
-
-        Text(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 4.dp, end = 4.dp)
-                .semantics {
-                    contentDescription = movie?.title.orEmpty()
-                },
-            text = movie?.title.orEmpty(),
-            color = MaterialTheme.colorScheme.onPrimaryContainer,
-            maxLines = 1,
-            fontSize = 16.sp,
-            fontFamily = FontFamily(Font(resId = RUiKit.font.sono_semibold)),
-            overflow = TextOverflow.Ellipsis
-        )
-
-        Text(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 4.dp, end = 4.dp, bottom = 12.dp)
-                .semantics {
-                    contentDescription = movie?.title.orEmpty()
-                },
-            text = movie?.releaseDate.orEmpty(),
-            color = MaterialTheme.colorScheme.onPrimaryContainer,
-            maxLines = 1,
-            fontSize = 14.sp,
-            fontFamily = FontFamily(Font(resId = RUiKit.font.sono_medium)),
+            pagingItems = pagingItems,
+            onItemClicked = onItemClicked::invoke,
         )
     }
 }
@@ -211,8 +126,12 @@ private fun Item(
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
 private fun SearchUIPreview() {
-    SearchUI(
+    SearchPage(
+        state = SearchState(
+            keyword = "Koala Kumal",
+        ),
+        onValueChange = { _ -> },
         onBack = { },
-        onItemClicked = { _, _ -> }
+        onItemClicked = { _, _ -> },
     )
 }
