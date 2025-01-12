@@ -13,6 +13,7 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.arj.search.ui.component.EmptyState
 import com.arj.search.ui.component.MoviesUI
@@ -43,6 +44,8 @@ private fun SearchPage(
     onBack: () -> Unit,
     onItemClicked: (movieId: String, movieTitle: String) -> Unit,
 ) {
+    val pagingItems = state.moviePagingItems.collectAsLazyPagingItems()
+
     ConstraintLayout(
         modifier = modifier
             .fillMaxSize()
@@ -54,27 +57,27 @@ private fun SearchPage(
 
         if (state.keyword?.isEmpty() == true) {
             EmptyState(
-                modifier = Modifier.constrainAs(emptyUI) {
-                    top.linkTo(topBar.bottom)
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                    bottom.linkTo(parent.bottom)
-                    height = Dimension.fillToConstraints
-                },
-                message = "Find out your movie!",
+                modifier = Modifier
+                    .constrainAs(emptyUI) {
+                        top.linkTo(topBar.bottom)
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                    },
+                message = "Type to discover good movie",
             )
-        }
-
-        if (state.moviePagingItems.collectAsLazyPagingItems().loadState.source.hasError) {
+        } else if (
+            pagingItems.itemCount <= 0 &&
+            pagingItems.loadState.refresh is LoadState.NotLoading
+        ) {
             EmptyState(
-                modifier = Modifier.constrainAs(emptyUI) {
-                    top.linkTo(topBar.bottom)
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                    bottom.linkTo(parent.bottom)
-                    height = Dimension.fillToConstraints
-                },
-                message = "Ups, we got some error.",
+                modifier = Modifier
+                    .constrainAs(emptyUI) {
+                        top.linkTo(topBar.bottom)
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                    }
+                    .fillMaxSize(),
+                message = "Movie not found. \nJust try another keyword.",
             )
         }
 
@@ -95,7 +98,7 @@ private fun SearchPage(
                     height = Dimension.fillToConstraints
                 }
                 .animateContentSize(),
-            pagingItems = state.moviePagingItems.collectAsLazyPagingItems(),
+            pagingItems = pagingItems,
             onItemClicked = onItemClicked::invoke,
         )
     }
