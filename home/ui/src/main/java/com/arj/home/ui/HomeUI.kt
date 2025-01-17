@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -20,6 +21,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -227,10 +229,22 @@ private fun Item(
             fontSize = 14.sp,
             fontFamily = FontFamily(Font(resId = RUiKit.font.sono_medium)),
         )
+
+        Text(
+            modifier = Modifier
+                .padding(horizontal = 1.dp)
+                .clip(RoundedCornerShape(50))
+                .background(color = MaterialTheme.colorScheme.tertiary)
+                .padding(horizontal = 8.dp, vertical = 4.dp),
+            text = "genre",
+            color = MaterialTheme.colorScheme.onTertiary,
+            fontSize = 12.sp,
+            fontFamily = FontFamily(Font(RUiKit.font.sono_medium)),
+        )
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 private fun HomePreview() {
     Item(

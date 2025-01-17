@@ -70,6 +70,8 @@ dependencies {
     implementation(project(":navigation:detail:controller"))
     implementation(project(":navigation:detail:impl"))
 
+    implementation(project(":common"))
+
     implementation(libs.appcompat)
     implementation(libs.compose.material3)
 
