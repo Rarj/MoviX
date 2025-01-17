@@ -8,3 +8,7 @@ val ColorWhite = Color(0xFFFFFFFF)
 val ColorGray = Color(0xFFBABABA)
 val ColorSecondaryVariant = Color(0xFFF05454)
 val ColorStar = Color(0xFFFFAF1A)
+
+// Release Date Color
+val ColorReleased = Color(0xFF009688)
+val ColorUpcoming = Color(0xFFFF5722)
