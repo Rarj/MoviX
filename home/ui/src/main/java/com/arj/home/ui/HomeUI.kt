@@ -238,7 +238,7 @@ private fun Item(
                     .padding(bottom = 12.dp)
                     .clip(RoundedCornerShape(50))
                     .background(color = Color(it.releaseStatusBackground))
-                    .padding(horizontal = 8.dp, vertical = 4.dp),
+                    .padding(horizontal = 8.dp, vertical = 2.dp),
                 text = it.releaseStatus,
                 color = MaterialTheme.colorScheme.onTertiary,
                 fontSize = 12.sp,
