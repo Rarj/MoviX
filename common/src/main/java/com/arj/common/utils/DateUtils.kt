@@ -33,11 +33,15 @@ object DateUtils {
     fun getReleaseStatus(releaseDate: String, currentLocalDate: LocalDate = LocalDate.now()): ReleaseStatus {
         if (releaseDate.isBlank()) return ReleaseStatus.UNKNOWN
 
-        val inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-        val releasedLocalDate = LocalDate.parse(releaseDate, inputFormatter)
+        return try {
+            val inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+            val releasedLocalDate = LocalDate.parse(releaseDate, inputFormatter)
 
-        return ReleaseStatus.RELEASED.takeIf {
-            releasedLocalDate.isEqual(currentLocalDate) || currentLocalDate.isAfter(releasedLocalDate)
-        } ?: ReleaseStatus.UPCOMING
+            ReleaseStatus.RELEASED.takeIf {
+                releasedLocalDate.isEqual(currentLocalDate) || currentLocalDate.isAfter(releasedLocalDate)
+            } ?: ReleaseStatus.UPCOMING
+        } catch (e: Exception) {
+            ReleaseStatus.UNKNOWN
+        }
     }
 }

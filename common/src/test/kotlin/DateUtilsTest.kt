@@ -34,4 +34,24 @@ internal class DateUtilsTest {
         )
     }
 
+    @Test
+    fun `return UNKNOWN when release date is blank`() {
+        assertTrue(
+            ReleaseStatus.UNKNOWN == DateUtils.getReleaseStatus(
+                releaseDate = "",
+                currentLocalDate = LocalDate.of(2025, 1, 10),
+            )
+        )
+    }
+
+    @Test
+    fun `return UNKNOWN when release date is failed to parse`() {
+        assertTrue(
+            ReleaseStatus.UNKNOWN == DateUtils.getReleaseStatus(
+                releaseDate = "2025-01-10x",
+                currentLocalDate = LocalDate.of(2025, 1, 10),
+            )
+        )
+    }
+
 }
