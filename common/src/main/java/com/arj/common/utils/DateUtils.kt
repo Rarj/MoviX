@@ -11,6 +11,10 @@ enum class ReleaseStatus {
     UPCOMING {
         override fun backgroundColor(): Long = 0xFFFF5722
         override fun status(): String = "Upcoming"
+    },
+    UNKNOWN {
+        override fun backgroundColor(): Long = 0xFFAAAAAA
+        override fun status(): String = "Unknown"
     };
 
     abstract fun backgroundColor(): Long
@@ -27,6 +31,8 @@ object DateUtils {
      * @return [ReleaseStatus]
      */
     fun getReleaseStatus(releaseDate: String, currentLocalDate: LocalDate = LocalDate.now()): ReleaseStatus {
+        if (releaseDate.isBlank()) return ReleaseStatus.UNKNOWN
+
         val inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
         val releasedLocalDate = LocalDate.parse(releaseDate, inputFormatter)
 
