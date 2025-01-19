@@ -22,6 +22,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -219,7 +220,7 @@ private fun Item(
         Text(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 4.dp, end = 4.dp, bottom = 12.dp)
+                .padding(start = 4.dp, end = 4.dp, bottom = 2.dp)
                 .semantics {
                     contentDescription = discoverMovie?.title.orEmpty()
                 },
@@ -230,17 +231,20 @@ private fun Item(
             fontFamily = FontFamily(Font(resId = RUiKit.font.sono_medium)),
         )
 
-        Text(
-            modifier = Modifier
-                .padding(horizontal = 1.dp)
-                .clip(RoundedCornerShape(50))
-                .background(color = MaterialTheme.colorScheme.tertiary)
-                .padding(horizontal = 8.dp, vertical = 4.dp),
-            text = "genre",
-            color = MaterialTheme.colorScheme.onTertiary,
-            fontSize = 12.sp,
-            fontFamily = FontFamily(Font(RUiKit.font.sono_medium)),
-        )
+        discoverMovie?.let {
+            Text(
+                modifier = Modifier
+                    .padding(horizontal = 1.dp)
+                    .padding(bottom = 12.dp)
+                    .clip(RoundedCornerShape(50))
+                    .background(color = Color(it.releaseStatusBackground))
+                    .padding(horizontal = 8.dp, vertical = 4.dp),
+                text = it.releaseStatus,
+                color = MaterialTheme.colorScheme.onTertiary,
+                fontSize = 12.sp,
+                fontFamily = FontFamily(Font(RUiKit.font.sono_medium)),
+            )
+        }
     }
 }
 
@@ -255,7 +259,9 @@ private fun HomePreview() {
             title = "Garfield",
             overview = "overview",
             rating = 10.0,
-            releaseDate = "17 August 2024"
+            releaseDate = "17 August 2024",
+            releaseStatus = "RELEASED",
+            releaseStatusBackground = 0xFF009688,
         ),
         onItemClicked = { },
     )
