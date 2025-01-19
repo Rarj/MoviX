@@ -34,4 +34,7 @@ android {
 
 dependencies {
     api(libs.three.ten)
+
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.test.ext.junit)
 }
