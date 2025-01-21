@@ -1,11 +1,9 @@
 package com.arj.home.ui
 
-import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -23,7 +21,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.Font
@@ -32,15 +29,12 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.arj.home.ui.filter.FilterScreen
 import com.arj.uikit.PosterUiKit
-import com.arj.uikit.ToolbarUiKit
 import com.arj.uikit.R as RUiKit
 
 @Composable
@@ -51,10 +45,6 @@ fun HomeUI(
     onItemClicked: (movieId: String, movieTitle: String) -> Unit,
 ) {
     val state = viewModel.state.collectAsState().value
-    val context = LocalContext.current
-    val selectedGenre = context.getString(
-        R.string.selected_genre_label, state.selectedGenre.orEmpty()
-    )
     val isAboutClicked = remember { mutableStateOf(false) }
 
     if (isAboutClicked.value) AlertAboutUI(isAboutClicked)
@@ -73,52 +63,14 @@ fun HomeUI(
             })
     }
 
-    ConstraintLayout(
-        modifier = modifier
-            .fillMaxSize()
-            .background(color = MaterialTheme.colorScheme.primaryContainer)
-            .padding(top = 24.dp, bottom = 24.dp)
-    ) {
-        val (toolbar, genre, movies) = createRefs()
-        createVerticalChain(toolbar, genre, movies)
-
-        ToolbarUiKit(modifier = Modifier.constrainAs(toolbar) {
-            top.linkTo(parent.top)
-            start.linkTo(parent.start)
-            end.linkTo(parent.end)
-        },
-            onSearchClicked = { onSearchClicked.invoke() },
-            onFilterClicked = { filterPageState.value = !filterPageState.value },
-            onAboutClicked = { isAboutClicked.value = !isAboutClicked.value })
-
-        Text(
-            modifier = Modifier
-                .constrainAs(genre) {
-                    top.linkTo(toolbar.bottom)
-                    start.linkTo(parent.start)
-                }
-                .padding(top = 16.dp, end = 16.dp, start = 16.dp),
-            text = selectedGenre,
-            color = MaterialTheme.colorScheme.tertiary,
-            fontSize = 18.sp,
-            fontFamily = FontFamily(Font(RUiKit.font.sono_medium)),
-        )
-
-        MoviesUI(
-            modifier = Modifier
-                .fillMaxSize()
-                .constrainAs(movies) {
-                    top.linkTo(genre.bottom)
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                    height = Dimension.fillToConstraints
-                }
-                .animateContentSize(),
-            pagingItems = state.moviePagingDataState.collectAsLazyPagingItems(),
-        ) { movieId, movieTitle ->
-            onItemClicked.invoke(movieId, movieTitle)
-        }
-    }
+    HomeScreen(
+        modifier = modifier,
+        movies = state.moviePagingDataState.collectAsLazyPagingItems(),
+        onNavigateToDetailScreen = onItemClicked::invoke,
+        onSearchClicked = onSearchClicked::invoke,
+        onFilterClicked = { filterPageState.value = !filterPageState.value },
+        onAboutClicked = { isAboutClicked.value = !isAboutClicked.value },
+    )
 }
 
 @Composable
@@ -150,14 +102,14 @@ private fun AlertAboutUI(isAboutClicked: MutableState<Boolean>) {
 }
 
 @Composable
-private fun MoviesUI(
+internal fun MoviesUI(
     modifier: Modifier,
     pagingItems: LazyPagingItems<com.arj.home.domain.mapper.DiscoverMovie>,
     onItemClicked: (movieId: String, movieTitle: String) -> Unit,
 ) {
     LazyVerticalGrid(
         columns = GridCells.Adaptive(150.dp),
-        modifier = modifier.padding(start = 8.dp, end = 8.dp, top = 16.dp),
+        modifier = modifier,
         horizontalArrangement = Arrangement.Center,
     ) {
         items(pagingItems.itemCount) { index ->
@@ -234,12 +186,12 @@ private fun Item(
         discoverMovie?.let {
             Text(
                 modifier = Modifier
-                    .padding(horizontal = 1.dp)
                     .padding(bottom = 12.dp)
+                    .padding(horizontal = 4.dp)
                     .clip(RoundedCornerShape(50))
                     .background(color = Color(it.releaseStatusBackground))
                     .padding(horizontal = 8.dp, vertical = 2.dp),
-                text = it.releaseStatus,
+                text = it.releaseStatus.uppercase(),
                 color = MaterialTheme.colorScheme.onTertiary,
                 fontSize = 12.sp,
                 fontFamily = FontFamily(Font(RUiKit.font.sono_medium)),
@@ -260,7 +212,7 @@ private fun HomePreview() {
             overview = "overview",
             rating = 10.0,
             releaseDate = "17 August 2024",
-            releaseStatus = "RELEASED",
+            releaseStatus = "Released",
             releaseStatusBackground = 0xFF009688,
         ),
         onItemClicked = { },
