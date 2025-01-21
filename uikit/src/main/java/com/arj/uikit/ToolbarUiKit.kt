@@ -14,6 +14,7 @@ import androidx.compose.material3.OutlinedIconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarColors
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -35,77 +36,92 @@ fun ToolbarUiKit(
     onSearchClicked: () -> Unit,
     onFilterClicked: () -> Unit,
     onAboutClicked: () -> Unit,
+    scrollBehavior: TopAppBarScrollBehavior? = null
 ) {
-    TopAppBar(modifier = modifier
-        .shadow(
-            elevation = 8.dp,
-            spotColor = MaterialTheme.colorScheme.scrim,
-        ), colors = TopAppBarColors(
-        containerColor = MaterialTheme.colorScheme.primaryContainer,
-        scrolledContainerColor = Color.Unspecified,
-        navigationIconContentColor = Color.Unspecified,
-        titleContentColor = Color.Unspecified,
-        actionIconContentColor = Color.Unspecified,
-    ), navigationIcon = {
-        OutlinedIconButton(
-            modifier = Modifier.padding(start = 4.dp),
-            onClick = { onAboutClicked.invoke() },
-            border = BorderStroke(1.dp, MaterialTheme.colorScheme.inverseSurface)
-        ) {
-            Icon(
-                painter = painterResource(R.drawable.ic_movie),
-                contentDescription = "About Page",
-            )
-        }
-    }, title = {
-        Column(
-            modifier = Modifier.padding(start = 16.dp)
-        ) {
-            Text(
-                text = "Welcome Movie Buffs!",
-                fontFamily = FontFamily(Font(resId = R.font.sono_bold)),
-                fontSize = 18.sp,
-                color = MaterialTheme.colorScheme.onPrimaryContainer,
-                style = TextStyle(platformStyle = PlatformTextStyle(includeFontPadding = false))
-            )
-            Text(
-                text = "Find your funky movie!",
-                fontFamily = FontFamily(Font(resId = R.font.sono_light)),
-                fontSize = 12.sp,
-                color = MaterialTheme.colorScheme.onPrimaryContainer,
-                style = TextStyle(platformStyle = PlatformTextStyle(includeFontPadding = false))
-            )
-        }
-    }, actions = {
-        Row {
-            IconButton(modifier = Modifier
-                .padding(end = 8.dp)
-                .height(24.dp)
-                .width(24.dp)
-                .align(alignment = Alignment.CenterVertically),
-                onClick = { onSearchClicked.invoke() }) {
+    TopAppBar(
+        modifier = modifier.shadow(
+                elevation = 8.dp,
+                spotColor = MaterialTheme.colorScheme.scrim,
+            ),
+        colors = TopAppBarColors(
+            containerColor = MaterialTheme.colorScheme.primaryContainer,
+            scrolledContainerColor = MaterialTheme.colorScheme.primaryContainer,
+            navigationIconContentColor = Color.Unspecified,
+            titleContentColor = Color.Unspecified,
+            actionIconContentColor = Color.Unspecified,
+        ),
+        navigationIcon = {
+            OutlinedIconButton(
+                modifier = Modifier.padding(start = 4.dp),
+                onClick = { onAboutClicked.invoke() },
+                border = BorderStroke(1.dp, MaterialTheme.colorScheme.inverseSurface)
+            ) {
                 Icon(
-                    painter = painterResource(R.drawable.ic_search),
-                    contentDescription = "Search Movie",
+                    painter = painterResource(R.drawable.ic_movie),
+                    contentDescription = "About Page",
                 )
             }
-            IconButton(modifier = Modifier
-                .padding(end = 8.dp)
-                .height(24.dp)
-                .width(24.dp)
-                .align(alignment = Alignment.CenterVertically),
-                onClick = { onFilterClicked.invoke() }) {
-                Icon(
-                    painter = painterResource(R.drawable.ic_filter),
-                    contentDescription = "Filter Movie by Genre",
+        },
+        title = {
+            Column(
+                modifier = Modifier.padding(start = 16.dp)
+            ) {
+                Text(
+                    text = "Welcome Movie Buffs!",
+                    fontFamily = FontFamily(Font(resId = R.font.sono_bold)),
+                    fontSize = 18.sp,
+                    color = MaterialTheme.colorScheme.onPrimaryContainer,
+                    style = TextStyle(platformStyle = PlatformTextStyle(includeFontPadding = false))
+                )
+                Text(
+                    text = "Find your funky movie!",
+                    fontFamily = FontFamily(Font(resId = R.font.sono_light)),
+                    fontSize = 12.sp,
+                    color = MaterialTheme.colorScheme.onPrimaryContainer,
+                    style = TextStyle(platformStyle = PlatformTextStyle(includeFontPadding = false))
                 )
             }
-        }
-    })
+        },
+        actions = {
+            Row {
+                IconButton(
+                    modifier = Modifier
+                        .padding(end = 8.dp)
+                        .height(24.dp)
+                        .width(24.dp)
+                        .align(alignment = Alignment.CenterVertically),
+                    onClick = { onSearchClicked.invoke() }) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_search),
+                        contentDescription = "Search Movie",
+                    )
+                }
+                IconButton(
+                    modifier = Modifier
+                        .padding(end = 8.dp)
+                        .height(24.dp)
+                        .width(24.dp)
+                        .align(alignment = Alignment.CenterVertically),
+                    onClick = { onFilterClicked.invoke() }) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_filter),
+                        contentDescription = "Filter Movie by Genre",
+                    )
+                }
+            }
+        },
+        scrollBehavior = scrollBehavior,
+    )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
 private fun ToolbarUiKitPreview() {
-    ToolbarUiKit(onSearchClicked = {}, onFilterClicked = {}, onAboutClicked = {})
+    ToolbarUiKit(
+        onSearchClicked = {},
+        onFilterClicked = {},
+        onAboutClicked = {},
+        scrollBehavior =  null,
+    )
 }
