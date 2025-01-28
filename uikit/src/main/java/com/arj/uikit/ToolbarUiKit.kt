@@ -5,7 +5,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Badge
+import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -28,6 +31,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.arj.uikit.appearance.ColorSecondary
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -83,7 +87,9 @@ fun ToolbarUiKit(
             }
         },
         actions = {
-            Row {
+            Row(
+                modifier = Modifier.padding(end = 10.dp)
+            ) {
                 IconButton(
                     modifier = Modifier
                         .padding(end = 8.dp)
@@ -96,17 +102,24 @@ fun ToolbarUiKit(
                         contentDescription = "Search Movie",
                     )
                 }
-                IconButton(
-                    modifier = Modifier
-                        .padding(end = 8.dp)
-                        .height(24.dp)
-                        .width(24.dp)
-                        .align(alignment = Alignment.CenterVertically),
-                    onClick = { onFilterClicked.invoke() }) {
-                    Icon(
-                        painter = painterResource(R.drawable.ic_filter),
-                        contentDescription = "Filter Movie by Genre",
-                    )
+                BadgedBox(
+                    badge = {
+                        Badge(
+                            modifier = Modifier.size(8.dp),
+                            containerColor = ColorSecondary,
+                        )
+                    },
+                ) {
+                    IconButton(
+                        modifier = Modifier
+                            .height(24.dp)
+                            .width(24.dp),
+                        onClick = { onFilterClicked.invoke() }) {
+                        Icon(
+                            painter = painterResource(R.drawable.ic_filter),
+                            contentDescription = "Filter Movie by Genre",
+                        )
+                    }
                 }
             }
         },
@@ -122,6 +135,6 @@ private fun ToolbarUiKitPreview() {
         onSearchClicked = {},
         onFilterClicked = {},
         onAboutClicked = {},
-        scrollBehavior =  null,
+        scrollBehavior = null,
     )
 }
