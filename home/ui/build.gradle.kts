@@ -48,6 +48,7 @@ dependencies {
     implementation(project(":genre:di"))
 
     implementation(project(":network:state"))
+    implementation(project(":common"))
 
     implementation(libs.compose.constraintlayout)
     implementation(libs.compose.material3)
