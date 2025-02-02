@@ -1,8 +1,6 @@
 package com.arj.home.ui
 
-import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -22,7 +20,6 @@ import kotlinx.coroutines.flow.flow
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun HomeScreen(
-    modifier: Modifier = Modifier,
     movies: LazyPagingItems<DiscoverMovie>,
     onNavigateToDetailScreen: (movieId: String, movieTitle: String) -> Unit,
     onSearchClicked: () -> Unit,
@@ -33,7 +30,9 @@ internal fun HomeScreen(
 
     Scaffold(
         containerColor = MaterialTheme.colorScheme.primaryContainer,
-        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        modifier = Modifier
+            .fillMaxSize()
+            .nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             ToolbarUiKit(
                 onSearchClicked = onSearchClicked::invoke,
@@ -44,10 +43,7 @@ internal fun HomeScreen(
         },
     ) { innerPadding ->
         MoviesUI(
-            modifier = Modifier
-                .padding(innerPadding)
-                .fillMaxSize()
-                .animateContentSize(),
+            innerPadding = innerPadding,
             pagingItems = movies,
             onItemClicked = onNavigateToDetailScreen::invoke,
         )
