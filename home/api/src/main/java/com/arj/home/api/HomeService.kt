@@ -13,4 +13,9 @@ interface HomeService {
         @Query("page") page: Int,
     ): NetworkResponse<Movie>
 
+    @GET("movie/now_playing")
+    suspend fun getNowPlayingMovie(
+        @Query("page") page: Int,
+    ): NetworkResponse<Movie>
+
 }

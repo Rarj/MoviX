@@ -5,7 +5,6 @@ import com.arj.home.domain.mapper.DiscoverMovie
 import kotlinx.coroutines.flow.Flow
 
 interface DiscoverMovieRepository {
-
     suspend fun getDiscoverMovie(genreId: String?): Flow<PagingData<DiscoverMovie>>
-
+    suspend fun getNowPlayingMovie(): Flow<PagingData<DiscoverMovie>>
 }

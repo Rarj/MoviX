@@ -33,4 +33,18 @@ class DiscoverMovieRepositoryImpl @Inject constructor(
         }.flow.flowOn(dispatcher)
     }
 
+    override suspend fun getNowPlayingMovie(): Flow<PagingData<DiscoverMovie>> {
+        return createPager { page ->
+            val response = apiService.getNowPlayingMovie(page)
+            val movies = response.results.map { it.toDiscoverMovie() }
+
+            val result = NetworkResponse(
+                page = response.page,
+                totalPages = response.totalPages,
+                results = movies
+            )
+
+            MovixNetworkResult.Success(result)
+        }.flow.flowOn(dispatcher)
+    }
 }

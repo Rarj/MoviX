@@ -54,6 +54,7 @@ class MainActivity : ComponentActivity() {
                         composable(route = HOME_ROUTE) {
                             HomeUI(
                                 onSearchClicked = {
+                                    navController.popBackStack()
                                     searchNavigation.navigateToSearchPage(navController)
                                 },
                                 onItemClicked = { movieId, movieTitle ->
