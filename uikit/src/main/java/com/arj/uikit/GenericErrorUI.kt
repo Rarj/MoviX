@@ -3,9 +3,9 @@ package com.arj.uikit
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
@@ -25,12 +25,13 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun GenericErrorUI(
     message: String?,
+    modifier: Modifier = Modifier,
     onRetry: () -> Unit,
 ) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .padding(all = 16.dp)
-            .fillMaxSize(),
+            .wrapContentSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
@@ -69,6 +70,7 @@ fun GenericErrorUI(
 @Composable
 private fun DetailMovieUIPreview() {
     GenericErrorUI(
+        modifier = Modifier,
         message = "No Internet Connection"
     ) {}
 }

@@ -15,8 +15,8 @@ android {
         applicationId = "com.arj.movix"
         minSdk = 23
         targetSdk = 34
-        versionCode = 200304
-        versionName = "2.3.4"
+        versionCode = 200305
+        versionName = "2.3.5"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -69,6 +69,8 @@ dependencies {
     implementation(project(":detail:ui"))
     implementation(project(":navigation:detail:controller"))
     implementation(project(":navigation:detail:impl"))
+
+    implementation(project(":common"))
 
     implementation(libs.appcompat)
     implementation(libs.compose.material3)

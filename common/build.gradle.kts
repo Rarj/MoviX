@@ -1,12 +1,10 @@
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.kotlinAndroid)
-    alias(libs.plugins.hilt)
-    alias(libs.plugins.kotlinkapt)
 }
 
 android {
-    namespace = "com.arj.genre.di"
+    namespace = "com.arj.common"
     compileSdk = 34
 
     defaultConfig {
@@ -18,7 +16,7 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = true
+            isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -35,17 +33,8 @@ android {
 }
 
 dependencies {
-    implementation(project(":network:shared"))
-    implementation(project(":network:state"))
+    api(libs.three.ten)
 
-    implementation(project(":genre:impl"))
-    implementation(project(":genre:api"))
-    implementation(project(":genre:domain"))
-
-    kapt(libs.dagger.hilt.compiler)
-    implementation(libs.dagger.hilt)
-}
-
-kapt {
-    correctErrorTypes = true
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.test.ext.junit)
 }

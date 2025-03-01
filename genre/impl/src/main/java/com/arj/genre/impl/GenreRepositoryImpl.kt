@@ -4,22 +4,22 @@ import com.arj.genre.api.GenreService
 import com.arj.genre.domain.GenreRepository
 import com.arj.genre.domain.model.GenreModel
 import com.arj.genre.domain.toGenres
-import kotlinx.coroutines.Dispatchers
+import com.arj.network.state.MovixNetworkResult
+import com.arj.network.state.safeCall
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 class GenreRepositoryImpl @Inject constructor(
     private val service: GenreService,
+    private val dispatcher: CoroutineDispatcher,
 ) : GenreRepository {
 
-    override suspend fun getGenres(): Flow<GenreModel> {
-        return flow {
+    override suspend fun getGenres(): Flow<MovixNetworkResult<GenreModel>> {
+        return safeCall(dispatcher) {
             val response = service.getGenres()
-            val genres = response.toGenres()
-            emit(genres)
-        }.flowOn(Dispatchers.IO)
+            response.toGenres()
+        }
     }
 
 }

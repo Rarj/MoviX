@@ -8,4 +8,6 @@ data class DiscoverMovie(
     val overview: String,
     val rating: Double,
     val releaseDate: String,
+    val releaseStatus: String,
+    val releaseStatusBackground: Long,
 )

@@ -38,6 +38,7 @@ dependencies {
     implementation(project(":genre:domain"))
     implementation(project(":home:api"))
     implementation(project(":network:shared"))
+    implementation(project(":common"))
 
     kapt(libs.dagger.hilt.compiler)
     implementation(libs.dagger.hilt)
