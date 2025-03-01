@@ -71,6 +71,7 @@ dependencies {
     implementation(project(":navigation:detail:impl"))
 
     implementation(project(":common"))
+    implementation(project(":uikit"))
 
     implementation(libs.appcompat)
     implementation(libs.compose.material3)

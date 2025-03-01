@@ -20,8 +20,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -41,7 +39,6 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.arj.common.utils.getRating
 import com.arj.home.domain.mapper.DiscoverMovie
-import com.arj.home.ui.filter.FilterScreen
 import com.arj.uikit.PosterUiKit
 import com.arj.uikit.appearance.ColorStar
 import com.arj.uikit.R as RUiKit
@@ -53,37 +50,18 @@ fun HomeUI(
     onItemClicked: (movieId: String, movieTitle: String) -> Unit,
 ) {
     val state = viewModel.state.collectAsState().value
-    val isAboutClicked = remember { mutableStateOf(false) }
-
-    if (isAboutClicked.value) AlertAboutUI(isAboutClicked)
-    val filterPageState = remember { mutableStateOf(false) }
-
-    if (filterPageState.value) {
-        FilterScreen(
-            selectedGenre = state.selectedGenreId.orEmpty(),
-            onDismiss = { filterPageState.value = !filterPageState.value },
-            onGenreClicked = { genre ->
-                filterPageState.value = !filterPageState.value
-
-                viewModel.apply {
-                    setSelectedGenre(genre?.id, genre?.name)
-                    getMovies()
-                }
-            }
-        )
-    }
 
     HomeScreen(
         movies = state.moviePagingDataState.collectAsLazyPagingItems(),
         onNavigateToDetailScreen = onItemClicked::invoke,
         onSearchClicked = onSearchClicked::invoke,
-        onFilterClicked = { filterPageState.value = !filterPageState.value },
-        onAboutClicked = { isAboutClicked.value = !isAboutClicked.value },
+        onFilterClicked = { },
+        onAboutClicked = { },
     )
 }
 
 @Composable
-private fun AlertAboutUI(isAboutClicked: MutableState<Boolean>) {
+fun AlertAboutUI(isAboutClicked: MutableState<Boolean>) {
     AlertDialog(
         containerColor = MaterialTheme.colorScheme.primaryContainer,
         title = {
@@ -119,7 +97,8 @@ internal fun MoviesUI(
     LazyVerticalGrid(
         modifier = Modifier
             .padding(innerPadding)
-            .fillMaxSize(),
+            .fillMaxSize()
+            .background(color = MaterialTheme.colorScheme.primaryContainer),
         columns = GridCells.Fixed(2),
         horizontalArrangement = Arrangement.Center,
     ) {

@@ -1,20 +1,14 @@
 package com.arj.home.ui
 
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.arj.home.domain.mapper.DiscoverMovie
-import com.arj.uikit.ToolbarUiKit
 import kotlinx.coroutines.flow.flow
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -26,28 +20,11 @@ internal fun HomeScreen(
     onFilterClicked: () -> Unit,
     onAboutClicked: () -> Unit,
 ) {
-    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
-
-    Scaffold(
-        containerColor = MaterialTheme.colorScheme.primaryContainer,
-        modifier = Modifier
-            .fillMaxSize()
-            .nestedScroll(scrollBehavior.nestedScrollConnection),
-        topBar = {
-            ToolbarUiKit(
-                onSearchClicked = onSearchClicked::invoke,
-                onFilterClicked = onFilterClicked::invoke,
-                onAboutClicked = onAboutClicked::invoke,
-                scrollBehavior = scrollBehavior,
-            )
-        },
-    ) { innerPadding ->
-        MoviesUI(
-            innerPadding = innerPadding,
-            pagingItems = movies,
-            onItemClicked = onNavigateToDetailScreen::invoke,
-        )
-    }
+    MoviesUI(
+        innerPadding = PaddingValues(0.dp),
+        pagingItems = movies,
+        onItemClicked = onNavigateToDetailScreen::invoke,
+    )
 }
 
 @Preview

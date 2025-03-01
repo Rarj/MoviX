@@ -8,6 +8,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -16,8 +17,9 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.core.view.WindowCompat
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -26,6 +28,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.arj.detail.ui.DetailMovieScreen
 import com.arj.detail.ui.DetailMovieViewModel
+import com.arj.home.ui.AlertAboutUI
 import com.arj.home.ui.HomeUI
 import com.arj.movix.appearance.MovixTheme
 import com.arj.movix.navigation.BottomNavItem
@@ -35,6 +38,7 @@ import com.arj.navigation.detail.controller.DETAIL_MOVIE_TITLE_ARGS
 import com.arj.navigation.home.controller.HOME_ROUTE
 import com.arj.search.controller.SEARCH_ROUTE
 import com.arj.search.ui.SearchUI
+import com.arj.uikit.ToolbarUiKit
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import com.arj.navigation.detail.controller.Navigation as DetailMovieNavigation
@@ -51,16 +55,29 @@ class MainActivity : ComponentActivity() {
 
     private val detailMovieViewModel: DetailMovieViewModel by viewModels()
 
+    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setContent {
             MovixTheme {
                 Surface {
+                    val isAboutClicked = remember { mutableStateOf(false) }
+
                     val navController = rememberNavController()
 
                     Scaffold(
+                        topBar = {
+                            ToolbarUiKit(
+                                onSearchClicked = {
+                                    navController.popBackStack()
+                                    searchNavigation.navigateToSearchPage(navController)
+                                },
+                                onFilterClicked = { },
+                                onAboutClicked = { isAboutClicked.value = !isAboutClicked.value },
+                                scrollBehavior = null,
+                            )
+                        },
                         bottomBar = {
                             val bottomNavigationItems = listOf(
                                 BottomNavItem.Home,
@@ -91,6 +108,8 @@ class MainActivity : ComponentActivity() {
                             }
                         },
                     ) { innerPadding ->
+                        if (isAboutClicked.value) AlertAboutUI(isAboutClicked)
+
                         NavHost(
                             modifier = Modifier.padding(innerPadding),
                             navController = navController,
