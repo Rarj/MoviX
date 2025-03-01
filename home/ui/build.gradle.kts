@@ -44,8 +44,8 @@ dependencies {
     implementation(project(":uikit"))
     implementation(project(":home:di"))
     implementation(project(":home:domain"))
-    implementation(project(":genre:domain"))
-    implementation(project(":genre:di"))
+//    implementation(project(":genre:domain"))
+//    implementation(project(":genre:di"))
 
     implementation(project(":network:state"))
     implementation(project(":common"))

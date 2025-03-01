@@ -1,4 +1,4 @@
-package com.arj.home.ui.filter
+package com.arj.genre.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -16,7 +16,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.arj.uikit.shimmerLoadingUI
-import kotlin.random.Random
 
 @Composable
 internal fun FilterLoadingUI() {

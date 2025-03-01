@@ -1,4 +1,4 @@
-package com.arj.home.ui.filter
+package com.arj.genre.ui
 
 import com.arj.genre.domain.model.GenreItemModel
 

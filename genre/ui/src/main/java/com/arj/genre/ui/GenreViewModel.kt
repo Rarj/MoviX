@@ -1,8 +1,7 @@
-package com.arj.home.ui.filter
+package com.arj.genre.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.arj.genre.domain.GenreRepository
 import com.arj.genre.domain.model.GenreModel
 import com.arj.genre.domain.usecase.GenreUseCase
 import com.arj.network.state.MovixNetworkResult

@@ -1,10 +1,12 @@
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.kotlinAndroid)
+    alias(libs.plugins.hilt)
+    alias(libs.plugins.kotlinkapt)
 }
 
 android {
-    namespace = "com.arj.uikit"
+    namespace = "com.arj.genre.ui"
     compileSdk = 34
 
     defaultConfig {
@@ -12,10 +14,6 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
-
-        buildConfigField("String", "IMAGE_BASE_URL", "\"https://image.tmdb.org/t/p/w342/\"")
-        buildConfigField("String", "BACKDROP_IMAGE_BASE_URL", "\"https://image.tmdb.org/t/p/w780/\"")
-        buildConfigField("String", "CAST_IMAGE_BASE_URL", "\"https://image.tmdb.org/t/p/h632/\"")
     }
 
     buildTypes {
@@ -36,7 +34,6 @@ android {
     }
     buildFeatures {
         compose = true
-        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.10"
@@ -44,9 +41,27 @@ android {
 }
 
 dependencies {
+    implementation(project(":uikit"))
+    implementation(project(":genre:domain"))
+    implementation(project(":genre:di"))
+
+    implementation(project(":network:state"))
+    implementation(project(":common"))
+
+    implementation(libs.compose.constraintlayout)
     implementation(libs.compose.material3)
     implementation(libs.compose.ui.tooling.preview)
     debugImplementation(libs.compose.ui.tooling.debug)
 
-    api(libs.coil.compose)
+    implementation(libs.paging.compose)
+
+    implementation(libs.viewmodelscope)
+
+    kapt(libs.dagger.hilt.compiler)
+    implementation(libs.dagger.hilt)
+    implementation(libs.compose.hiltNavigation)
+}
+
+kapt {
+    correctErrorTypes = true
 }
