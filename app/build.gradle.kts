@@ -70,6 +70,10 @@ dependencies {
     implementation(project(":navigation:detail:controller"))
     implementation(project(":navigation:detail:impl"))
 
+    implementation(project(":genre:ui"))
+    implementation(project(":navigation:filter:controller"))
+    implementation(project(":navigation:filter:impl"))
+
     implementation(project(":common"))
     implementation(project(":uikit"))
 

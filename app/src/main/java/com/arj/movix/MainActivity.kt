@@ -28,6 +28,9 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.arj.detail.ui.DetailMovieScreen
 import com.arj.detail.ui.DetailMovieViewModel
+import com.arj.filter.controller.FilterState
+import com.arj.filter.controller.Navigation
+import com.arj.genre.ui.FilterScreen
 import com.arj.home.ui.AlertAboutUI
 import com.arj.home.ui.HomeUI
 import com.arj.movix.appearance.MovixTheme
@@ -46,7 +49,6 @@ import com.arj.search.controller.Navigation as SearchNavigation
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-
     @Inject
     lateinit var searchNavigation: SearchNavigation
 
@@ -55,6 +57,10 @@ class MainActivity : ComponentActivity() {
 
     private val detailMovieViewModel: DetailMovieViewModel by viewModels()
 
+    @Inject
+    lateinit var filterNavigation: Navigation
+
+
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,9 +68,26 @@ class MainActivity : ComponentActivity() {
         setContent {
             MovixTheme {
                 Surface {
+                    val filterState = filterNavigation.state.collectAsState()
                     val isAboutClicked = remember { mutableStateOf(false) }
 
                     val navController = rememberNavController()
+
+                    if (filterState.value is FilterState.VISIBLE) {
+                        FilterScreen(
+//                            selectedGenre = state.selectedGenreId.orEmpty(),
+                            selectedGenre = "28",
+//                            onDismiss = { filterPageState.value = !filterPageState.value },
+                            onDismiss = { filterNavigation.hideBottomSheet() },
+                            onGenreClicked = { genre ->
+//                                filterPageState.value = !filterPageState.value
+//
+//                                viewModel.apply {
+//                                    setSelectedGenre(genre?.id, genre?.name)
+//                                    getMovies()
+//                                }
+                            })
+                    }
 
                     Scaffold(
                         topBar = {
@@ -73,7 +96,9 @@ class MainActivity : ComponentActivity() {
                                     navController.popBackStack()
                                     searchNavigation.navigateToSearchPage(navController)
                                 },
-                                onFilterClicked = { },
+                                onFilterClicked = {
+                                    filterNavigation.showBottomSheet()
+                                },
                                 onAboutClicked = { isAboutClicked.value = !isAboutClicked.value },
                                 scrollBehavior = null,
                             )
