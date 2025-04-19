@@ -13,7 +13,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -88,7 +87,8 @@ private fun SearchPage(
         ) {
             LazyVerticalGrid(
                 columns = GridCells.Fixed(count = 2),
-                modifier = modifier.padding(start = 8.dp, end = 8.dp, top = 16.dp)
+                modifier = modifier
+                    .padding(start = 8.dp, end = 8.dp, top = 16.dp)
                     .constrainAs(loadingUI) {
                         top.linkTo(topBar.bottom)
 
@@ -103,6 +103,8 @@ private fun SearchPage(
         ToolbarUI(
             modifier = Modifier.constrainAs(topBar) {
                 top.linkTo(parent.top)
+                start.linkTo(parent.start)
+                end.linkTo(parent.end)
             },
             keyword = state.keyword.toString(),
             onValueChange = onValueChange,
@@ -114,7 +116,8 @@ private fun SearchPage(
                 .fillMaxSize()
                 .constrainAs(movies) {
                     top.linkTo(topBar.bottom)
-                    height = Dimension.fillToConstraints
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
                 }
                 .animateContentSize(),
             pagingItems = pagingItems,
