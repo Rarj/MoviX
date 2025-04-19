@@ -4,7 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.padding
@@ -41,6 +42,7 @@ import com.arj.navigation.detail.controller.DETAIL_MOVIE_TITLE_ARGS
 import com.arj.navigation.home.controller.HOME_ROUTE
 import com.arj.search.controller.SEARCH_ROUTE
 import com.arj.search.ui.SearchUI
+import com.arj.uikit.ShowWithAnimation
 import com.arj.uikit.ToolbarUiKit
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -73,7 +75,15 @@ class MainActivity : ComponentActivity() {
 
                     val navController = rememberNavController()
 
+                    val bottomNavigationItems = listOf(
+                        BottomNavItem.Home,
+                        BottomNavItem.NowPlaying,
+                    )
+                    val showBottomNav: Boolean =
+                        navController.currentBackStackEntryAsState().value?.destination?.route in bottomNavigationItems.map { it.route }
+
                     if (filterState.value is FilterState.VISIBLE) {
+                        // FIXME: Filter selection not working
                         FilterScreen(
 //                            selectedGenre = state.selectedGenreId.orEmpty(),
                             selectedGenre = "28",
@@ -91,31 +101,30 @@ class MainActivity : ComponentActivity() {
 
                     Scaffold(
                         topBar = {
-                            ToolbarUiKit(
-                                onSearchClicked = {
-                                    navController.popBackStack()
-                                    searchNavigation.navigateToSearchPage(navController)
-                                },
-                                onFilterClicked = {
-                                    filterNavigation.showBottomSheet()
-                                },
-                                onAboutClicked = { isAboutClicked.value = !isAboutClicked.value },
-                                scrollBehavior = null,
-                            )
+                            ShowWithAnimation(
+                                showBottomNav,
+                                enterTransition = slideInVertically(),
+                                exitTransition = slideOutVertically(),
+                            ) {
+                                ToolbarUiKit(
+                                    onSearchClicked = {
+                                        searchNavigation.navigateToSearchPage(navController)
+                                    },
+                                    onFilterClicked = {
+                                        filterNavigation.showBottomSheet()
+                                    },
+                                    onAboutClicked = {
+                                        isAboutClicked.value = !isAboutClicked.value
+                                    },
+                                    scrollBehavior = null,
+                                )
+                            }
                         },
                         bottomBar = {
-                            val bottomNavigationItems = listOf(
-                                BottomNavItem.Home,
-                                BottomNavItem.NowPlaying,
-                            )
                             val navBackStackEntry = navController.currentBackStackEntryAsState()
                             val currentRoute = navBackStackEntry.value?.destination?.route
 
-                            AnimatedVisibility(
-                                visible = currentRoute == HOME_ROUTE || currentRoute == SEARCH_ROUTE,
-                                enter = slideInVertically(initialOffsetY = { it }),
-                                exit = slideOutVertically(targetOffsetY = { it }),
-                            ) {
+                            ShowWithAnimation(showBottomNav) {
                                 NavigationBar {
                                     bottomNavigationItems.forEach { item ->
                                         NavigationBarItem(
@@ -139,6 +148,8 @@ class MainActivity : ComponentActivity() {
                             modifier = Modifier.padding(innerPadding),
                             navController = navController,
                             startDestination = HOME_ROUTE,
+                            enterTransition = { EnterTransition.None },
+                            exitTransition = { ExitTransition.None },
                         ) {
                             composable(route = HOME_ROUTE) {
                                 HomeUI(

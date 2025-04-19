@@ -5,14 +5,21 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.rounded.PlayArrow
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.arj.navigation.home.controller.HOME_ROUTE
-import com.arj.search.controller.SEARCH_ROUTE
 
-sealed class BottomNavItem(
+internal sealed class BottomNavItem(
     val route: String,
     val icon: ImageVector,
     val label: String,
-    val isHideBottomNav: Boolean = false
 ) {
-    object Home : BottomNavItem(HOME_ROUTE, Icons.Default.Home, "Home")
-    object NowPlaying : BottomNavItem(SEARCH_ROUTE, Icons.Rounded.PlayArrow, "Now Playing")
+    object Home : BottomNavItem(
+        route = HOME_ROUTE,
+        icon = Icons.Default.Home,
+        label = "Home",
+    )
+
+    object NowPlaying : BottomNavItem(
+        route = HOME_ROUTE,
+        icon = Icons.Rounded.PlayArrow,
+        label = "Now Playing",
+    )
 }
