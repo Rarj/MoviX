@@ -1,13 +1,13 @@
-package com.arj.review.impl
+package com.cinepeek.review.impl
 
 import androidx.paging.PagingData
-import com.arj.review.api.ReviewService
-import com.arj.review.domain.ReviewRepository
-import com.arj.review.domain.model.ReviewModel
-import com.arj.review.domain.toReview
 import com.cinepeek.network.shared.NetworkResponse
 import com.cinepeek.network.shared.createPager
 import com.cinepeek.network.state.MovixNetworkResult
+import com.cinepeek.review.api.ReviewService
+import com.cinepeek.review.domain.ReviewRepository
+import com.cinepeek.review.domain.model.ReviewModel
+import com.cinepeek.review.domain.toReview
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn

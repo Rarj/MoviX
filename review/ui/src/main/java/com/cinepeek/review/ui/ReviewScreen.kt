@@ -1,4 +1,4 @@
-package com.arj.review.ui
+package com.cinepeek.review.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -26,7 +26,7 @@ import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.arj.review.domain.model.ReviewModel
+import com.cinepeek.review.domain.model.ReviewModel
 import com.cinepeek.uikit.appearance.ColorStar
 import kotlinx.coroutines.flow.flow
 import com.cinepeek.uikit.R as RUiKit

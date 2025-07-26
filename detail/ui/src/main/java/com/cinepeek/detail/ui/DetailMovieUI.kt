@@ -29,8 +29,8 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import com.arj.review.ui.ReviewScreen
 import com.cinepeek.detail.ui.tab.TabUI
+import com.cinepeek.review.ui.ReviewScreen
 import com.cinepeek.uikit.R as RUiKit
 
 @Composable

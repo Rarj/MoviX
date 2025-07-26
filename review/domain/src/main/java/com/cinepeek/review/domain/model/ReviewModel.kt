@@ -1,4 +1,4 @@
-package com.arj.review.domain.model
+package com.cinepeek.review.domain.model
 
 data class ReviewModel(
     val id: String,

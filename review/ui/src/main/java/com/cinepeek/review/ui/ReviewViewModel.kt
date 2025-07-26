@@ -1,9 +1,9 @@
-package com.arj.review.ui
+package com.cinepeek.review.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
-import com.arj.review.domain.usecase.ReviewUseCase
+import com.cinepeek.review.domain.usecase.ReviewUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

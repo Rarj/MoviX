@@ -1,4 +1,4 @@
-package com.arj.review.api.response
+package com.cinepeek.review.api.response
 
 data class ReviewResponse(
     val id: String,

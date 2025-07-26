@@ -1,7 +1,7 @@
-package com.arj.review.ui
+package com.cinepeek.review.ui
 
 import androidx.paging.PagingData
-import com.arj.review.domain.model.ReviewModel
+import com.cinepeek.review.domain.model.ReviewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 

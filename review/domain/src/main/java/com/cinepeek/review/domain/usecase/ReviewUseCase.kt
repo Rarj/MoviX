@@ -1,6 +1,6 @@
-package com.arj.review.domain.usecase
+package com.cinepeek.review.domain.usecase
 
-import com.arj.review.domain.ReviewRepository
+import com.cinepeek.review.domain.ReviewRepository
 import javax.inject.Inject
 
 class ReviewUseCase @Inject constructor(

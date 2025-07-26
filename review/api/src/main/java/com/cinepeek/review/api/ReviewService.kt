@@ -1,7 +1,7 @@
-package com.arj.review.api
+package com.cinepeek.review.api
 
-import com.arj.review.api.response.ReviewResponse
 import com.cinepeek.network.shared.NetworkResponse
+import com.cinepeek.review.api.response.ReviewResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

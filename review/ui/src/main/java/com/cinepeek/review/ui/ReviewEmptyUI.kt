@@ -1,4 +1,4 @@
-package com.arj.review.ui
+package com.cinepeek.review.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
