@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.arj.detail.impl"
+    namespace = "com.cinepeek.detail.impl"
     compileSdk = 34
 
     defaultConfig {
