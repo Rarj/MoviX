@@ -1,4 +1,4 @@
-package com.arj.benchmark
+package com.cinepeek.benchmark
 
 import androidx.benchmark.macro.StartupMode
 import androidx.benchmark.macro.StartupTimingMetric
