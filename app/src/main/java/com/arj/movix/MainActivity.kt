@@ -14,7 +14,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.arj.movix.appearance.MovixTheme
-import com.arj.search.ui.SearchUI
+import com.cinepeek.search.ui.SearchUI
 import com.cinepeek.detail.ui.DetailMovieScreen
 import com.cinepeek.detail.ui.DetailMovieViewModel
 import com.cinepeek.home.ui.HomeUI
