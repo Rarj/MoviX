@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.arj.navigation.home.controller"
+    namespace = "com.cinepeek.navigation.home.controller"
     compileSdk = 34
 
     defaultConfig {

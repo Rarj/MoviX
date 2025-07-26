@@ -1,4 +1,4 @@
-package com.arj.navigation.home.controller
+package com.cinepeek.navigation.home.controller
 
 import dagger.Module
 import dagger.Provides
