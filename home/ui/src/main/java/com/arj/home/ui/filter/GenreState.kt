@@ -1,6 +1,6 @@
 package com.arj.home.ui.filter
 
-import com.arj.genre.domain.model.GenreItemModel
+import com.cinepeek.genre.domain.model.GenreItemModel
 
 sealed class GenreUIState {
     object Init : GenreUIState()

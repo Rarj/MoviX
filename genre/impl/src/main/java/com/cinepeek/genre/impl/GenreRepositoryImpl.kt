@@ -1,9 +1,9 @@
-package com.arj.genre.impl
+package com.cinepeek.genre.impl
 
-import com.arj.genre.api.GenreService
-import com.arj.genre.domain.GenreRepository
-import com.arj.genre.domain.model.GenreModel
-import com.arj.genre.domain.toGenres
+import com.cinepeek.genre.api.GenreService
+import com.cinepeek.genre.domain.GenreRepository
+import com.cinepeek.genre.domain.model.GenreModel
+import com.cinepeek.genre.domain.toGenres
 import com.cinepeek.network.state.MovixNetworkResult
 import com.cinepeek.network.state.safeCall
 import kotlinx.coroutines.CoroutineDispatcher

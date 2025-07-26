@@ -1,9 +1,9 @@
-package com.arj.genre.di
+package com.cinepeek.genre.di
 
-import com.arj.genre.api.GenreService
-import com.arj.genre.domain.GenreRepository
-import com.arj.genre.domain.usecase.GenreUseCase
-import com.arj.genre.impl.GenreRepositoryImpl
+import com.cinepeek.genre.api.GenreService
+import com.cinepeek.genre.domain.GenreRepository
+import com.cinepeek.genre.domain.usecase.GenreUseCase
+import com.cinepeek.genre.impl.GenreRepositoryImpl
 import com.cinepeek.network.state.IoDispatcher
 import dagger.Module
 import dagger.Provides

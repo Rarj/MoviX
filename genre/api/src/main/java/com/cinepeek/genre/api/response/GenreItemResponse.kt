@@ -1,4 +1,4 @@
-package com.arj.genre.api.response
+package com.cinepeek.genre.api.response
 
 import com.google.gson.annotations.SerializedName
 

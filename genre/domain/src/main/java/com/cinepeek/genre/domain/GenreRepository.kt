@@ -1,6 +1,6 @@
-package com.arj.genre.domain
+package com.cinepeek.genre.domain
 
-import com.arj.genre.domain.model.GenreModel
+import com.cinepeek.genre.domain.model.GenreModel
 import com.cinepeek.network.state.MovixNetworkResult
 import kotlinx.coroutines.flow.Flow
 

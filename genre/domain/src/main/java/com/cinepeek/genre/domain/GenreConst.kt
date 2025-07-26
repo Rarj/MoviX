@@ -1,4 +1,4 @@
-package com.arj.genre.domain
+package com.cinepeek.genre.domain
 
 object GenreConst {
     const val DEFAULT_GENRE_NAME = "Action" // Action Genre

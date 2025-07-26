@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.arj.genre.domain.model.GenreItemModel
+import com.cinepeek.genre.domain.model.GenreItemModel
 import com.cinepeek.uikit.GenericErrorUI
 import com.cinepeek.uikit.R
 import com.cinepeek.uikit.appearance.ColorSecondary

@@ -1,9 +1,9 @@
 package com.arj.home.ui
 
 import androidx.paging.PagingData
-import com.arj.genre.domain.GenreConst.DEFAULT_GENRE_ID
-import com.arj.genre.domain.GenreConst.DEFAULT_GENRE_NAME
 import com.arj.home.domain.mapper.DiscoverMovie
+import com.cinepeek.genre.domain.GenreConst.DEFAULT_GENRE_ID
+import com.cinepeek.genre.domain.GenreConst.DEFAULT_GENRE_NAME
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 

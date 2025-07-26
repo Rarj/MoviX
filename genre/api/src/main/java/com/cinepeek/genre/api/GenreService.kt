@@ -1,6 +1,6 @@
-package com.arj.genre.api
+package com.cinepeek.genre.api
 
-import com.arj.genre.api.response.GenreResponse
+import com.cinepeek.genre.api.response.GenreResponse
 import retrofit2.http.GET
 
 interface GenreService {

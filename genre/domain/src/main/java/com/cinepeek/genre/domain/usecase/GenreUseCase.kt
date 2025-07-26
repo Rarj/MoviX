@@ -1,6 +1,6 @@
-package com.arj.genre.domain.usecase
+package com.cinepeek.genre.domain.usecase
 
-import com.arj.genre.domain.GenreRepository
+import com.cinepeek.genre.domain.GenreRepository
 import javax.inject.Inject
 
 class GenreUseCase @Inject constructor(
