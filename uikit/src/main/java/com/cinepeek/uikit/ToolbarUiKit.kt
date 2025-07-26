@@ -1,4 +1,4 @@
-package com.arj.uikit
+package com.cinepeek.uikit
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Column
@@ -31,7 +31,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.arj.uikit.appearance.ColorSecondary
+import com.cinepeek.uikit.appearance.ColorSecondary
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

@@ -42,9 +42,9 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.arj.common.utils.getRating
 import com.arj.home.domain.mapper.DiscoverMovie
 import com.arj.home.ui.filter.FilterScreen
-import com.arj.uikit.PosterUiKit
-import com.arj.uikit.appearance.ColorStar
-import com.arj.uikit.R as RUiKit
+import com.cinepeek.uikit.PosterUiKit
+import com.cinepeek.uikit.appearance.ColorStar
+import com.cinepeek.uikit.R as RUiKit
 
 @Composable
 fun HomeUI(

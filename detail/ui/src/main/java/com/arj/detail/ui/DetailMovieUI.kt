@@ -31,7 +31,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.arj.detail.ui.tab.TabUI
 import com.arj.review.ui.ReviewScreen
-import com.arj.uikit.R as RUiKit
+import com.cinepeek.uikit.R as RUiKit
 
 @Composable
 fun DetailMovieScreen(

@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import com.arj.uikit.shimmerLoadingUI
+import com.cinepeek.uikit.shimmerLoadingUI
 
 @Composable
 internal fun LoadingUI() {

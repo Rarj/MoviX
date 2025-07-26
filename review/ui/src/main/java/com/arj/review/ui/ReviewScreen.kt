@@ -27,9 +27,9 @@ import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.arj.review.domain.model.ReviewModel
-import com.arj.uikit.appearance.ColorStar
+import com.cinepeek.uikit.appearance.ColorStar
 import kotlinx.coroutines.flow.flow
-import com.arj.uikit.R as RUiKit
+import com.cinepeek.uikit.R as RUiKit
 
 @Composable
 fun ReviewScreen(

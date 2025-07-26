@@ -14,7 +14,7 @@ import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.arj.home.domain.mapper.DiscoverMovie
-import com.arj.uikit.ToolbarUiKit
+import com.cinepeek.uikit.ToolbarUiKit
 import kotlinx.coroutines.flow.flow
 
 @OptIn(ExperimentalMaterial3Api::class)

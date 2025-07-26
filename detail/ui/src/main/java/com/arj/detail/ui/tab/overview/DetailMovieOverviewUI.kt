@@ -37,11 +37,10 @@ import androidx.constraintlayout.compose.Dimension
 import com.arj.detail.ui.DetailMovieState
 import com.arj.detail.ui.DetailMovieUIState
 import com.arj.detail.ui.tab.LoadingUI
-import com.arj.uikit.BackdropUiKit
-import com.arj.uikit.GenericErrorUI
-import com.arj.uikit.R
-import com.arj.uikit.appearance.ColorStar
-import com.arj.uikit.R as RUiKit
+import com.cinepeek.uikit.BackdropUiKit
+import com.cinepeek.uikit.GenericErrorUI
+import com.cinepeek.uikit.appearance.ColorStar
+import com.cinepeek.uikit.R as RUiKit
 
 @Composable
 internal fun OverviewUI(
@@ -130,7 +129,7 @@ private fun OverviewUIStateHandler(
             color = MaterialTheme.colorScheme.onPrimaryContainer,
             textAlign = TextAlign.Center,
             fontSize = 18.sp,
-            fontFamily = FontFamily(Font(R.font.sono_light)),
+            fontFamily = FontFamily(Font(RUiKit.font.sono_light)),
         )
 
         Button(
@@ -194,7 +193,7 @@ fun ReleaseDateComponent(
             text = status,
             color = MaterialTheme.colorScheme.onPrimaryContainer,
             fontSize = 16.sp,
-            fontFamily = FontFamily(Font(resId = R.font.sono_bold)),
+            fontFamily = FontFamily(Font(resId = RUiKit.font.sono_bold)),
         )
         VerticalDivider(
             modifier = Modifier
@@ -207,7 +206,7 @@ fun ReleaseDateComponent(
             text = releaseDate,
             color = MaterialTheme.colorScheme.onPrimaryContainer,
             fontSize = 16.sp,
-            fontFamily = FontFamily(Font(resId = R.font.sono_bold)),
+            fontFamily = FontFamily(Font(resId = RUiKit.font.sono_bold)),
         )
         VerticalDivider(
             modifier = Modifier
@@ -218,7 +217,7 @@ fun ReleaseDateComponent(
         )
         Icon(
             tint = ColorStar,
-            imageVector = ImageVector.vectorResource(id = R.drawable.ic_star),
+            imageVector = ImageVector.vectorResource(id = RUiKit.drawable.ic_star),
             contentDescription = "Rating Icon - Star",
         )
         Text(
@@ -227,7 +226,7 @@ fun ReleaseDateComponent(
             maxLines = 1,
             color = MaterialTheme.colorScheme.onPrimaryContainer,
             fontSize = 16.sp,
-            fontFamily = FontFamily(Font(resId = R.font.sono_bold)),
+            fontFamily = FontFamily(Font(resId = RUiKit.font.sono_bold)),
         )
     }
 }

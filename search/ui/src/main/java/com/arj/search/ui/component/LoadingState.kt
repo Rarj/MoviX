@@ -14,7 +14,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.arj.uikit.shimmerLoadingUI
+import com.cinepeek.uikit.shimmerLoadingUI
 
 @Composable
 internal fun LoadingState() {

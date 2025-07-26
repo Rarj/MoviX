@@ -2,7 +2,6 @@ package com.arj.home.ui.filter
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
@@ -30,9 +29,9 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.arj.genre.domain.model.GenreItemModel
-import com.arj.uikit.GenericErrorUI
-import com.arj.uikit.R
-import com.arj.uikit.appearance.ColorSecondary
+import com.cinepeek.uikit.GenericErrorUI
+import com.cinepeek.uikit.R
+import com.cinepeek.uikit.appearance.ColorSecondary
 import kotlinx.coroutines.launch
 
 @Composable

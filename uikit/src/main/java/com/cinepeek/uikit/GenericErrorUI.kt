@@ -1,4 +1,4 @@
-package com.arj.uikit
+package com.cinepeek.uikit
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement

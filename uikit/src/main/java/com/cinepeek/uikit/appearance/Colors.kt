@@ -1,4 +1,4 @@
-package com.arj.uikit.appearance
+package com.cinepeek.uikit.appearance
 
 import androidx.compose.ui.graphics.Color
 

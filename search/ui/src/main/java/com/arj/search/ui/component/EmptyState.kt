@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintLayoutScope
-import com.arj.uikit.R
+import com.cinepeek.uikit.R
 
 @Composable
 internal fun ConstraintLayoutScope.EmptyState(

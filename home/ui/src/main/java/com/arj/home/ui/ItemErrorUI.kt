@@ -12,8 +12,8 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.arj.uikit.R
-import com.arj.uikit.appearance.ColorSecondaryVariant
+import com.cinepeek.uikit.appearance.ColorSecondaryVariant
+import com.cinepeek.uikit.R as RUiKit
 
 @Composable
 internal fun ItemErrorUI(
@@ -29,7 +29,7 @@ internal fun ItemErrorUI(
         Text(
             text = "Retry",
             fontSize = 16.sp,
-            fontFamily = FontFamily(Font(R.font.sono_bold)),
+            fontFamily = FontFamily(Font(RUiKit.font.sono_bold)),
             letterSpacing = 1.sp,
             color = ColorSecondaryVariant,
         )

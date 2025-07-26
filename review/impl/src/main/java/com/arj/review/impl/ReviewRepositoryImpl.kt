@@ -1,9 +1,9 @@
 package com.arj.review.impl
 
 import androidx.paging.PagingData
-import com.arj.network.state.MovixNetworkResult
 import com.arj.network.shared.NetworkResponse
 import com.arj.network.shared.createPager
+import com.arj.network.state.MovixNetworkResult
 import com.arj.review.api.ReviewService
 import com.arj.review.domain.ReviewRepository
 import com.arj.review.domain.model.ReviewModel

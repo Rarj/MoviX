@@ -15,8 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.arj.uikit.shimmerLoadingUI
-import kotlin.random.Random
+import com.cinepeek.uikit.shimmerLoadingUI
 
 @Composable
 internal fun FilterLoadingUI() {

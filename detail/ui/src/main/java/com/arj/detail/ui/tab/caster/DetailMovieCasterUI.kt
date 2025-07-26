@@ -31,9 +31,9 @@ import coil.request.ImageRequest
 import com.arj.detail.domain.mapper.Cast
 import com.arj.detail.ui.CreditsMovieUIState
 import com.arj.detail.ui.tab.CasterLoading
-import com.arj.uikit.BuildConfig
-import com.arj.uikit.GenericErrorUI
-import com.arj.uikit.R
+import com.cinepeek.uikit.BuildConfig
+import com.cinepeek.uikit.GenericErrorUI
+import com.cinepeek.uikit.R
 
 @Composable
 internal fun CasterScreen(

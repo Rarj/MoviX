@@ -16,8 +16,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.arj.search.domain.model.MovieModel
-import com.arj.uikit.PosterUiKit
-import com.arj.uikit.R
+import com.cinepeek.uikit.PosterUiKit
+import com.cinepeek.uikit.R
 
 @Composable
 internal fun ItemUI(
