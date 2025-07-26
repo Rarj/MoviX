@@ -13,11 +13,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.arj.home.ui.HomeUI
 import com.arj.movix.appearance.MovixTheme
 import com.arj.search.ui.SearchUI
 import com.cinepeek.detail.ui.DetailMovieScreen
 import com.cinepeek.detail.ui.DetailMovieViewModel
+import com.cinepeek.home.ui.HomeUI
 import com.cinepeek.navigation.detail.controller.DETAIL_MOVIE_ID_ARGS
 import com.cinepeek.navigation.detail.controller.DETAIL_MOVIE_ROUTE
 import com.cinepeek.navigation.detail.controller.DETAIL_MOVIE_TITLE_ARGS
