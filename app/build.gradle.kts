@@ -8,11 +8,11 @@ plugins {
 }
 
 android {
-    namespace = "com.arj.movix"
+    namespace = "com.arj.cinepeek"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.arj.movix"
+        applicationId = "com.arj.cinepeek"
         minSdk = 23
         targetSdk = 34
         versionCode = 200306

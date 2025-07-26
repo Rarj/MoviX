@@ -1,4 +1,4 @@
-package com.arj.movix.appearance
+package com.arj.cinepeek.appearance
 
 import android.app.Activity
 import android.os.Build

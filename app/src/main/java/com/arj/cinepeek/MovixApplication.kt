@@ -1,4 +1,4 @@
-package com.arj.movix
+package com.arj.cinepeek
 
 import android.app.Application
 import com.jakewharton.threetenabp.AndroidThreeTen

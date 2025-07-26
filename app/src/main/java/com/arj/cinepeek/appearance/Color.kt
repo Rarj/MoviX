@@ -1,4 +1,4 @@
-package com.arj.movix.appearance
+package com.arj.cinepeek.appearance
 
 import androidx.compose.ui.graphics.Color
 
