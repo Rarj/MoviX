@@ -1,13 +1,13 @@
 package com.cinepeek.search.impl
 
 import androidx.paging.PagingData
+import com.cinepeek.network.shared.NetworkResponse
+import com.cinepeek.network.shared.createPager
+import com.cinepeek.network.state.CinepeekNetworkResult
 import com.cinepeek.search.api.SearchService
 import com.cinepeek.search.domain.SearchRepository
 import com.cinepeek.search.domain.model.MovieModel
 import com.cinepeek.search.domain.toMovie
-import com.cinepeek.network.shared.NetworkResponse
-import com.cinepeek.network.shared.createPager
-import com.cinepeek.network.state.MovixNetworkResult
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
@@ -28,7 +28,7 @@ class SearchRepositoryImpl @Inject constructor(
                 totalPages = response.totalPages,
                 results = results,
             )
-            MovixNetworkResult.Success(result)
+            CinepeekNetworkResult.Success(result)
         }.flow.flowOn(dispatcher)
     }
 }

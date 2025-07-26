@@ -6,7 +6,7 @@ import com.cinepeek.detail.domain.mapper.CreditsMovie
 import com.cinepeek.detail.domain.mapper.DetailMovie
 import com.cinepeek.detail.domain.usecase.CreditUseCase
 import com.cinepeek.detail.domain.usecase.DetailMovieUseCase
-import com.cinepeek.network.state.MovixNetworkResult
+import com.cinepeek.network.state.CinepeekNetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -44,24 +44,25 @@ class DetailMovieViewModel @Inject constructor(
         }
     }
 
-    private fun creditsMovieResponseHandler(response: MovixNetworkResult<CreditsMovie>) {
+    private fun creditsMovieResponseHandler(response: CinepeekNetworkResult<CreditsMovie>) {
         val uiState = when (response) {
-            is MovixNetworkResult.Loading -> CreditsMovieUIState.Loading
-            is MovixNetworkResult.Success -> CreditsMovieUIState.Success(
+            is CinepeekNetworkResult.Loading -> CreditsMovieUIState.Loading
+            is CinepeekNetworkResult.Success -> CreditsMovieUIState.Success(
                 CreditsMovieState(
                     casts = response.value.casts.orEmpty(),
                     crews = response.value.crews.orEmpty(),
                 )
             )
-            is MovixNetworkResult.Failed -> CreditsMovieUIState.Error(response.message)
+
+            is CinepeekNetworkResult.Failed -> CreditsMovieUIState.Error(response.message)
         }
         _creditsState.value = uiState
     }
 
-    private fun detailMovieResponseHandler(response: MovixNetworkResult<DetailMovie>) {
+    private fun detailMovieResponseHandler(response: CinepeekNetworkResult<DetailMovie>) {
         val uiState = when (response) {
-            is MovixNetworkResult.Loading -> DetailMovieUIState.Loading
-            is MovixNetworkResult.Success -> DetailMovieUIState.Success(
+            is CinepeekNetworkResult.Loading -> DetailMovieUIState.Loading
+            is CinepeekNetworkResult.Success -> DetailMovieUIState.Success(
                 DetailMovieState(
                     title = response.value.title,
                     posterPath = response.value.posterPath,
@@ -73,7 +74,7 @@ class DetailMovieViewModel @Inject constructor(
                 )
             )
 
-            is MovixNetworkResult.Failed -> DetailMovieUIState.Error(response.message)
+            is CinepeekNetworkResult.Failed -> DetailMovieUIState.Error(response.message)
         }
         setDetailMovieUiState(uiState)
     }

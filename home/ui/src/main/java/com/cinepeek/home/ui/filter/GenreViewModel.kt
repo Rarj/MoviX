@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cinepeek.genre.domain.model.GenreModel
 import com.cinepeek.genre.domain.usecase.GenreUseCase
-import com.cinepeek.network.state.MovixNetworkResult
+import com.cinepeek.network.state.CinepeekNetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -28,11 +28,11 @@ class GenreViewModel @Inject constructor(
         }
     }
 
-    private fun genreResponseHandler(response: MovixNetworkResult<GenreModel>) {
+    private fun genreResponseHandler(response: CinepeekNetworkResult<GenreModel>) {
         val state = when (response) {
-            is MovixNetworkResult.Loading -> GenreUIState.Loading
-            is MovixNetworkResult.Success -> GenreUIState.Success(GenreState(response.value.genres))
-            is MovixNetworkResult.Failed -> GenreUIState.Error(response.message)
+            is CinepeekNetworkResult.Loading -> GenreUIState.Loading
+            is CinepeekNetworkResult.Success -> GenreUIState.Success(GenreState(response.value.genres))
+            is CinepeekNetworkResult.Failed -> GenreUIState.Error(response.message)
         }
         _state.value = state
     }

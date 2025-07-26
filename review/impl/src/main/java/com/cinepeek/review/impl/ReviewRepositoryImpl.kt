@@ -3,7 +3,7 @@ package com.cinepeek.review.impl
 import androidx.paging.PagingData
 import com.cinepeek.network.shared.NetworkResponse
 import com.cinepeek.network.shared.createPager
-import com.cinepeek.network.state.MovixNetworkResult
+import com.cinepeek.network.state.CinepeekNetworkResult
 import com.cinepeek.review.api.ReviewService
 import com.cinepeek.review.domain.ReviewRepository
 import com.cinepeek.review.domain.model.ReviewModel
@@ -28,7 +28,7 @@ class ReviewRepositoryImpl @Inject constructor(
                 totalPages = response.totalPages,
                 results = results,
             )
-            MovixNetworkResult.Success(result)
+            CinepeekNetworkResult.Success(result)
         }.flow.flowOn(dispatcher)
     }
 }
