@@ -39,9 +39,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.arj.common.utils.getRating
 import com.arj.home.domain.mapper.DiscoverMovie
 import com.arj.home.ui.filter.FilterScreen
+import com.cinepeek.common.utils.getRating
 import com.cinepeek.uikit.PosterUiKit
 import com.cinepeek.uikit.appearance.ColorStar
 import com.cinepeek.uikit.R as RUiKit

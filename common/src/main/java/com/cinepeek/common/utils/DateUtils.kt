@@ -1,6 +1,6 @@
-package com.arj.common.utils
+package com.cinepeek.common.utils
 
-import com.arj.common.utils.DateUtils.getReleaseStatus
+import com.cinepeek.common.utils.DateUtils.getReleaseStatus
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 

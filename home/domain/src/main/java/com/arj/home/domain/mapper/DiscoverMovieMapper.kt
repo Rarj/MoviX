@@ -1,8 +1,8 @@
 package com.arj.home.domain.mapper
 
-import com.arj.common.utils.DateUtils
-import com.arj.common.utils.ReleaseStatus
 import com.arj.home.api.response.discover.Movie
+import com.cinepeek.common.utils.DateUtils
+import com.cinepeek.common.utils.ReleaseStatus
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 

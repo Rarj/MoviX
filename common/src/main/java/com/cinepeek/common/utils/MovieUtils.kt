@@ -1,4 +1,4 @@
-package com.arj.common.utils
+package com.cinepeek.common.utils
 
 import kotlin.math.roundToInt
 
