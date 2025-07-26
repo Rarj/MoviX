@@ -5,7 +5,7 @@ import com.jakewharton.threetenabp.AndroidThreeTen
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
-class MovixApplication: Application() {
+class CinepeekApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()

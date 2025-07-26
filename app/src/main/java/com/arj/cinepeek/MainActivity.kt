@@ -13,7 +13,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.arj.cinepeek.appearance.MovixTheme
+import com.arj.cinepeek.appearance.CinepeekTheme
 import com.cinepeek.detail.ui.DetailMovieScreen
 import com.cinepeek.detail.ui.DetailMovieViewModel
 import com.cinepeek.home.ui.HomeUI
@@ -44,7 +44,7 @@ class MainActivity : ComponentActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setContent {
-            MovixTheme {
+            CinepeekTheme {
                 Surface {
                     val navController = rememberNavController()
 

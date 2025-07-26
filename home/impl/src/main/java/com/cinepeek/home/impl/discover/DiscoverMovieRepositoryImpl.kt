@@ -7,7 +7,7 @@ import com.cinepeek.home.domain.mapper.DiscoverMovie
 import com.cinepeek.home.domain.mapper.toDiscoverMovie
 import com.cinepeek.network.shared.NetworkResponse
 import com.cinepeek.network.shared.createPager
-import com.cinepeek.network.state.MovixNetworkResult
+import com.cinepeek.network.state.CinepeekNetworkResult
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
@@ -29,7 +29,7 @@ class DiscoverMovieRepositoryImpl @Inject constructor(
                 results = movies
             )
 
-            MovixNetworkResult.Success(result)
+            CinepeekNetworkResult.Success(result)
         }.flow.flowOn(dispatcher)
     }
 
