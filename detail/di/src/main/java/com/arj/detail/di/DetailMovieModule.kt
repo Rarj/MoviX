@@ -5,7 +5,7 @@ import com.arj.detail.domain.DetailMovieRepository
 import com.arj.detail.domain.usecase.CreditUseCase
 import com.arj.detail.domain.usecase.DetailMovieUseCase
 import com.arj.detail.impl.DetailMovieRepositoryImpl
-import com.arj.network.state.IoDispatcher
+import com.cinepeek.network.state.IoDispatcher
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

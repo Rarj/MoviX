@@ -4,7 +4,7 @@ import com.arj.genre.api.GenreService
 import com.arj.genre.domain.GenreRepository
 import com.arj.genre.domain.usecase.GenreUseCase
 import com.arj.genre.impl.GenreRepositoryImpl
-import com.arj.network.state.IoDispatcher
+import com.cinepeek.network.state.IoDispatcher
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

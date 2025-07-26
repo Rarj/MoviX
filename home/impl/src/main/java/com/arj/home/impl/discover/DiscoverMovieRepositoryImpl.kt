@@ -5,9 +5,9 @@ import com.arj.home.api.HomeService
 import com.arj.home.domain.DiscoverMovieRepository
 import com.arj.home.domain.mapper.DiscoverMovie
 import com.arj.home.domain.mapper.toDiscoverMovie
-import com.arj.network.state.MovixNetworkResult
 import com.cinepeek.network.shared.NetworkResponse
 import com.cinepeek.network.shared.createPager
+import com.cinepeek.network.state.MovixNetworkResult
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn

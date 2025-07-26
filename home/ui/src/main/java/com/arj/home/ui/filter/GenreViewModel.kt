@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.arj.genre.domain.model.GenreModel
 import com.arj.genre.domain.usecase.GenreUseCase
-import com.arj.network.state.MovixNetworkResult
+import com.cinepeek.network.state.MovixNetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

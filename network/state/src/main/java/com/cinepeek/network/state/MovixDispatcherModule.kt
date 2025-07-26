@@ -1,4 +1,4 @@
-package com.arj.network.state
+package com.cinepeek.network.state
 
 import dagger.Module
 import dagger.Provides

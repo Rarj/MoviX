@@ -6,8 +6,8 @@ import com.arj.detail.domain.mapper.CreditsMovie
 import com.arj.detail.domain.mapper.DetailMovie
 import com.arj.detail.domain.mapper.toCreditsMovie
 import com.arj.detail.domain.mapper.toDetailMovie
-import com.arj.network.state.MovixNetworkResult
-import com.arj.network.state.safeCall
+import com.cinepeek.network.state.MovixNetworkResult
+import com.cinepeek.network.state.safeCall
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

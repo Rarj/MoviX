@@ -4,8 +4,8 @@ import com.arj.genre.api.GenreService
 import com.arj.genre.domain.GenreRepository
 import com.arj.genre.domain.model.GenreModel
 import com.arj.genre.domain.toGenres
-import com.arj.network.state.MovixNetworkResult
-import com.arj.network.state.safeCall
+import com.cinepeek.network.state.MovixNetworkResult
+import com.cinepeek.network.state.safeCall
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

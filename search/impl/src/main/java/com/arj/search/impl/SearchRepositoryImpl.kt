@@ -1,13 +1,13 @@
 package com.arj.search.impl
 
 import androidx.paging.PagingData
-import com.arj.network.state.MovixNetworkResult
 import com.arj.search.api.SearchService
 import com.arj.search.domain.SearchRepository
 import com.arj.search.domain.model.MovieModel
 import com.arj.search.domain.toMovie
 import com.cinepeek.network.shared.NetworkResponse
 import com.cinepeek.network.shared.createPager
+import com.cinepeek.network.state.MovixNetworkResult
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn

@@ -2,7 +2,7 @@ package com.arj.detail.domain
 
 import com.arj.detail.domain.mapper.CreditsMovie
 import com.arj.detail.domain.mapper.DetailMovie
-import com.arj.network.state.MovixNetworkResult
+import com.cinepeek.network.state.MovixNetworkResult
 import kotlinx.coroutines.flow.Flow
 
 interface DetailMovieRepository {

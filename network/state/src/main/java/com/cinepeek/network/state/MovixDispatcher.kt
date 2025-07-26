@@ -1,4 +1,4 @@
-package com.arj.network.state
+package com.cinepeek.network.state
 
 import javax.inject.Qualifier
 

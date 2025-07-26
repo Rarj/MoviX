@@ -2,7 +2,7 @@ package com.cinepeek.network.shared
 
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
-import com.arj.network.state.MovixNetworkResult
+import com.cinepeek.network.state.MovixNetworkResult
 
 private const val DEFAULT_PAGE_SIZE = 20
 

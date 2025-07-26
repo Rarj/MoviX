@@ -2,7 +2,7 @@ package com.cinepeek.network.shared
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.arj.network.state.MovixNetworkResult
+import com.cinepeek.network.state.MovixNetworkResult
 import java.net.UnknownHostException
 
 class BasePagingSource<V : Any>(

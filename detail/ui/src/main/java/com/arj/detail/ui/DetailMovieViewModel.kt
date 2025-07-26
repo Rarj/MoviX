@@ -6,7 +6,7 @@ import com.arj.detail.domain.mapper.CreditsMovie
 import com.arj.detail.domain.mapper.DetailMovie
 import com.arj.detail.domain.usecase.CreditUseCase
 import com.arj.detail.domain.usecase.DetailMovieUseCase
-import com.arj.network.state.MovixNetworkResult
+import com.cinepeek.network.state.MovixNetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow

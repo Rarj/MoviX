@@ -1,10 +1,11 @@
-package com.arj.network.state
+package com.cinepeek.network.state
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import retrofit2.HttpException
 import java.net.UnknownHostException
 
 suspend fun <T> safeCall(
@@ -25,7 +26,7 @@ suspend fun <T> safeCall(
                 )
             }
 
-            is retrofit2.HttpException -> {
+            is HttpException -> {
                 when (cause.code()) {
                     401 -> emit(
                         MovixNetworkResult.Failed(

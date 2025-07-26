@@ -1,10 +1,10 @@
 package com.arj.review.di
 
-import com.arj.network.state.IoDispatcher
 import com.arj.review.api.ReviewService
 import com.arj.review.domain.ReviewRepository
 import com.arj.review.domain.usecase.ReviewUseCase
 import com.arj.review.impl.ReviewRepositoryImpl
+import com.cinepeek.network.state.IoDispatcher
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
