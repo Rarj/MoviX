@@ -1,7 +1,7 @@
 package com.arj.home.api
 
 import com.arj.home.api.response.discover.Movie
-import com.arj.network.shared.NetworkResponse
+import com.cinepeek.network.shared.NetworkResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 

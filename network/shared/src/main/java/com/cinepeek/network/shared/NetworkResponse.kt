@@ -1,4 +1,4 @@
-package com.arj.network.shared
+package com.cinepeek.network.shared
 
 import com.google.gson.annotations.SerializedName
 

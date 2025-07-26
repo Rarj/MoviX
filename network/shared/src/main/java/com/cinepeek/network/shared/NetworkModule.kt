@@ -1,4 +1,4 @@
-package com.arj.network.shared
+package com.cinepeek.network.shared
 
 import dagger.Module
 import dagger.Provides
