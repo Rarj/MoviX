@@ -1,6 +1,6 @@
-package com.arj.search.impl
+package com.cinepeek.search.impl
 
-import com.arj.search.controller.Navigation
+import com.cinepeek.search.controller.Navigation
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

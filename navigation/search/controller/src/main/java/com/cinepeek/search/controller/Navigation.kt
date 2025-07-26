@@ -1,4 +1,4 @@
-package com.arj.search.controller
+package com.cinepeek.search.controller
 
 import androidx.navigation.NavHostController
 

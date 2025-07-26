@@ -1,8 +1,8 @@
-package com.arj.search.impl
+package com.cinepeek.search.impl
 
 import androidx.navigation.NavHostController
-import com.arj.search.controller.Navigation
-import com.arj.search.controller.SEARCH_ROUTE
+import com.cinepeek.search.controller.Navigation
+import com.cinepeek.search.controller.SEARCH_ROUTE
 import javax.inject.Inject
 
 
