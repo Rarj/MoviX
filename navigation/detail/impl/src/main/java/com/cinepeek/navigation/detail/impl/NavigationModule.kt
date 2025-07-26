@@ -1,6 +1,6 @@
-package com.arj.navigation.detail.impl
+package com.cinepeek.navigation.detail.impl
 
-import com.arj.navigation.detail.controller.Navigation
+import com.cinepeek.navigation.detail.controller.Navigation
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

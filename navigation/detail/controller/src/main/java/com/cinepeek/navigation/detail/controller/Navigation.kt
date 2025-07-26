@@ -1,4 +1,4 @@
-package com.arj.navigation.detail.controller
+package com.cinepeek.navigation.detail.controller
 
 import androidx.navigation.NavHostController
 

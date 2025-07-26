@@ -1,7 +1,7 @@
-package com.arj.navigation.detail.impl
+package com.cinepeek.navigation.detail.impl
 
 import androidx.navigation.NavHostController
-import com.arj.navigation.detail.controller.Navigation
+import com.cinepeek.navigation.detail.controller.Navigation
 import javax.inject.Inject
 
 class NavigationImpl @Inject constructor() : Navigation {

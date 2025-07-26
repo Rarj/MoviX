@@ -17,16 +17,16 @@ import com.arj.detail.ui.DetailMovieScreen
 import com.arj.detail.ui.DetailMovieViewModel
 import com.arj.home.ui.HomeUI
 import com.arj.movix.appearance.MovixTheme
-import com.arj.navigation.detail.controller.DETAIL_MOVIE_ID_ARGS
-import com.arj.navigation.detail.controller.DETAIL_MOVIE_ROUTE
-import com.arj.navigation.detail.controller.DETAIL_MOVIE_TITLE_ARGS
 import com.arj.navigation.home.controller.HOME_ROUTE
 import com.arj.search.controller.SEARCH_ROUTE
 import com.arj.search.ui.SearchUI
+import com.cinepeek.navigation.detail.controller.DETAIL_MOVIE_ID_ARGS
+import com.cinepeek.navigation.detail.controller.DETAIL_MOVIE_ROUTE
+import com.cinepeek.navigation.detail.controller.DETAIL_MOVIE_TITLE_ARGS
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
-import com.arj.navigation.detail.controller.Navigation as DetailMovieNavigation
 import com.arj.search.controller.Navigation as SearchNavigation
+import com.cinepeek.navigation.detail.controller.Navigation as DetailMovieNavigation
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
