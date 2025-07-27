@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.arj.review.domain"
+    namespace = "com.cinepeek.review.domain"
     compileSdk = 34
 
     defaultConfig {

@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.arj.network.state"
+    namespace = "com.cinepeek.network.state"
     compileSdk = 34
 
     defaultConfig {

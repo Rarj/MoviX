@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.arj.navigation.detail.impl"
+    namespace = "com.cinepeek.navigation.detail.impl"
     compileSdk = 34
 
     defaultConfig {

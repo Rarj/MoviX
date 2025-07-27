@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.arj.benchmark"
+    namespace = "com.cinepeek.benchmark"
     compileSdk = 34
 
     compileOptions {

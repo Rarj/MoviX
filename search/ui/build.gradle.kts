@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.arj.search.ui"
+    namespace = "com.cinepeek.search.ui"
     compileSdk = 34
 
     defaultConfig {
