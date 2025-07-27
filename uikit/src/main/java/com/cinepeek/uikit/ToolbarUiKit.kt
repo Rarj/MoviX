@@ -1,7 +1,6 @@
 package com.cinepeek.uikit
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -14,7 +13,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedIconButton
-import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.TopAppBarScrollBehavior
@@ -24,13 +22,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.PlatformTextStyle
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.cinepeek.uikit.appearance.ColorSecondary
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -66,26 +59,7 @@ fun ToolbarUiKit(
                 )
             }
         },
-        title = {
-            Column(
-                modifier = Modifier.padding(start = 16.dp)
-            ) {
-                Text(
-                    text = "Welcome Movie Buffs!",
-                    fontFamily = FontFamily(Font(resId = R.font.sono_bold)),
-                    fontSize = 18.sp,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer,
-                    style = TextStyle(platformStyle = PlatformTextStyle(includeFontPadding = false))
-                )
-                Text(
-                    text = "Find your funky movie!",
-                    fontFamily = FontFamily(Font(resId = R.font.sono_light)),
-                    fontSize = 12.sp,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer,
-                    style = TextStyle(platformStyle = PlatformTextStyle(includeFontPadding = false))
-                )
-            }
-        },
+        title = { },
         actions = {
             Row(
                 modifier = Modifier.padding(end = 10.dp)
