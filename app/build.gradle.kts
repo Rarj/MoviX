@@ -29,7 +29,7 @@ android {
 
             applicationIdSuffix = ".debug"
             versionNameSuffix = "-DEBUG"
-            resValue(type = "string", name = "app_name", value = "Cinepeek Debug")
+            resValue(type = "string", name = "app_name", value = "Cine Peek - Debug")
         }
         release {
             isDebuggable = false
