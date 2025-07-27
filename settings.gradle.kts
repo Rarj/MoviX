@@ -13,7 +13,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "MoviX"
+rootProject.name = "Cinepeek"
 include(":app")
 include(":uikit")
 include(":home:ui")

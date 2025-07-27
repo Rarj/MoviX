@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.arj.home.ui"
+    namespace = "com.cinepeek.home.ui"
     compileSdk = 34
 
     defaultConfig {

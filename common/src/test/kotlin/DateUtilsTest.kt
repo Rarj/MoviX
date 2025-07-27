@@ -1,5 +1,5 @@
-import com.arj.common.utils.DateUtils
-import com.arj.common.utils.ReleaseStatus
+import com.cinepeek.common.utils.DateUtils
+import com.cinepeek.common.utils.ReleaseStatus
 import junit.framework.TestCase.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith

@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.arj.review.api"
+    namespace = "com.cinepeek.review.api"
     compileSdk = 34
 
     defaultConfig {
