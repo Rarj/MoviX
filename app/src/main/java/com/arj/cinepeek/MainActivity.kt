@@ -18,6 +18,7 @@ import com.cinepeek.detail.ui.DetailMovieScreen
 import com.cinepeek.detail.ui.DetailMovieViewModel
 import com.cinepeek.home.ui.HomeUI
 import com.cinepeek.login.ui.LoginScreen
+import com.cinepeek.login.ui.LoginViewModel
 import com.cinepeek.navigation.detail.controller.DETAIL_MOVIE_ID_ARGS
 import com.cinepeek.navigation.detail.controller.DETAIL_MOVIE_ROUTE
 import com.cinepeek.navigation.detail.controller.DETAIL_MOVIE_TITLE_ARGS
@@ -40,6 +41,7 @@ class MainActivity : ComponentActivity() {
     lateinit var detailMovieNavigation: DetailMovieNavigation
 
     private val detailMovieViewModel: DetailMovieViewModel by viewModels()
+    private val loginViewModel: LoginViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,7 +56,11 @@ class MainActivity : ComponentActivity() {
 	                    navController, startDestination = LOGIN_ROUTE
                     ) {
 	                    composable(route = LOGIN_ROUTE) {
-		                    LoginScreen()
+                            LaunchedEffect(true) {
+                                loginViewModel.requestToken()
+                            }
+
+                            LoginScreen()
 	                    }
 
                         composable(route = HOME_ROUTE) {
