@@ -17,10 +17,12 @@ import com.arj.cinepeek.appearance.CinepeekTheme
 import com.cinepeek.detail.ui.DetailMovieScreen
 import com.cinepeek.detail.ui.DetailMovieViewModel
 import com.cinepeek.home.ui.HomeUI
+import com.cinepeek.login.ui.LoginScreen
 import com.cinepeek.navigation.detail.controller.DETAIL_MOVIE_ID_ARGS
 import com.cinepeek.navigation.detail.controller.DETAIL_MOVIE_ROUTE
 import com.cinepeek.navigation.detail.controller.DETAIL_MOVIE_TITLE_ARGS
 import com.cinepeek.navigation.home.controller.HOME_ROUTE
+import com.cinepeek.navigation.login.controller.LOGIN_ROUTE
 import com.cinepeek.search.controller.SEARCH_ROUTE
 import com.cinepeek.search.ui.SearchUI
 import dagger.hilt.android.AndroidEntryPoint
@@ -49,8 +51,12 @@ class MainActivity : ComponentActivity() {
                     val navController = rememberNavController()
 
                     NavHost(
-                        navController, startDestination = HOME_ROUTE
+	                    navController, startDestination = LOGIN_ROUTE
                     ) {
+	                    composable(route = LOGIN_ROUTE) {
+		                    LoginScreen()
+	                    }
+
                         composable(route = HOME_ROUTE) {
                             HomeUI(
                                 onSearchClicked = {

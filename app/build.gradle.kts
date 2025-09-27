@@ -70,6 +70,10 @@ dependencies {
     implementation(project(":navigation:detail:controller"))
     implementation(project(":navigation:detail:impl"))
 
+	implementation(project(":login:ui"))
+	implementation(project(":navigation:login:controller"))
+	implementation(project(":navigation:login:impl"))
+
     implementation(project(":common"))
 
     implementation(libs.appcompat)
