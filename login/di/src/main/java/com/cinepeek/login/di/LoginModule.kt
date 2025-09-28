@@ -2,7 +2,8 @@ package com.cinepeek.login.di
 
 import com.cinepeek.login.api.LoginService
 import com.cinepeek.login.domain.LoginRepository
-import com.cinepeek.login.domain.usecase.LoginUseCase
+import com.cinepeek.login.domain.usecase.LoginAsGuestUseCase
+import com.cinepeek.login.domain.usecase.LoginAsUserUseCase
 import com.cinepeek.login.impl.LoginRepositoryImpl
 import com.cinepeek.network.state.IoDispatcher
 import dagger.Module
@@ -30,6 +31,9 @@ class LoginModule {
 	}
 
 	@Provides
-	fun provideLoginUseCase(loginRepository: LoginRepository) = LoginUseCase(loginRepository)
+	fun provideLoginUseCase(loginRepository: LoginRepository) = LoginAsUserUseCase(loginRepository)
+
+	@Provides
+	fun provideLoginGuestUseCase(loginRepository: LoginRepository) = LoginAsGuestUseCase(loginRepository)
 
 }

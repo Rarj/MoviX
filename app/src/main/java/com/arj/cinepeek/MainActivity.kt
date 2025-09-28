@@ -56,11 +56,14 @@ class MainActivity : ComponentActivity() {
 	                    navController, startDestination = LOGIN_ROUTE
                     ) {
 	                    composable(route = LOGIN_ROUTE) {
-                            LaunchedEffect(true) {
-                                loginViewModel.requestToken()
-                            }
-
-                            LoginScreen()
+		                    LoginScreen(
+			                    onLoginAsGuest = {
+				                    loginViewModel.loginAsGuest()
+			                    },
+			                    onLoginAsUser = { username, password ->
+				                    loginViewModel.loginAsUser(username, password)
+			                    },
+		                    )
 	                    }
 
                         composable(route = HOME_ROUTE) {
